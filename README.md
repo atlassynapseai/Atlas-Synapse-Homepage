@@ -3,7 +3,7 @@
 **Setting the Trust Layer of the AI Era**
 
 ## Live Site
-https://atlassynapseai.github.io/atlas-synapse-homepage/
+https://atlassynapseai.github.io/Atlas-Synapse-Homepage/
 
 ## Products
 
