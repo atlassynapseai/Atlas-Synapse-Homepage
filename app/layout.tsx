@@ -1,0 +1,29 @@
+import type { Metadata } from 'next'
+import { AuthProvider } from '@/lib/auth-context'
+import './globals.css'
+
+export const metadata: Metadata = {
+  title: 'Atlas Synapse | Trust Engine for AI Systems',
+  description: 'Atlas Synapse is the trust layer for agentic AI — governance, verification, and auditability at the boundaries of your AI systems.',
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en" className="dark">
+      <head>
+        <link rel="icon" type="image/png" href="/Atlas-Synapse-Homepage/logo.png" />
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
+      <body className="bg-[#050816] text-slate-100">
+        <AuthProvider>
+          {children}
+        </AuthProvider>
+      </body>
+    </html>
+  )
+}
