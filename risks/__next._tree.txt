@@ -1,0 +1,4 @@
+:HL["/Atlas-Synapse-Homepage/_next/static/chunks/e280c3c2401d98cd.css","style"]
+:HL["/Atlas-Synapse-Homepage/_next/static/media/0c89a48fa5027cee-s.p.4564287c.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/Atlas-Synapse-Homepage/_next/static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+0:{"buildId":"3mMN9IPn5PZGKahIb3-vM","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"risks","paramType":null,"paramKey":"risks","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
