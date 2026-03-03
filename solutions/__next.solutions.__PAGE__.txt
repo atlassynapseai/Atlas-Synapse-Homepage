@@ -1,7 +1,0 @@
-1:"$Sreact.fragment"
-2:I[62319,["/Atlas-Synapse-Homepage/_next/static/chunks/78e3b6b318089ceb.js","/Atlas-Synapse-Homepage/_next/static/chunks/448f1fa75bc789a0.js","/Atlas-Synapse-Homepage/_next/static/chunks/07ac63267383eb11.js","/Atlas-Synapse-Homepage/_next/static/chunks/665056fc74b0f09e.js"],"default"]
-3:I[66143,["/Atlas-Synapse-Homepage/_next/static/chunks/78e3b6b318089ceb.js","/Atlas-Synapse-Homepage/_next/static/chunks/448f1fa75bc789a0.js","/Atlas-Synapse-Homepage/_next/static/chunks/07ac63267383eb11.js","/Atlas-Synapse-Homepage/_next/static/chunks/665056fc74b0f09e.js"],"default"]
-4:I[97367,["/Atlas-Synapse-Homepage/_next/static/chunks/ff1a16fafef87110.js","/Atlas-Synapse-Homepage/_next/static/chunks/d2be314c3ece3fbe.js"],"OutletBoundary"]
-5:"$Sreact.suspense"
-0:{"buildId":"3mMN9IPn5PZGKahIb3-vM","rsc":["$","$1","c",{"children":[[["$","$L2",null,{}],["$","$L3",null,{}]],[["$","script","script-0",{"src":"/Atlas-Synapse-Homepage/_next/static/chunks/07ac63267383eb11.js","async":true}],["$","script","script-1",{"src":"/Atlas-Synapse-Homepage/_next/static/chunks/665056fc74b0f09e.js","async":true}]],["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]]}],"loading":null,"isPartial":false}
-6:null
