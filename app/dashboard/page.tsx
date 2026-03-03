@@ -79,8 +79,8 @@ export default function Dashboard() {
     return (
       <div className="flex items-center justify-center min-h-screen bg-[#050816]">
         <div className="text-center">
-          <div className="h-12 w-12 animate-spin rounded-full border-4 border-atlas-primary/30 border-t-atlas-primary mx-auto mb-4"></div>
-          <p className="text-slate-300">Loading...</p>
+          <div className="h-12 w-12 animate-spin rounded-full border-4 border-atlas-primary/30 border-t-atlas-primary mx-auto mb-4 shadow-lg shadow-atlas-primary/50"></div>
+          <p className="text-slate-300 animate-pulse">Loading your profile...</p>
         </div>
       </div>
     )
@@ -89,7 +89,7 @@ export default function Dashboard() {
   if (!user || !profile) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-[#050816]">
-        <p className="text-slate-300">Redirecting...</p>
+        <p className="text-slate-300 animate-pulse">Redirecting...</p>
       </div>
     )
   }
@@ -97,31 +97,31 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-[#050816] pt-24">
       <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-lg border border-white/10 bg-slate-900/60 p-8">
-          <div className="flex items-center gap-6 mb-8">
-            <div>
-              <h1 className="text-3xl font-bold text-slate-100">{profile.name}</h1>
-              <p className="text-slate-400">{profile.email}</p>
+        <div className="animate-bounce-in rounded-lg border border-white/10 bg-slate-900/60 p-8">
+          <div className="flex items-center gap-6 mb-8 animate-slide-up delay-100">
+            <div className="flex-1">
+              <h1 className="text-3xl font-bold text-slate-100 animate-slide-up delay-200">{profile.name}</h1>
+              <p className="text-slate-400 animate-slide-up delay-300">{profile.email}</p>
             </div>
           </div>
 
-          <div className="border-t border-white/10 pt-8">
+          <div className="border-t border-white/10 pt-8 animate-slide-up delay-300">
             <h2 className="text-lg font-semibold text-slate-100 mb-4">Account Information</h2>
             <div className="space-y-4">
-              <div>
+              <div className="animate-slide-up delay-400 p-3 rounded-lg hover:bg-white/5 transition-colors duration-300">
                 <p className="text-sm text-slate-400">Full Name</p>
                 <p className="text-slate-100 font-medium">{profile.name}</p>
               </div>
-              <div>
+              <div className="animate-slide-up delay-500 p-3 rounded-lg hover:bg-white/5 transition-colors duration-300">
                 <p className="text-sm text-slate-400">Email Address</p>
                 <p className="text-slate-100 font-medium">{profile.email}</p>
               </div>
-              <div>
+              <div className="animate-slide-up delay-500 p-3 rounded-lg hover:bg-white/5 transition-colors duration-300">
                 <p className="text-sm text-slate-400">User ID</p>
-                <p className="text-slate-100 font-medium text-xs font-mono">{profile.id}</p>
+                <p className="text-slate-100 font-medium text-xs font-mono break-all">{profile.id}</p>
               </div>
               {profile.created_at && (
-                <div>
+                <div className="animate-slide-up delay-500 p-3 rounded-lg hover:bg-white/5 transition-colors duration-300">
                   <p className="text-sm text-slate-400">Member Since</p>
                   <p className="text-slate-100 font-medium">
                     {new Date(profile.created_at).toLocaleDateString()}
@@ -131,18 +131,18 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div className="border-t border-white/10 pt-8 mt-8">
+          <div className="border-t border-white/10 pt-8 mt-8 animate-slide-up delay-500">
             <button
               onClick={handleLogout}
-              className="rounded-lg bg-red-600/20 px-6 py-2 font-semibold text-red-400 hover:bg-red-600/30 transition-colors"
+              className="relative-sheen sheen rounded-lg bg-red-600/20 px-6 py-2 font-semibold text-red-400 hover:bg-red-600/30 hover:shadow-lg hover:shadow-red-600/20 active:scale-95 transition-all duration-200"
             >
               Sign Out
             </button>
           </div>
         </div>
 
-        <div className="mt-8 text-center">
-          <a href="/Atlas-Synapse-Homepage/" className="text-atlas-secondary hover:text-atlas-primary">
+        <div className="mt-8 text-center animate-slide-up delay-500">
+          <a href="/Atlas-Synapse-Homepage/" className="text-atlas-secondary hover:text-atlas-primary transition-colors duration-200 inline-block hover:scale-105">
             ← Back to Home
           </a>
         </div>
