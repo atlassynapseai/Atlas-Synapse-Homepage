@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Atlas Synapse | Trust Engine for AI Systems',
@@ -30,18 +31,18 @@ export default function Home() {
             </a>
           </nav>
           <div className="flex items-center gap-3">
-            <a
+            <Link
               href="/login"
               className="hidden text-sm font-semibold text-slate-300 hover:text-white sm:inline-block"
             >
               Sign In
-            </a>
-            <a
+            </Link>
+            <Link
               href="/signup"
               className="rounded-full bg-gradient-to-r from-atlas-primary to-atlas-secondary px-6 py-2 text-sm font-semibold text-white"
             >
               Sign Up
-            </a>
+            </Link>
           </div>
         </div>
       </header>
@@ -55,12 +56,12 @@ export default function Home() {
             Atlas Synapse is the trust layer for agentic AI — governance, verification, and auditability at the boundaries of your AI systems.
           </p>
           <div className="flex justify-center gap-4">
-            <a
+            <Link
               href="/signup"
               className="rounded-lg bg-gradient-to-r from-atlas-primary to-atlas-secondary px-6 py-3 font-semibold text-white hover:opacity-95"
             >
               Get Started
-            </a>
+            </Link>
             <a
               href="/solutions"
               className="rounded-lg border border-white/20 px-6 py-3 font-semibold text-slate-300 hover:bg-white/5"

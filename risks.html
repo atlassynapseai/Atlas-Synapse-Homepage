@@ -1,1 +1,526 @@
-<!DOCTYPE html><html lang="en" class="dark"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="icon" type="image/png" href="/Atlas-Synapse-Homepage/logo.png"/><link rel="preload" href="/Atlas-Synapse-Homepage/_next/static/media/36966cca54120369-s.p.woff2" as="font" crossorigin="" type="font/woff2"/><link rel="preload" href="/Atlas-Synapse-Homepage/_next/static/media/e4af272ccee01ff0-s.p.woff2" as="font" crossorigin="" type="font/woff2"/><link rel="preload" as="image" href="/Atlas-Synapse-Homepage/logo.png" fetchPriority="high"/><link rel="stylesheet" href="/Atlas-Synapse-Homepage/_next/static/css/71f448186abc21da.css" data-precedence="next"/><link rel="preload" as="script" fetchPriority="low" href="/Atlas-Synapse-Homepage/_next/static/chunks/webpack-bf83e1048b92443c.js"/><script src="/Atlas-Synapse-Homepage/_next/static/chunks/fd9d1056-b11b2651f33aae7f.js" async=""></script><script src="/Atlas-Synapse-Homepage/_next/static/chunks/117-be87d8fafab49776.js" async=""></script><script src="/Atlas-Synapse-Homepage/_next/static/chunks/main-app-e28af39e7c84dd53.js" async=""></script><script src="/Atlas-Synapse-Homepage/_next/static/chunks/343-d19fa052849c47bf.js" async=""></script><script src="/Atlas-Synapse-Homepage/_next/static/chunks/400-1988122442d5aff4.js" async=""></script><script src="/Atlas-Synapse-Homepage/_next/static/chunks/699-a4c093164ed0e1c1.js" async=""></script><script src="/Atlas-Synapse-Homepage/_next/static/chunks/app/risks/page-7c87f02aff052554.js" async=""></script><script src="/Atlas-Synapse-Homepage/_next/static/chunks/237-7f853165730144b0.js" async=""></script><script src="/Atlas-Synapse-Homepage/_next/static/chunks/app/layout-7333f7c25a1bee99.js" async=""></script><title>Risks | Atlas Synapse</title><meta name="description" content="Explore AI lifecycle risks: governance drift, policy conflict, data leakage, fabricated outputs, missing audit trails, agent unpredictability. See how Atlas Synapse intervenes."/><meta name="next-size-adjust"/><script src="/Atlas-Synapse-Homepage/_next/static/chunks/polyfills-42372ed130431b0a.js" noModule=""></script></head><body class="__variable_4e8f21 __variable_2699e9 font-sans text-slate-100 antialiased"><div class="pointer-events-none fixed inset-0 -z-10 bg-[#050816]" aria-hidden="true"><svg class="absolute inset-0 h-full w-full" viewBox="0 0 1 1" preserveAspectRatio="xMidYMid slice"><defs><filter id="edge-blur" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur in="SourceGraphic" stdDeviation="0.8" result="blur"></feGaussianBlur><feMerge><feMergeNode in="blur"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter><filter id="node-glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.5" result="blur"></feGaussianBlur><feMerge><feMergeNode in="blur"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter></defs><g transform="translate(0, 0)" filter="url(#edge-blur)"></g><g transform="translate(0, 0)" filter="url(#node-glow)"></g></svg><div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse 100% 80% at 50% 50%, transparent 40%, rgba(5,8,22,0.25) 72%, rgba(5,8,22,0.7) 100%)" aria-hidden="true"></div><div class="absolute inset-0 pointer-events-none bg-gradient-to-b from-[#050816]/30 via-transparent to-[#050816]/40" aria-hidden="true"></div></div><main class="relative z-10"><!--$--><header class="fixed inset-x-0 top-0 z-50 min-h-[4rem] border-b transition-all duration-300 overflow-hidden border-transparent bg-transparent" aria-label="Primary navigation"><div class="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-6 px-4 py-0 sm:px-6 lg:px-10"><a class="flex h-10 items-center gap-2.5 rounded-full bg-atlas-soft/80 pl-2 pr-4 ring-1 ring-white/8 hover:ring-atlas-primary-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-primary sm:h-11 sm:pl-2.5 sm:pr-5" href="/Atlas-Synapse-Homepage"><div class="relative h-8 w-8 shrink-0 overflow-hidden rounded-full bg-gradient-to-tr from-atlas-primary to-atlas-secondary shadow-atlas-glow-sm sm:h-9 sm:w-9"><img alt="Atlas Synapse" fetchPriority="high" decoding="async" data-nimg="fill" style="position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;color:transparent" src="/Atlas-Synapse-Homepage/logo.png"/></div><div class="hidden sm:block"><p class="font-display text-sm font-semibold uppercase tracking-[0.18em] text-slate-200 leading-none">Atlas Synapse</p></div></a><nav class="hidden flex-1 items-center justify-center gap-0.5 md:flex"><a class="relative flex h-10 items-center rounded-xl px-4 py-0 text-sm font-medium tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-primary sm:h-11 sm:px-5 sm:text-base text-slate-300 hover:text-white" href="/Atlas-Synapse-Homepage/about"><span class="relative z-10">About Us</span></a><a class="relative flex h-10 items-center rounded-xl px-4 py-0 text-sm font-medium tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-primary sm:h-11 sm:px-5 sm:text-base text-atlas-secondary" href="/Atlas-Synapse-Homepage/risks"><span class="absolute inset-0 rounded-xl bg-atlas-primary/15 ring-1 ring-atlas-primary/30"></span><span class="relative z-10">Risks</span></a><a class="relative flex h-10 items-center rounded-xl px-4 py-0 text-sm font-medium tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-primary sm:h-11 sm:px-5 sm:text-base text-slate-300 hover:text-white" href="/Atlas-Synapse-Homepage/solutions"><span class="relative z-10">Solutions</span></a><a class="relative flex h-10 items-center rounded-xl px-4 py-0 text-sm font-medium tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-primary sm:h-11 sm:px-5 sm:text-base text-slate-300 hover:text-white" href="/Atlas-Synapse-Homepage/contact"><span class="relative z-10">Contact</span></a></nav><div class="flex h-10 items-center gap-3 sm:h-11"><a class="sheen-button hidden h-10 items-center rounded-full bg-gradient-to-r from-atlas-primary to-atlas-secondary px-5 py-0 text-sm font-semibold tracking-[0.12em] text-slate-950 shadow-atlas-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-secondary sm:inline-flex sm:h-11 sm:px-6 sm:text-base" href="/Atlas-Synapse-Homepage/contact">Request Demo</a><button type="button" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/15 bg-atlas-soft/80 text-slate-300 md:hidden" aria-expanded="false" aria-label="Toggle menu"><span class="block">☰</span><span class="hidden">×</span></button></div></div></header><div data-section="risks" class="min-h-screen pt-20 pb-16" style="padding-top:clamp(72px, 8vh, 96px);padding-bottom:clamp(48px, 6vh, 80px)"><div class="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8"><header class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between sm:gap-6 mb-10"><div><h1 class="section-title font-display text-2xl sm:text-3xl lg:text-[2rem] font-bold tracking-tight text-slate-100">Risks we help you manage</h1><p class="mt-2 text-slate-400 text-base sm:text-lg max-w-xl">These are the main risks across the AI lifecycle when there&#x27;s no trust layer. Each section explains the risk and how Atlas Synapse helps.</p></div><a class="shrink-0 text-base font-semibold text-atlas-secondary hover:text-atlas-primary transition-colors" href="/Atlas-Synapse-Homepage">← Home</a></header><div class="relative"><div class="relative"><article class="glass-panel rounded-2xl border border-white/10 overflow-hidden w-full max-w-[calc(100%-2rem)] sm:max-w-[85%] mr-auto" style="opacity:0;transform:translateX(-32px) scale(0.96)"><div class="flex gap-6 p-6 sm:p-8"><div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-rose-500/15 ring-1 ring-rose-500/30"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-off h-6 w-6 text-rose-400" aria-hidden="true"><path d="m2 2 20 20"></path><path d="M5 5a1 1 0 0 0-1 1v7c0 5 3.5 7.5 7.67 8.94a1 1 0 0 0 .67.01c2.35-.82 4.48-1.97 5.9-3.71"></path><path d="M9.309 3.652A12.252 12.252 0 0 0 11.24 2.28a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1v7a9.784 9.784 0 0 1-.08 1.264"></path></svg></div><div class="min-w-0 flex-1"><div class="flex items-center gap-3"><span class="text-xs font-mono font-semibold text-slate-500">01</span><h2 class="font-display text-xl sm:text-[1.3rem] font-bold text-slate-100">Governance drift</h2></div><p class="mt-3 text-slate-400 text-sm sm:text-base leading-relaxed">Policies slip when models and data change. Without continuous checks, version drift goes unnoticed until it becomes a compliance finding or audit failure.</p><div class="mt-5"><div class="relative rounded-xl border-2 border-atlas-primary/30 bg-atlas-primary/10 p-4 overflow-hidden" style="box-shadow:0 0 20px rgba(168,85,247,0.12)"><div class="absolute inset-0 opacity-30" style="background:linear-gradient(110deg, transparent 0%, rgba(168,85,247,0.15) 50%, transparent 100%)"></div><div class="relative"><p class="flex items-center gap-2 text-sm font-semibold text-atlas-primary"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check h-4 w-4 shrink-0" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>How Atlas Synapse helps</p><p class="mt-2 text-sm text-slate-300 leading-relaxed">We validate policy versions at the input gate and flag drift so you can refresh before it impacts decisions. Full audit trail of which policy version applied to each request.</p></div></div></div></div></div></article></div><div class="relative"><div class="relative w-full flex justify-center" style="height:32px"><svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100"><defs><linearGradient id="wave-1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="rgba(168,85,247,0.4)"></stop><stop offset="50%" stop-color="rgba(248,113,113,0.35)"></stop><stop offset="100%" stop-color="rgba(168,85,247,0.4)"></stop></linearGradient></defs><path d="M 20 0 C 20 50, 20 50, 20 100" fill="none" stroke="url(#wave-1)" stroke-width="2" stroke-linecap="round"></path></svg></div><article class="glass-panel rounded-2xl border border-white/10 overflow-hidden w-full max-w-[calc(100%-2rem)] sm:max-w-[85%] ml-auto" style="opacity:0;transform:translateX(32px) scale(0.96)"><div class="flex gap-6 p-6 sm:p-8"><div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-rose-500/15 ring-1 ring-rose-500/30"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-triangle-alert h-6 w-6 text-rose-400" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg></div><div class="min-w-0 flex-1"><div class="flex items-center gap-3"><span class="text-xs font-mono font-semibold text-slate-500">02</span><h2 class="font-display text-xl sm:text-[1.3rem] font-bold text-slate-100">Policy conflict</h2></div><p class="mt-3 text-slate-400 text-sm sm:text-base leading-relaxed">Requests bypass or contradict guardrails. Unchecked inputs can trigger actions that violate internal or regulatory policy, exposing the organization to liability.</p><div class="mt-5"><div class="relative rounded-xl border-2 border-atlas-primary/30 bg-atlas-primary/10 p-4 overflow-hidden" style="box-shadow:0 0 20px rgba(168,85,247,0.12)"><div class="absolute inset-0 opacity-30" style="background:linear-gradient(110deg, transparent 0%, rgba(168,85,247,0.15) 50%, transparent 100%)"></div><div class="relative"><p class="flex items-center gap-2 text-sm font-semibold text-atlas-primary"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check h-4 w-4 shrink-0" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>How Atlas Synapse helps</p><p class="mt-2 text-sm text-slate-300 leading-relaxed">Input and output gates enforce policy before and after processing. Conflicting requests are blocked or routed to human review. Every block is logged with evidence.</p></div></div></div></div></div></article></div><div class="relative"><div class="relative w-full flex justify-center" style="height:32px"><svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100"><defs><linearGradient id="wave-2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="rgba(168,85,247,0.4)"></stop><stop offset="50%" stop-color="rgba(248,113,113,0.35)"></stop><stop offset="100%" stop-color="rgba(168,85,247,0.4)"></stop></linearGradient></defs><path d="M 80 0 C 80 50, 80 50, 80 100" fill="none" stroke="url(#wave-2)" stroke-width="2" stroke-linecap="round"></path></svg></div><article class="glass-panel rounded-2xl border border-white/10 overflow-hidden w-full max-w-[calc(100%-2rem)] sm:max-w-[85%] mr-auto" style="opacity:0;transform:translateX(-32px) scale(0.96)"><div class="flex gap-6 p-6 sm:p-8"><div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-rose-500/15 ring-1 ring-rose-500/30"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-database h-6 w-6 text-rose-400" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5V19A9 3 0 0 0 21 19V5"></path><path d="M3 12A9 3 0 0 0 21 12"></path></svg></div><div class="min-w-0 flex-1"><div class="flex items-center gap-3"><span class="text-xs font-mono font-semibold text-slate-500">03</span><h2 class="font-display text-xl sm:text-[1.3rem] font-bold text-slate-100">Data leakage</h2></div><p class="mt-3 text-slate-400 text-sm sm:text-base leading-relaxed">Sensitive data enters prompts or outputs. PII, PHI, and confidential content can leak into logs, model responses, or downstream systems.</p><div class="mt-5"><div class="relative rounded-xl border-2 border-atlas-primary/30 bg-atlas-primary/10 p-4 overflow-hidden" style="box-shadow:0 0 20px rgba(168,85,247,0.12)"><div class="absolute inset-0 opacity-30" style="background:linear-gradient(110deg, transparent 0%, rgba(168,85,247,0.15) 50%, transparent 100%)"></div><div class="relative"><p class="flex items-center gap-2 text-sm font-semibold text-atlas-primary"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check h-4 w-4 shrink-0" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>How Atlas Synapse helps</p><p class="mt-2 text-sm text-slate-300 leading-relaxed">PII/PHI detection and masking at the input gate; redaction at the output gate. Configurable rules per domain. Evidence packages for compliance.</p></div></div></div></div></div></article></div><div class="relative"><div class="relative w-full flex justify-center" style="height:32px"><svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100"><defs><linearGradient id="wave-3" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="rgba(168,85,247,0.4)"></stop><stop offset="50%" stop-color="rgba(248,113,113,0.35)"></stop><stop offset="100%" stop-color="rgba(168,85,247,0.4)"></stop></linearGradient></defs><path d="M 20 0 C 20 50, 20 50, 20 100" fill="none" stroke="url(#wave-3)" stroke-width="2" stroke-linecap="round"></path></svg></div><article class="glass-panel rounded-2xl border border-white/10 overflow-hidden w-full max-w-[calc(100%-2rem)] sm:max-w-[85%] ml-auto" style="opacity:0;transform:translateX(32px) scale(0.96)"><div class="flex gap-6 p-6 sm:p-8"><div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-rose-500/15 ring-1 ring-rose-500/30"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square-warning h-6 w-6 text-rose-400" aria-hidden="true"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"></path><path d="M12 15h.01"></path><path d="M12 7v4"></path></svg></div><div class="min-w-0 flex-1"><div class="flex items-center gap-3"><span class="text-xs font-mono font-semibold text-slate-500">04</span><h2 class="font-display text-xl sm:text-[1.3rem] font-bold text-slate-100">Fabricated outputs</h2></div><p class="mt-3 text-slate-400 text-sm sm:text-base leading-relaxed">Hallucinations and unsupported claims. Low-confidence or ungrounded outputs ship without verification, leading to wrong decisions and lost trust.</p><div class="mt-5"><div class="relative rounded-xl border-2 border-atlas-primary/30 bg-atlas-primary/10 p-4 overflow-hidden" style="box-shadow:0 0 20px rgba(168,85,247,0.12)"><div class="absolute inset-0 opacity-30" style="background:linear-gradient(110deg, transparent 0%, rgba(168,85,247,0.15) 50%, transparent 100%)"></div><div class="relative"><p class="flex items-center gap-2 text-sm font-semibold text-atlas-primary"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check h-4 w-4 shrink-0" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>How Atlas Synapse helps</p><p class="mt-2 text-sm text-slate-300 leading-relaxed">Output verification scores confidence and grounds. Low-confidence responses can be held for review or blocked. Audit trail includes scores and routing decisions.</p></div></div></div></div></div></article></div><div class="relative"><div class="relative w-full flex justify-center" style="height:32px"><svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100"><defs><linearGradient id="wave-4" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="rgba(168,85,247,0.4)"></stop><stop offset="50%" stop-color="rgba(248,113,113,0.35)"></stop><stop offset="100%" stop-color="rgba(168,85,247,0.4)"></stop></linearGradient></defs><path d="M 80 0 C 80 50, 80 50, 80 100" fill="none" stroke="url(#wave-4)" stroke-width="2" stroke-linecap="round"></path></svg></div><article class="glass-panel rounded-2xl border border-white/10 overflow-hidden w-full max-w-[calc(100%-2rem)] sm:max-w-[85%] mr-auto" style="opacity:0;transform:translateX(-32px) scale(0.96)"><div class="flex gap-6 p-6 sm:p-8"><div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-rose-500/15 ring-1 ring-rose-500/30"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-question-mark h-6 w-6 text-rose-400" aria-hidden="true"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M12 17h.01"></path><path d="M9.1 9a3 3 0 0 1 5.82 1c0 2-3 3-3 3"></path></svg></div><div class="min-w-0 flex-1"><div class="flex items-center gap-3"><span class="text-xs font-mono font-semibold text-slate-500">05</span><h2 class="font-display text-xl sm:text-[1.3rem] font-bold text-slate-100">Missing audit trails</h2></div><p class="mt-3 text-slate-400 text-sm sm:text-base leading-relaxed">No evidence for compliance or review. When regulators or internal audit ask how a decision was made, there&#x27;s nothing to show.</p><div class="mt-5"><div class="relative rounded-xl border-2 border-atlas-primary/30 bg-atlas-primary/10 p-4 overflow-hidden" style="box-shadow:0 0 20px rgba(168,85,247,0.12)"><div class="absolute inset-0 opacity-30" style="background:linear-gradient(110deg, transparent 0%, rgba(168,85,247,0.15) 50%, transparent 100%)"></div><div class="relative"><p class="flex items-center gap-2 text-sm font-semibold text-atlas-primary"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check h-4 w-4 shrink-0" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>How Atlas Synapse helps</p><p class="mt-2 text-sm text-slate-300 leading-relaxed">Every request and response is tagged, traced, and exportable. Full evidence packages for regulators. Searchable audit log with filters by policy, risk type, and outcome.</p></div></div></div></div></div></article></div><div class="relative"><div class="relative w-full flex justify-center" style="height:32px"><svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100"><defs><linearGradient id="wave-5" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="rgba(168,85,247,0.4)"></stop><stop offset="50%" stop-color="rgba(248,113,113,0.35)"></stop><stop offset="100%" stop-color="rgba(168,85,247,0.4)"></stop></linearGradient></defs><path d="M 20 0 C 20 50, 20 50, 20 100" fill="none" stroke="url(#wave-5)" stroke-width="2" stroke-linecap="round"></path></svg></div><article class="glass-panel rounded-2xl border border-white/10 overflow-hidden w-full max-w-[calc(100%-2rem)] sm:max-w-[85%] ml-auto" style="opacity:0;transform:translateX(32px) scale(0.96)"><div class="flex gap-6 p-6 sm:p-8"><div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-rose-500/15 ring-1 ring-rose-500/30"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-git-branch h-6 w-6 text-rose-400" aria-hidden="true"><path d="M15 6a9 9 0 0 0-9 9V3"></path><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle></svg></div><div class="min-w-0 flex-1"><div class="flex items-center gap-3"><span class="text-xs font-mono font-semibold text-slate-500">06</span><h2 class="font-display text-xl sm:text-[1.3rem] font-bold text-slate-100">Agent unpredictability</h2></div><p class="mt-3 text-slate-400 text-sm sm:text-base leading-relaxed">Autonomous steps deviate from intent. Multi-step agents can drift from approved workflows and produce unexpected or non-compliant outcomes.</p><div class="mt-5"><div class="relative rounded-xl border-2 border-atlas-primary/30 bg-atlas-primary/10 p-4 overflow-hidden" style="box-shadow:0 0 20px rgba(168,85,247,0.12)"><div class="absolute inset-0 opacity-30" style="background:linear-gradient(110deg, transparent 0%, rgba(168,85,247,0.15) 50%, transparent 100%)"></div><div class="relative"><p class="flex items-center gap-2 text-sm font-semibold text-atlas-primary"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check h-4 w-4 shrink-0" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>How Atlas Synapse helps</p><p class="mt-2 text-sm text-slate-300 leading-relaxed">We validate agent context at the boundary and log each step. Step-level bounds and routing rules keep agents within approved flows. Full trace for every run.</p></div></div></div></div></div></article></div></div><div class="mt-14 text-center"><a class="inline-flex items-center gap-2 text-sm font-semibold text-atlas-secondary hover:text-atlas-primary transition-colors" href="/Atlas-Synapse-Homepage/solutions">See how we apply this in practice<span aria-hidden="true">→</span></a></div></div></div><!--/$--></main><script src="/Atlas-Synapse-Homepage/_next/static/chunks/webpack-bf83e1048b92443c.js" async=""></script><script>(self.__next_f=self.__next_f||[]).push([0]);self.__next_f.push([2,null])</script><script>self.__next_f.push([1,"1:HL[\"/Atlas-Synapse-Homepage/_next/static/media/36966cca54120369-s.p.woff2\",\"font\",{\"crossOrigin\":\"\",\"type\":\"font/woff2\"}]\n2:HL[\"/Atlas-Synapse-Homepage/_next/static/media/e4af272ccee01ff0-s.p.woff2\",\"font\",{\"crossOrigin\":\"\",\"type\":\"font/woff2\"}]\n3:HL[\"/Atlas-Synapse-Homepage/_next/static/css/71f448186abc21da.css\",\"style\"]\n"])</script><script>self.__next_f.push([1,"4:I[2846,[],\"\"]\n6:I[2611,[\"343\",\"static/chunks/343-d19fa052849c47bf.js\",\"400\",\"static/chunks/400-1988122442d5aff4.js\",\"699\",\"static/chunks/699-a4c093164ed0e1c1.js\",\"867\",\"static/chunks/app/risks/page-7c87f02aff052554.js\"],\"default\"]\n7:I[3180,[\"343\",\"static/chunks/343-d19fa052849c47bf.js\",\"400\",\"static/chunks/400-1988122442d5aff4.js\",\"699\",\"static/chunks/699-a4c093164ed0e1c1.js\",\"867\",\"static/chunks/app/risks/page-7c87f02aff052554.js\"],\"default\"]\n8:I[4707,[],\"\"]\n9:I[6423,[],\"\"]\na:I[5527,[\"343\",\"static/chunks/343-d19fa052849c47bf.js\",\"699\",\"static/chunks/699-a4c093164ed0e1c1.js\",\"237\",\"static/chunks/237-7f853165730144b0.js\",\"185\",\"static/chunks/app/layout-7333f7c25a1bee99.js\"],\"default\"]\nb:I[7683,[\"343\",\"static/chunks/343-d19fa052849c47bf.js\",\"699\",\"static/chunks/699-a4c093164ed0e1c1.js\",\"237\",\"static/chunks/237-7f853165730144b0.js\",\"185\",\"static/chunks/app/layout-7333f7c25a1bee99.js\"],\"default\"]\nd:I[1060,[],\"\"]\ne:[]\n"])</script><script>self.__next_f.push([1,"0:[\"$\",\"$L4\",null,{\"buildId\":\"76fUw_E6KyUuUVB-QkAcn\",\"assetPrefix\":\"/Atlas-Synapse-Homepage\",\"urlParts\":[\"\",\"risks\"],\"initialTree\":[\"\",{\"children\":[\"risks\",{\"children\":[\"__PAGE__\",{}]}]},\"$undefined\",\"$undefined\",true],\"initialSeedData\":[\"\",{\"children\":[\"risks\",{\"children\":[\"__PAGE__\",{},[[\"$L5\",[[\"$\",\"$L6\",null,{}],[\"$\",\"$L7\",null,{}]],null],null],null]},[null,[\"$\",\"$L8\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\",\"risks\",\"children\"],\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L9\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":\"$undefined\",\"notFoundStyles\":\"$undefined\"}]],null]},[[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/Atlas-Synapse-Homepage/_next/static/css/71f448186abc21da.css\",\"precedence\":\"next\",\"crossOrigin\":\"$undefined\"}]],[\"$\",\"html\",null,{\"lang\":\"en\",\"className\":\"dark\",\"children\":[\"$\",\"body\",null,{\"className\":\"__variable_4e8f21 __variable_2699e9 font-sans text-slate-100 antialiased\",\"children\":[[\"$\",\"$La\",null,{}],[\"$\",\"$Lb\",null,{\"children\":[\"$\",\"main\",null,{\"className\":\"relative z-10\",\"children\":[\"$\",\"$L8\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\"],\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L9\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":[[\"$\",\"title\",null,{\"children\":\"404: This page could not be found.\"}],[\"$\",\"div\",null,{\"style\":{\"fontFamily\":\"system-ui,\\\"Segoe UI\\\",Roboto,Helvetica,Arial,sans-serif,\\\"Apple Color Emoji\\\",\\\"Segoe UI Emoji\\\"\",\"height\":\"100vh\",\"textAlign\":\"center\",\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"justifyContent\":\"center\"},\"children\":[\"$\",\"div\",null,{\"children\":[[\"$\",\"style\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\"}}],[\"$\",\"h1\",null,{\"className\":\"next-error-h1\",\"style\":{\"display\":\"inline-block\",\"margin\":\"0 20px 0 0\",\"padding\":\"0 23px 0 0\",\"fontSize\":24,\"fontWeight\":500,\"verticalAlign\":\"top\",\"lineHeight\":\"49px\"},\"children\":\"404\"}],[\"$\",\"div\",null,{\"style\":{\"display\":\"inline-block\"},\"children\":[\"$\",\"h2\",null,{\"style\":{\"fontSize\":14,\"fontWeight\":400,\"lineHeight\":\"49px\",\"margin\":0},\"children\":\"This page could not be found.\"}]}]]}]}]],\"notFoundStyles\":[]}]}]}]]}]}]],null],[[\"$\",\"div\",null,{\"className\":\"fixed inset-0 z-50 flex items-center justify-center bg-atlas-bg\",\"children\":[\"$\",\"div\",null,{\"className\":\"flex flex-col items-center gap-4\",\"children\":[[\"$\",\"div\",null,{\"className\":\"h-10 w-10 animate-spin rounded-full border-2 border-atlas-primary/30 border-t-atlas-primary\"}],[\"$\",\"p\",null,{\"className\":\"text-sm text-slate-400\",\"children\":\"Loading…\"}]]}]}],[],[]]],\"couldBeIntercepted\":false,\"initialHead\":[null,\"$Lc\"],\"globalErrorComponent\":\"$d\",\"missingSlots\":\"$We\"}]\n"])</script><script>self.__next_f.push([1,"c:[[\"$\",\"meta\",\"0\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"}],[\"$\",\"meta\",\"1\",{\"charSet\":\"utf-8\"}],[\"$\",\"title\",\"2\",{\"children\":\"Risks | Atlas Synapse\"}],[\"$\",\"meta\",\"3\",{\"name\":\"description\",\"content\":\"Explore AI lifecycle risks: governance drift, policy conflict, data leakage, fabricated outputs, missing audit trails, agent unpredictability. See how Atlas Synapse intervenes.\"}],[\"$\",\"meta\",\"4\",{\"name\":\"next-size-adjust\"}]]\n5:null\n"])</script></body></html>
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charSet="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" href="/Atlas-Synapse-Homepage/logo.png" />
+    <link rel="preload" href="/Atlas-Synapse-Homepage/_next/static/media/36966cca54120369-s.p.woff2" as="font"
+        crossorigin="" type="font/woff2" />
+    <link rel="preload" href="/Atlas-Synapse-Homepage/_next/static/media/e4af272ccee01ff0-s.p.woff2" as="font"
+        crossorigin="" type="font/woff2" />
+    <link rel="preload" as="image" href="/Atlas-Synapse-Homepage/logo.png" fetchPriority="high" />
+    <link rel="stylesheet" href="/Atlas-Synapse-Homepage/_next/static/css/71f448186abc21da.css"
+        data-precedence="next" />
+    <link rel="preload" as="script" fetchPriority="low"
+        href="/Atlas-Synapse-Homepage/_next/static/chunks/webpack-bf83e1048b92443c.js" />
+    <script src="/Atlas-Synapse-Homepage/_next/static/chunks/fd9d1056-b11b2651f33aae7f.js" async=""></script>
+    <script src="/Atlas-Synapse-Homepage/_next/static/chunks/117-be87d8fafab49776.js" async=""></script>
+    <script src="/Atlas-Synapse-Homepage/_next/static/chunks/main-app-e28af39e7c84dd53.js" async=""></script>
+    <script src="/Atlas-Synapse-Homepage/_next/static/chunks/343-d19fa052849c47bf.js" async=""></script>
+    <script src="/Atlas-Synapse-Homepage/_next/static/chunks/400-1988122442d5aff4.js" async=""></script>
+    <script src="/Atlas-Synapse-Homepage/_next/static/chunks/699-a4c093164ed0e1c1.js" async=""></script>
+    <script src="/Atlas-Synapse-Homepage/_next/static/chunks/app/risks/page-7c87f02aff052554.js" async=""></script>
+    <script src="/Atlas-Synapse-Homepage/_next/static/chunks/237-7f853165730144b0.js" async=""></script>
+    <script src="/Atlas-Synapse-Homepage/_next/static/chunks/app/layout-7333f7c25a1bee99.js" async=""></script>
+    <title>Risks | Atlas Synapse</title>
+    <meta name="description"
+        content="Explore AI lifecycle risks: governance drift, policy conflict, data leakage, fabricated outputs, missing audit trails, agent unpredictability. See how Atlas Synapse intervenes." />
+    <meta name="next-size-adjust" />
+    <script src="/Atlas-Synapse-Homepage/_next/static/chunks/polyfills-42372ed130431b0a.js" noModule=""></script>
+</head>
+
+<body class="__variable_4e8f21 __variable_2699e9 font-sans text-slate-100 antialiased">
+    <div class="pointer-events-none fixed inset-0 -z-10 bg-[#050816]" aria-hidden="true"><svg
+            class="absolute inset-0 h-full w-full" viewBox="0 0 1 1" preserveAspectRatio="xMidYMid slice">
+            <defs>
+                <filter id="edge-blur" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="0.8" result="blur"></feGaussianBlur>
+                    <feMerge>
+                        <feMergeNode in="blur"></feMergeNode>
+                        <feMergeNode in="SourceGraphic"></feMergeNode>
+                    </feMerge>
+                </filter>
+                <filter id="node-glow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="1.5" result="blur"></feGaussianBlur>
+                    <feMerge>
+                        <feMergeNode in="blur"></feMergeNode>
+                        <feMergeNode in="SourceGraphic"></feMergeNode>
+                    </feMerge>
+                </filter>
+            </defs>
+            <g transform="translate(0, 0)" filter="url(#edge-blur)"></g>
+            <g transform="translate(0, 0)" filter="url(#node-glow)"></g>
+        </svg>
+        <div class="absolute inset-0 pointer-events-none"
+            style="background:radial-gradient(ellipse 100% 80% at 50% 50%, transparent 40%, rgba(5,8,22,0.25) 72%, rgba(5,8,22,0.7) 100%)"
+            aria-hidden="true"></div>
+        <div class="absolute inset-0 pointer-events-none bg-gradient-to-b from-[#050816]/30 via-transparent to-[#050816]/40"
+            aria-hidden="true"></div>
+    </div>
+    <main class="relative z-10"><!--$-->
+        <header
+            class="fixed inset-x-0 top-0 z-50 min-h-[4rem] border-b transition-all duration-300 overflow-hidden border-transparent bg-transparent"
+            aria-label="Primary navigation">
+            <div
+                class="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-6 px-4 py-0 sm:px-6 lg:px-10">
+                <a class="flex h-10 items-center gap-2.5 rounded-full bg-atlas-soft/80 pl-2 pr-4 ring-1 ring-white/8 hover:ring-atlas-primary-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-primary sm:h-11 sm:pl-2.5 sm:pr-5"
+                    href="/Atlas-Synapse-Homepage">
+                    <div
+                        class="relative h-8 w-8 shrink-0 overflow-hidden rounded-full bg-gradient-to-tr from-atlas-primary to-atlas-secondary shadow-atlas-glow-sm sm:h-9 sm:w-9">
+                        <img alt="Atlas Synapse" fetchPriority="high" decoding="async" data-nimg="fill"
+                            style="position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;color:transparent"
+                            src="/Atlas-Synapse-Homepage/logo.png" /></div>
+                    <div class="hidden sm:block">
+                        <p
+                            class="font-display text-sm font-semibold uppercase tracking-[0.18em] text-slate-200 leading-none">
+                            Atlas Synapse</p>
+                    </div>
+                </a>
+                <nav class="hidden flex-1 items-center justify-center gap-0.5 md:flex"><a
+                        class="relative flex h-10 items-center rounded-xl px-4 py-0 text-sm font-medium tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-primary sm:h-11 sm:px-5 sm:text-base text-slate-300 hover:text-white"
+                        href="/Atlas-Synapse-Homepage/about"><span class="relative z-10">About Us</span></a><a
+                        class="relative flex h-10 items-center rounded-xl px-4 py-0 text-sm font-medium tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-primary sm:h-11 sm:px-5 sm:text-base text-atlas-secondary"
+                        href="/Atlas-Synapse-Homepage/risks"><span
+                            class="absolute inset-0 rounded-xl bg-atlas-primary/15 ring-1 ring-atlas-primary/30"></span><span
+                            class="relative z-10">Risks</span></a><a
+                        class="relative flex h-10 items-center rounded-xl px-4 py-0 text-sm font-medium tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-primary sm:h-11 sm:px-5 sm:text-base text-slate-300 hover:text-white"
+                        href="/Atlas-Synapse-Homepage/solutions"><span class="relative z-10">Solutions</span></a><a
+                        class="relative flex h-10 items-center rounded-xl px-4 py-0 text-sm font-medium tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-primary sm:h-11 sm:px-5 sm:text-base text-slate-300 hover:text-white"
+                        href="/Atlas-Synapse-Homepage/contact"><span class="relative z-10">Contact</span></a></nav>
+                <div class="flex h-10 items-center gap-3 sm:h-11"><a
+                        class="sheen-button hidden h-10 items-center rounded-full bg-gradient-to-r from-atlas-primary to-atlas-secondary px-5 py-0 text-sm font-semibold tracking-[0.12em] text-slate-950 shadow-atlas-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-secondary sm:inline-flex sm:h-11 sm:px-6 sm:text-base"
+                        href="/Atlas-Synapse-Homepage/contact">Request Demo</a><button type="button"
+                        class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/15 bg-atlas-soft/80 text-slate-300 md:hidden"
+                        aria-expanded="false" aria-label="Toggle menu"><span class="block">☰</span><span
+                            class="hidden">×</span></button></div>
+            </div>
+        </header>
+        <div data-section="risks" class="min-h-screen pt-20 pb-16"
+            style="padding-top:clamp(72px, 8vh, 96px);padding-bottom:clamp(48px, 6vh, 80px)">
+            <div class="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
+                <header class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between sm:gap-6 mb-10">
+                    <div>
+                        <h1
+                            class="section-title font-display text-2xl sm:text-3xl lg:text-[2rem] font-bold tracking-tight text-slate-100">
+                            Risks we help you manage</h1>
+                        <p class="mt-2 text-slate-400 text-base sm:text-lg max-w-xl">These are the main risks across the
+                            AI lifecycle when there&#x27;s no trust layer. Each section explains the risk and how Atlas
+                            Synapse helps.</p>
+                    </div><a
+                        class="shrink-0 text-base font-semibold text-atlas-secondary hover:text-atlas-primary transition-colors"
+                        href="/Atlas-Synapse-Homepage">← Home</a>
+                </header>
+                <div class="relative">
+                    <div class="relative">
+                        <article
+                            class="glass-panel rounded-2xl border border-white/10 overflow-hidden w-full max-w-[calc(100%-2rem)] sm:max-w-[85%] mr-auto"
+                            style="opacity:0;transform:translateX(-32px) scale(0.96)">
+                            <div class="flex gap-6 p-6 sm:p-8">
+                                <div
+                                    class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-rose-500/15 ring-1 ring-rose-500/30">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="lucide lucide-shield-off h-6 w-6 text-rose-400"
+                                        aria-hidden="true">
+                                        <path d="m2 2 20 20"></path>
+                                        <path
+                                            d="M5 5a1 1 0 0 0-1 1v7c0 5 3.5 7.5 7.67 8.94a1 1 0 0 0 .67.01c2.35-.82 4.48-1.97 5.9-3.71">
+                                        </path>
+                                        <path
+                                            d="M9.309 3.652A12.252 12.252 0 0 0 11.24 2.28a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1v7a9.784 9.784 0 0 1-.08 1.264">
+                                        </path>
+                                    </svg></div>
+                                <div class="min-w-0 flex-1">
+                                    <div class="flex items-center gap-3"><span
+                                            class="text-xs font-mono font-semibold text-slate-500">01</span>
+                                        <h2 class="font-display text-xl sm:text-[1.3rem] font-bold text-slate-100">
+                                            Governance drift</h2>
+                                    </div>
+                                    <p class="mt-3 text-slate-400 text-sm sm:text-base leading-relaxed">Policies slip
+                                        when models and data change. Without continuous checks, version drift goes
+                                        unnoticed until it becomes a compliance finding or audit failure.</p>
+                                    <div class="mt-5">
+                                        <div class="relative rounded-xl border-2 border-atlas-primary/30 bg-atlas-primary/10 p-4 overflow-hidden"
+                                            style="box-shadow:0 0 20px rgba(168,85,247,0.12)">
+                                            <div class="absolute inset-0 opacity-30"
+                                                style="background:linear-gradient(110deg, transparent 0%, rgba(168,85,247,0.15) 50%, transparent 100%)">
+                                            </div>
+                                            <div class="relative">
+                                                <p
+                                                    class="flex items-center gap-2 text-sm font-semibold text-atlas-primary">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="lucide lucide-shield-check h-4 w-4 shrink-0"
+                                                        aria-hidden="true">
+                                                        <path
+                                                            d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z">
+                                                        </path>
+                                                        <path d="m9 12 2 2 4-4"></path>
+                                                    </svg>How Atlas Synapse helps</p>
+                                                <p class="mt-2 text-sm text-slate-300 leading-relaxed">We validate
+                                                    policy versions at the input gate and flag drift so you can refresh
+                                                    before it impacts decisions. Full audit trail of which policy
+                                                    version applied to each request.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="relative">
+                        <div class="relative w-full flex justify-center" style="height:32px"><svg
+                                class="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
+                                <defs>
+                                    <linearGradient id="wave-1" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="rgba(168,85,247,0.4)"></stop>
+                                        <stop offset="50%" stop-color="rgba(248,113,113,0.35)"></stop>
+                                        <stop offset="100%" stop-color="rgba(168,85,247,0.4)"></stop>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M 20 0 C 20 50, 20 50, 20 100" fill="none" stroke="url(#wave-1)"
+                                    stroke-width="2" stroke-linecap="round"></path>
+                            </svg></div>
+                        <article
+                            class="glass-panel rounded-2xl border border-white/10 overflow-hidden w-full max-w-[calc(100%-2rem)] sm:max-w-[85%] ml-auto"
+                            style="opacity:0;transform:translateX(32px) scale(0.96)">
+                            <div class="flex gap-6 p-6 sm:p-8">
+                                <div
+                                    class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-rose-500/15 ring-1 ring-rose-500/30">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="lucide lucide-triangle-alert h-6 w-6 text-rose-400" aria-hidden="true">
+                                        <path
+                                            d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3">
+                                        </path>
+                                        <path d="M12 9v4"></path>
+                                        <path d="M12 17h.01"></path>
+                                    </svg></div>
+                                <div class="min-w-0 flex-1">
+                                    <div class="flex items-center gap-3"><span
+                                            class="text-xs font-mono font-semibold text-slate-500">02</span>
+                                        <h2 class="font-display text-xl sm:text-[1.3rem] font-bold text-slate-100">
+                                            Policy conflict</h2>
+                                    </div>
+                                    <p class="mt-3 text-slate-400 text-sm sm:text-base leading-relaxed">Requests bypass
+                                        or contradict guardrails. Unchecked inputs can trigger actions that violate
+                                        internal or regulatory policy, exposing the organization to liability.</p>
+                                    <div class="mt-5">
+                                        <div class="relative rounded-xl border-2 border-atlas-primary/30 bg-atlas-primary/10 p-4 overflow-hidden"
+                                            style="box-shadow:0 0 20px rgba(168,85,247,0.12)">
+                                            <div class="absolute inset-0 opacity-30"
+                                                style="background:linear-gradient(110deg, transparent 0%, rgba(168,85,247,0.15) 50%, transparent 100%)">
+                                            </div>
+                                            <div class="relative">
+                                                <p
+                                                    class="flex items-center gap-2 text-sm font-semibold text-atlas-primary">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="lucide lucide-shield-check h-4 w-4 shrink-0"
+                                                        aria-hidden="true">
+                                                        <path
+                                                            d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z">
+                                                        </path>
+                                                        <path d="m9 12 2 2 4-4"></path>
+                                                    </svg>How Atlas Synapse helps</p>
+                                                <p class="mt-2 text-sm text-slate-300 leading-relaxed">Input and output
+                                                    gates enforce policy before and after processing. Conflicting
+                                                    requests are blocked or routed to human review. Every block is
+                                                    logged with evidence.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="relative">
+                        <div class="relative w-full flex justify-center" style="height:32px"><svg
+                                class="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
+                                <defs>
+                                    <linearGradient id="wave-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="rgba(168,85,247,0.4)"></stop>
+                                        <stop offset="50%" stop-color="rgba(248,113,113,0.35)"></stop>
+                                        <stop offset="100%" stop-color="rgba(168,85,247,0.4)"></stop>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M 80 0 C 80 50, 80 50, 80 100" fill="none" stroke="url(#wave-2)"
+                                    stroke-width="2" stroke-linecap="round"></path>
+                            </svg></div>
+                        <article
+                            class="glass-panel rounded-2xl border border-white/10 overflow-hidden w-full max-w-[calc(100%-2rem)] sm:max-w-[85%] mr-auto"
+                            style="opacity:0;transform:translateX(-32px) scale(0.96)">
+                            <div class="flex gap-6 p-6 sm:p-8">
+                                <div
+                                    class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-rose-500/15 ring-1 ring-rose-500/30">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="lucide lucide-database h-6 w-6 text-rose-400"
+                                        aria-hidden="true">
+                                        <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                                        <path d="M3 5V19A9 3 0 0 0 21 19V5"></path>
+                                        <path d="M3 12A9 3 0 0 0 21 12"></path>
+                                    </svg></div>
+                                <div class="min-w-0 flex-1">
+                                    <div class="flex items-center gap-3"><span
+                                            class="text-xs font-mono font-semibold text-slate-500">03</span>
+                                        <h2 class="font-display text-xl sm:text-[1.3rem] font-bold text-slate-100">Data
+                                            leakage</h2>
+                                    </div>
+                                    <p class="mt-3 text-slate-400 text-sm sm:text-base leading-relaxed">Sensitive data
+                                        enters prompts or outputs. PII, PHI, and confidential content can leak into
+                                        logs, model responses, or downstream systems.</p>
+                                    <div class="mt-5">
+                                        <div class="relative rounded-xl border-2 border-atlas-primary/30 bg-atlas-primary/10 p-4 overflow-hidden"
+                                            style="box-shadow:0 0 20px rgba(168,85,247,0.12)">
+                                            <div class="absolute inset-0 opacity-30"
+                                                style="background:linear-gradient(110deg, transparent 0%, rgba(168,85,247,0.15) 50%, transparent 100%)">
+                                            </div>
+                                            <div class="relative">
+                                                <p
+                                                    class="flex items-center gap-2 text-sm font-semibold text-atlas-primary">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="lucide lucide-shield-check h-4 w-4 shrink-0"
+                                                        aria-hidden="true">
+                                                        <path
+                                                            d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z">
+                                                        </path>
+                                                        <path d="m9 12 2 2 4-4"></path>
+                                                    </svg>How Atlas Synapse helps</p>
+                                                <p class="mt-2 text-sm text-slate-300 leading-relaxed">PII/PHI detection
+                                                    and masking at the input gate; redaction at the output gate.
+                                                    Configurable rules per domain. Evidence packages for compliance.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="relative">
+                        <div class="relative w-full flex justify-center" style="height:32px"><svg
+                                class="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
+                                <defs>
+                                    <linearGradient id="wave-3" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="rgba(168,85,247,0.4)"></stop>
+                                        <stop offset="50%" stop-color="rgba(248,113,113,0.35)"></stop>
+                                        <stop offset="100%" stop-color="rgba(168,85,247,0.4)"></stop>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M 20 0 C 20 50, 20 50, 20 100" fill="none" stroke="url(#wave-3)"
+                                    stroke-width="2" stroke-linecap="round"></path>
+                            </svg></div>
+                        <article
+                            class="glass-panel rounded-2xl border border-white/10 overflow-hidden w-full max-w-[calc(100%-2rem)] sm:max-w-[85%] ml-auto"
+                            style="opacity:0;transform:translateX(32px) scale(0.96)">
+                            <div class="flex gap-6 p-6 sm:p-8">
+                                <div
+                                    class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-rose-500/15 ring-1 ring-rose-500/30">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="lucide lucide-message-square-warning h-6 w-6 text-rose-400"
+                                        aria-hidden="true">
+                                        <path
+                                            d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z">
+                                        </path>
+                                        <path d="M12 15h.01"></path>
+                                        <path d="M12 7v4"></path>
+                                    </svg></div>
+                                <div class="min-w-0 flex-1">
+                                    <div class="flex items-center gap-3"><span
+                                            class="text-xs font-mono font-semibold text-slate-500">04</span>
+                                        <h2 class="font-display text-xl sm:text-[1.3rem] font-bold text-slate-100">
+                                            Fabricated outputs</h2>
+                                    </div>
+                                    <p class="mt-3 text-slate-400 text-sm sm:text-base leading-relaxed">Hallucinations
+                                        and unsupported claims. Low-confidence or ungrounded outputs ship without
+                                        verification, leading to wrong decisions and lost trust.</p>
+                                    <div class="mt-5">
+                                        <div class="relative rounded-xl border-2 border-atlas-primary/30 bg-atlas-primary/10 p-4 overflow-hidden"
+                                            style="box-shadow:0 0 20px rgba(168,85,247,0.12)">
+                                            <div class="absolute inset-0 opacity-30"
+                                                style="background:linear-gradient(110deg, transparent 0%, rgba(168,85,247,0.15) 50%, transparent 100%)">
+                                            </div>
+                                            <div class="relative">
+                                                <p
+                                                    class="flex items-center gap-2 text-sm font-semibold text-atlas-primary">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="lucide lucide-shield-check h-4 w-4 shrink-0"
+                                                        aria-hidden="true">
+                                                        <path
+                                                            d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z">
+                                                        </path>
+                                                        <path d="m9 12 2 2 4-4"></path>
+                                                    </svg>How Atlas Synapse helps</p>
+                                                <p class="mt-2 text-sm text-slate-300 leading-relaxed">Output
+                                                    verification scores confidence and grounds. Low-confidence responses
+                                                    can be held for review or blocked. Audit trail includes scores and
+                                                    routing decisions.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="relative">
+                        <div class="relative w-full flex justify-center" style="height:32px"><svg
+                                class="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
+                                <defs>
+                                    <linearGradient id="wave-4" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="rgba(168,85,247,0.4)"></stop>
+                                        <stop offset="50%" stop-color="rgba(248,113,113,0.35)"></stop>
+                                        <stop offset="100%" stop-color="rgba(168,85,247,0.4)"></stop>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M 80 0 C 80 50, 80 50, 80 100" fill="none" stroke="url(#wave-4)"
+                                    stroke-width="2" stroke-linecap="round"></path>
+                            </svg></div>
+                        <article
+                            class="glass-panel rounded-2xl border border-white/10 overflow-hidden w-full max-w-[calc(100%-2rem)] sm:max-w-[85%] mr-auto"
+                            style="opacity:0;transform:translateX(-32px) scale(0.96)">
+                            <div class="flex gap-6 p-6 sm:p-8">
+                                <div
+                                    class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-rose-500/15 ring-1 ring-rose-500/30">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="lucide lucide-file-question-mark h-6 w-6 text-rose-400"
+                                        aria-hidden="true">
+                                        <path
+                                            d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z">
+                                        </path>
+                                        <path d="M12 17h.01"></path>
+                                        <path d="M9.1 9a3 3 0 0 1 5.82 1c0 2-3 3-3 3"></path>
+                                    </svg></div>
+                                <div class="min-w-0 flex-1">
+                                    <div class="flex items-center gap-3"><span
+                                            class="text-xs font-mono font-semibold text-slate-500">05</span>
+                                        <h2 class="font-display text-xl sm:text-[1.3rem] font-bold text-slate-100">
+                                            Missing audit trails</h2>
+                                    </div>
+                                    <p class="mt-3 text-slate-400 text-sm sm:text-base leading-relaxed">No evidence for
+                                        compliance or review. When regulators or internal audit ask how a decision was
+                                        made, there&#x27;s nothing to show.</p>
+                                    <div class="mt-5">
+                                        <div class="relative rounded-xl border-2 border-atlas-primary/30 bg-atlas-primary/10 p-4 overflow-hidden"
+                                            style="box-shadow:0 0 20px rgba(168,85,247,0.12)">
+                                            <div class="absolute inset-0 opacity-30"
+                                                style="background:linear-gradient(110deg, transparent 0%, rgba(168,85,247,0.15) 50%, transparent 100%)">
+                                            </div>
+                                            <div class="relative">
+                                                <p
+                                                    class="flex items-center gap-2 text-sm font-semibold text-atlas-primary">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="lucide lucide-shield-check h-4 w-4 shrink-0"
+                                                        aria-hidden="true">
+                                                        <path
+                                                            d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z">
+                                                        </path>
+                                                        <path d="m9 12 2 2 4-4"></path>
+                                                    </svg>How Atlas Synapse helps</p>
+                                                <p class="mt-2 text-sm text-slate-300 leading-relaxed">Every request and
+                                                    response is tagged, traced, and exportable. Full evidence packages
+                                                    for regulators. Searchable audit log with filters by policy, risk
+                                                    type, and outcome.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="relative">
+                        <div class="relative w-full flex justify-center" style="height:32px"><svg
+                                class="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
+                                <defs>
+                                    <linearGradient id="wave-5" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="rgba(168,85,247,0.4)"></stop>
+                                        <stop offset="50%" stop-color="rgba(248,113,113,0.35)"></stop>
+                                        <stop offset="100%" stop-color="rgba(168,85,247,0.4)"></stop>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M 20 0 C 20 50, 20 50, 20 100" fill="none" stroke="url(#wave-5)"
+                                    stroke-width="2" stroke-linecap="round"></path>
+                            </svg></div>
+                        <article
+                            class="glass-panel rounded-2xl border border-white/10 overflow-hidden w-full max-w-[calc(100%-2rem)] sm:max-w-[85%] ml-auto"
+                            style="opacity:0;transform:translateX(32px) scale(0.96)">
+                            <div class="flex gap-6 p-6 sm:p-8">
+                                <div
+                                    class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-rose-500/15 ring-1 ring-rose-500/30">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="lucide lucide-git-branch h-6 w-6 text-rose-400"
+                                        aria-hidden="true">
+                                        <path d="M15 6a9 9 0 0 0-9 9V3"></path>
+                                        <circle cx="18" cy="6" r="3"></circle>
+                                        <circle cx="6" cy="18" r="3"></circle>
+                                    </svg></div>
+                                <div class="min-w-0 flex-1">
+                                    <div class="flex items-center gap-3"><span
+                                            class="text-xs font-mono font-semibold text-slate-500">06</span>
+                                        <h2 class="font-display text-xl sm:text-[1.3rem] font-bold text-slate-100">Agent
+                                            unpredictability</h2>
+                                    </div>
+                                    <p class="mt-3 text-slate-400 text-sm sm:text-base leading-relaxed">Autonomous steps
+                                        deviate from intent. Multi-step agents can drift from approved workflows and
+                                        produce unexpected or non-compliant outcomes.</p>
+                                    <div class="mt-5">
+                                        <div class="relative rounded-xl border-2 border-atlas-primary/30 bg-atlas-primary/10 p-4 overflow-hidden"
+                                            style="box-shadow:0 0 20px rgba(168,85,247,0.12)">
+                                            <div class="absolute inset-0 opacity-30"
+                                                style="background:linear-gradient(110deg, transparent 0%, rgba(168,85,247,0.15) 50%, transparent 100%)">
+                                            </div>
+                                            <div class="relative">
+                                                <p
+                                                    class="flex items-center gap-2 text-sm font-semibold text-atlas-primary">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="lucide lucide-shield-check h-4 w-4 shrink-0"
+                                                        aria-hidden="true">
+                                                        <path
+                                                            d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z">
+                                                        </path>
+                                                        <path d="m9 12 2 2 4-4"></path>
+                                                    </svg>How Atlas Synapse helps</p>
+                                                <p class="mt-2 text-sm text-slate-300 leading-relaxed">We validate agent
+                                                    context at the boundary and log each step. Step-level bounds and
+                                                    routing rules keep agents within approved flows. Full trace for
+                                                    every run.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                <div class="mt-14 text-center"><a
+                        class="inline-flex items-center gap-2 text-sm font-semibold text-atlas-secondary hover:text-atlas-primary transition-colors"
+                        href="/Atlas-Synapse-Homepage/solutions">See how we apply this in practice<span
+                            aria-hidden="true">→</span></a></div>
+            </div>
+        </div><!--/$-->
+    </main>
+    <script src="/Atlas-Synapse-Homepage/_next/static/chunks/webpack-bf83e1048b92443c.js" async=""></script>
+    <script>(self.__next_f = self.__next_f || []).push([0]); self.__next_f.push([2, null])</script>
+    <script>self.__next_f.push([1, "1:HL[\"/Atlas-Synapse-Homepage/_next/static/media/36966cca54120369-s.p.woff2\",\"font\",{\"crossOrigin\":\"\",\"type\":\"font/woff2\"}]\n2:HL[\"/Atlas-Synapse-Homepage/_next/static/media/e4af272ccee01ff0-s.p.woff2\",\"font\",{\"crossOrigin\":\"\",\"type\":\"font/woff2\"}]\n3:HL[\"/Atlas-Synapse-Homepage/_next/static/css/71f448186abc21da.css\",\"style\"]\n"])</script>
+    <script>self.__next_f.push([1, "4:I[2846,[],\"\"]\n6:I[2611,[\"343\",\"static/chunks/343-d19fa052849c47bf.js\",\"400\",\"static/chunks/400-1988122442d5aff4.js\",\"699\",\"static/chunks/699-a4c093164ed0e1c1.js\",\"867\",\"static/chunks/app/risks/page-7c87f02aff052554.js\"],\"default\"]\n7:I[3180,[\"343\",\"static/chunks/343-d19fa052849c47bf.js\",\"400\",\"static/chunks/400-1988122442d5aff4.js\",\"699\",\"static/chunks/699-a4c093164ed0e1c1.js\",\"867\",\"static/chunks/app/risks/page-7c87f02aff052554.js\"],\"default\"]\n8:I[4707,[],\"\"]\n9:I[6423,[],\"\"]\na:I[5527,[\"343\",\"static/chunks/343-d19fa052849c47bf.js\",\"699\",\"static/chunks/699-a4c093164ed0e1c1.js\",\"237\",\"static/chunks/237-7f853165730144b0.js\",\"185\",\"static/chunks/app/layout-7333f7c25a1bee99.js\"],\"default\"]\nb:I[7683,[\"343\",\"static/chunks/343-d19fa052849c47bf.js\",\"699\",\"static/chunks/699-a4c093164ed0e1c1.js\",\"237\",\"static/chunks/237-7f853165730144b0.js\",\"185\",\"static/chunks/app/layout-7333f7c25a1bee99.js\"],\"default\"]\nd:I[1060,[],\"\"]\ne:[]\n"])</script>
+    <script>self.__next_f.push([1, "0:[\"$\",\"$L4\",null,{\"buildId\":\"76fUw_E6KyUuUVB-QkAcn\",\"assetPrefix\":\"/Atlas-Synapse-Homepage\",\"urlParts\":[\"\",\"risks\"],\"initialTree\":[\"\",{\"children\":[\"risks\",{\"children\":[\"__PAGE__\",{}]}]},\"$undefined\",\"$undefined\",true],\"initialSeedData\":[\"\",{\"children\":[\"risks\",{\"children\":[\"__PAGE__\",{},[[\"$L5\",[[\"$\",\"$L6\",null,{}],[\"$\",\"$L7\",null,{}]],null],null],null]},[null,[\"$\",\"$L8\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\",\"risks\",\"children\"],\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L9\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":\"$undefined\",\"notFoundStyles\":\"$undefined\"}]],null]},[[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/Atlas-Synapse-Homepage/_next/static/css/71f448186abc21da.css\",\"precedence\":\"next\",\"crossOrigin\":\"$undefined\"}]],[\"$\",\"html\",null,{\"lang\":\"en\",\"className\":\"dark\",\"children\":[\"$\",\"body\",null,{\"className\":\"__variable_4e8f21 __variable_2699e9 font-sans text-slate-100 antialiased\",\"children\":[[\"$\",\"$La\",null,{}],[\"$\",\"$Lb\",null,{\"children\":[\"$\",\"main\",null,{\"className\":\"relative z-10\",\"children\":[\"$\",\"$L8\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\"],\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L9\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":[[\"$\",\"title\",null,{\"children\":\"404: This page could not be found.\"}],[\"$\",\"div\",null,{\"style\":{\"fontFamily\":\"system-ui,\\\"Segoe UI\\\",Roboto,Helvetica,Arial,sans-serif,\\\"Apple Color Emoji\\\",\\\"Segoe UI Emoji\\\"\",\"height\":\"100vh\",\"textAlign\":\"center\",\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"justifyContent\":\"center\"},\"children\":[\"$\",\"div\",null,{\"children\":[[\"$\",\"style\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\"}}],[\"$\",\"h1\",null,{\"className\":\"next-error-h1\",\"style\":{\"display\":\"inline-block\",\"margin\":\"0 20px 0 0\",\"padding\":\"0 23px 0 0\",\"fontSize\":24,\"fontWeight\":500,\"verticalAlign\":\"top\",\"lineHeight\":\"49px\"},\"children\":\"404\"}],[\"$\",\"div\",null,{\"style\":{\"display\":\"inline-block\"},\"children\":[\"$\",\"h2\",null,{\"style\":{\"fontSize\":14,\"fontWeight\":400,\"lineHeight\":\"49px\",\"margin\":0},\"children\":\"This page could not be found.\"}]}]]}]}]],\"notFoundStyles\":[]}]}]}]]}]}]],null],[[\"$\",\"div\",null,{\"className\":\"fixed inset-0 z-50 flex items-center justify-center bg-atlas-bg\",\"children\":[\"$\",\"div\",null,{\"className\":\"flex flex-col items-center gap-4\",\"children\":[[\"$\",\"div\",null,{\"className\":\"h-10 w-10 animate-spin rounded-full border-2 border-atlas-primary/30 border-t-atlas-primary\"}],[\"$\",\"p\",null,{\"className\":\"text-sm text-slate-400\",\"children\":\"Loading…\"}]]}]}],[],[]]],\"couldBeIntercepted\":false,\"initialHead\":[null,\"$Lc\"],\"globalErrorComponent\":\"$d\",\"missingSlots\":\"$We\"}]\n"])</script>
+    <script>self.__next_f.push([1, "c:[[\"$\",\"meta\",\"0\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"}],[\"$\",\"meta\",\"1\",{\"charSet\":\"utf-8\"}],[\"$\",\"title\",\"2\",{\"children\":\"Risks | Atlas Synapse\"}],[\"$\",\"meta\",\"3\",{\"name\":\"description\",\"content\":\"Explore AI lifecycle risks: governance drift, policy conflict, data leakage, fabricated outputs, missing audit trails, agent unpredictability. See how Atlas Synapse intervenes.\"}],[\"$\",\"meta\",\"4\",{\"name\":\"next-size-adjust\"}]]\n5:null\n"])</script>
+</body>
+
+</html>

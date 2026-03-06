@@ -32,15 +32,35 @@ export default function Login() {
 
       if (signInError) throw signInError
 
-      // If we're in linking mode, show the linking prompt instead of redirecting
+      // If we're in linking mode, check if the user already has this provider
       if (linkProvider) {
-        setShowLinkingPrompt(true)
-        setLinkingProvider(linkProvider)
+        const { data: { user } } = await supabase.auth.getUser()
+
+        if (user?.identities) {
+          // Check if this provider is already linked
+          const providerAlreadyLinked = user.identities.some(id => id.provider === linkProvider)
+
+          if (providerAlreadyLinked) {
+            // Provider already linked - just redirect
+            sessionStorage.removeItem('pendingLinkProvider')
+            router.push('/')
+          } else {
+            // Provider not linked yet - show linking prompt
+            setShowLinkingPrompt(true)
+            setLinkingProvider(linkProvider)
+          }
+        } else {
+          // Can't check identities - just show linking prompt
+          setShowLinkingPrompt(true)
+          setLinkingProvider(linkProvider)
+        }
       } else {
         router.push('/')
       }
     } catch (err: any) {
       setError(err.message || 'Failed to sign in')
+      // Clear linking state on error
+      sessionStorage.removeItem('pendingLinkProvider')
     } finally {
       setLoading(false)
     }
@@ -86,7 +106,8 @@ export default function Login() {
 
       if (error) throw error
 
-      // Success - redirect to homepage
+      // Success - clear linking state and redirect to homepage
+      sessionStorage.removeItem('pendingLinkProvider')
       setShowLinkingPrompt(false)
       router.push('/')
     } catch (err: any) {
@@ -97,6 +118,8 @@ export default function Login() {
   }
 
   const handleSkipLinking = () => {
+    // Clear linking state and redirect home
+    sessionStorage.removeItem('pendingLinkProvider')
     setShowLinkingPrompt(false)
     router.push('/')
   }

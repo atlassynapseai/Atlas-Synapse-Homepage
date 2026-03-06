@@ -40,13 +40,62 @@ CREATE POLICY "Users can update their own profile"
   ON users FOR UPDATE
   USING (auth.uid() = id);
 
+DROP POLICY IF EXISTS "Users can insert their own profile" ON users;
+CREATE POLICY "Users can insert their own profile"
+  ON users FOR INSERT
+  WITH CHECK (auth.uid() = id);
+
 DROP POLICY IF EXISTS "Users can view their own products" ON user_products;
 CREATE POLICY "Users can view their own products"
   ON user_products FOR SELECT
   USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can insert their own products" ON user_products;
+CREATE POLICY "Users can insert their own products"
+  ON user_products FOR INSERT
+  WITH CHECK (auth.uid() = user_id);
+
+DROP POLICY IF EXISTS "Users can update their own products" ON user_products;
+CREATE POLICY "Users can update their own products"
+  ON user_products FOR UPDATE
+  USING (auth.uid() = user_id);
+
+DROP POLICY IF EXISTS "Users can delete their own products" ON user_products;
+CREATE POLICY "Users can delete their own products"
+  ON user_products FOR DELETE
+  USING (auth.uid() = user_id);
+
 -- ============================================
--- Future: skool.com Integration
+-- AUTOMATIC USER PROFILE CREATION
+-- ============================================
+-- When a new auth user is created, automatically create their profile
+-- This function runs with SECURITY DEFINER so it bypasses RLS
+
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS TRIGGER
+LANGUAGE PLPGSQL
+SECURITY DEFINER SET search_path = public
+AS $$
+BEGIN
+  INSERT INTO public.users (id, email, name, created_at)
+  VALUES (
+    NEW.id,
+    NEW.email,
+    COALESCE(NEW.raw_user_meta_data->>'name', NEW.email),
+    NOW()
+  )
+  ON CONFLICT (id) DO NOTHING;
+  RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
+
+-- ============================================
+-- FUTURE: skool.com Integration
 -- ============================================
 -- Uncomment and run these when integrating skool.com
 
