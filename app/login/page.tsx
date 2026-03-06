@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 
 export default function Login() {
@@ -24,7 +25,7 @@ export default function Login() {
 
       if (signInError) throw signInError
 
-      router.push('/Atlas-Synapse-Homepage/dashboard')
+      router.push('/')
     } catch (err: any) {
       setError(err.message || 'Failed to sign in')
     } finally {
@@ -40,7 +41,7 @@ export default function Login() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: provider as any,
         options: {
-          redirectTo: `${window.location.origin}/Atlas-Synapse-Homepage/dashboard`,
+          redirectTo: window.location.origin + '/Atlas-Synapse-Homepage',
         },
       })
 
@@ -124,9 +125,9 @@ export default function Login() {
 
         <p className="mt-6 text-center text-sm text-slate-400 animate-slide-up delay-400">
           Don't have an account?{' '}
-          <a href="/Atlas-Synapse-Homepage/signup" className="text-atlas-secondary hover:text-atlas-primary transition-colors duration-200">
+          <Link href="/signup" className="text-atlas-secondary hover:text-atlas-primary transition-colors duration-200">
             Sign Up
-          </a>
+          </Link>
         </p>
       </div>
     </div>
