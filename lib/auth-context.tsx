@@ -1,6 +1,7 @@
 'use client'
 
 import React, { createContext, useContext, useEffect, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { Session, User } from '@supabase/supabase-js'
 import { supabase } from './supabase'
 
@@ -17,6 +18,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null)
   const [session, setSession] = useState<Session | null>(null)
   const [loading, setLoading] = useState(true)
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
+  useEffect(() => {
+    // Handle OAuth redirect errors
+    const error = searchParams.get('error')
+    const errorDescription = searchParams.get('error_description')
+
+    if (error && errorDescription) {
+      const decodedDescription = decodeURIComponent(errorDescription)
+
+      // Check if this is an email conflict error from OAuth
+      if (decodedDescription.includes('Multiple accounts with the same email')) {
+        // Store pending provider and redirect to login with linking mode
+        const provider = sessionStorage.getItem('pendingLinkProvider') || 'github'
+        router.push(`/login?linkProvider=${provider}`)
+      }
+    }
+  }, [searchParams, router])
 
   useEffect(() => {
     // Check active sessions and subscribe to auth changes

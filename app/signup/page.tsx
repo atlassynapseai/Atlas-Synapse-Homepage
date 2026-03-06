@@ -46,6 +46,9 @@ export default function SignUp() {
     setLoading(true)
 
     try {
+      // Store the provider in case of email conflict error
+      sessionStorage.setItem('pendingLinkProvider', provider)
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider: provider as any,
         options: {
@@ -59,8 +62,6 @@ export default function SignUp() {
 
       // Check if this is an account linking scenario (same email, different provider)
       if (errorMessage.includes('Multiple accounts with the same email')) {
-        // Store the pending provider for linking attempt
-        sessionStorage.setItem('pendingLinkProvider', provider)
         setError(`Account already exists with this email. Sign in with your existing account first to link providers.`)
 
         // Show a helpful link to navigate to login

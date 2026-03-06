@@ -51,6 +51,9 @@ export default function Login() {
     setLoading(true)
 
     try {
+      // Store the provider in case of email conflict error
+      sessionStorage.setItem('pendingLinkProvider', provider)
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider: provider as any,
         options: {
