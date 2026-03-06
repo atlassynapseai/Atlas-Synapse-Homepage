@@ -107,6 +107,28 @@ CREATE TABLE users (
   name VARCHAR NOT NULL,
   skool_id VARCHAR,
   skool_enrollment_active BOOLEAN DEFAULT false,
+  -- Subscription fields
+  stripe_customer_id VARCHAR UNIQUE,
+  subscription_status VARCHAR DEFAULT 'none', -- 'none', 'active', 'cancelled', 'past_due'
+  current_plan VARCHAR DEFAULT 'free', -- 'free', 'standard', 'premium', 'vip'
+  subscription_ends_at TIMESTAMP,
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Create subscriptions table (track active subscriptions)
+CREATE TABLE subscriptions (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  stripe_subscription_id VARCHAR NOT NULL UNIQUE,
+  plan_tier VARCHAR NOT NULL, -- 'standard', 'premium', 'vip'
+  amount INTEGER NOT NULL, -- in cents (e.g., 10000 for $100.00)
+  currency VARCHAR DEFAULT 'usd',
+  status VARCHAR NOT NULL, -- 'active', 'trialing', 'past_due', 'canceled', 'unpaid'
+  current_period_start TIMESTAMP NOT NULL,
+  current_period_end TIMESTAMP NOT NULL,
+  cancel_at_period_end BOOLEAN DEFAULT false,
+  canceled_at TIMESTAMP,
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
 );
@@ -115,16 +137,30 @@ CREATE TABLE users (
 CREATE TABLE user_products (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  product_name VARCHAR NOT NULL, -- 'homepage', 'aegis-prime', 'product-3', 'product-4'
-  access_level VARCHAR DEFAULT 'standard', -- 'beta', 'premium', 'standard'
-  enrolled_date TIMESTAMP DEFAULT NOW(),
-  expires_at TIMESTAMP,
+  product_name VARCHAR NOT NULL, -- 'aegis-auditor', 'product-2', 'product-3', etc
+  tier_required VARCHAR NOT NULL, -- 'standard', 'premium', 'vip' (minimum tier to access)
+  access_start TIMESTAMP DEFAULT NOW(),
+  access_end TIMESTAMP,
   UNIQUE(user_id, product_name)
+);
+
+-- Create payments table (track payment history)
+CREATE TABLE payments (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  stripe_payment_id VARCHAR NOT NULL UNIQUE,
+  amount INTEGER NOT NULL, -- in cents
+  currency VARCHAR DEFAULT 'usd',
+  status VARCHAR NOT NULL, -- 'succeeded', 'failed', 'processing'
+  description VARCHAR,
+  created_at TIMESTAMP DEFAULT NOW()
 );
 
 -- Enable RLS (Row Level Security)
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE user_products ENABLE ROW LEVEL SECURITY;
+ALTER TABLE subscriptions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE payments ENABLE ROW LEVEL SECURITY;
 
 -- Create policies
 CREATE POLICY "Users can view their own profile"
@@ -138,27 +174,57 @@ CREATE POLICY "Users can update their own profile"
 CREATE POLICY "Users can view their own products"
   ON user_products FOR SELECT
   USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can view their own subscriptions"
+  ON subscriptions FOR SELECT
+  USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can view their own payments"
+  ON payments FOR SELECT
+  USING (auth.uid() = user_id);
 ```
 
 ### 4. Setup Environment Variables
+
+#### Supabase Configuration
 
 1. In Supabase Dashboard, click **Settings** → **API**
 2. Copy:
    - Project URL (looks like `https://xxxxx.supabase.co`)
    - Anon Key (public key for client-side)
 
+#### Stripe Configuration
+
+1. Go to [Stripe Dashboard](https://dashboard.stripe.com)
+2. Click **Developers** → **API keys**
+3. Copy:
+   - **Publishable Key** (starts with `pk_test_`)
+   - **Secret Key** (starts with `sk_test_`)
+   - **Webhook Secret** (generate after webhook setup in Phase 3)
+
+#### Create `.env.local`
+
 3. Create `.env.local` in project root:
 ```bash
 cp .env.local.example .env.local
 ```
 
-4. Fill in:
+4. Fill in with all variables:
 ```
+# Supabase
 NEXT_PUBLIC_SUPABASE_URL=your_project_url_here
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here
+
+# Stripe
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_your_key_here
+STRIPE_SECRET_KEY=sk_test_your_key_here
+STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret_here
 ```
 
-**⚠️ SECURITY**: Never commit `.env.local` to git (already in .gitignore)
+**⚠️ SECURITY**:
+- Never commit `.env.local` to git (already in .gitignore)
+- Secret keys stay server-side only
+- Publishable key is safe to use client-side
 
 ### 5. Install Dependencies & Test Locally
 
@@ -257,23 +323,56 @@ export async function POST(request: Request) {
 
 ### users table
 ```sql
-id          UUID        (user ID from auth)
-email       VARCHAR     (unique email)
-name        VARCHAR     (display name)
-skool_id    VARCHAR     (future: skool.com ID)
-skool_enrollment_active BOOLEAN (future)
-created_at  TIMESTAMP
-updated_at  TIMESTAMP
+id                      UUID        (user ID from auth)
+email                   VARCHAR     (unique email)
+name                    VARCHAR     (display name)
+skool_id                VARCHAR     (future: skool.com ID)
+skool_enrollment_active BOOLEAN     (future)
+stripe_customer_id      VARCHAR     (Stripe customer reference)
+subscription_status     VARCHAR     ('none'|'active'|'cancelled'|'past_due')
+current_plan            VARCHAR     ('free'|'standard'|'premium'|'vip')
+subscription_ends_at    TIMESTAMP   (when current subscription ends)
+created_at              TIMESTAMP
+updated_at              TIMESTAMP
 ```
 
-### user_products table
+### subscriptions table (Stripe-managed)
 ```sql
-id              UUID      (primary key)
-user_id         UUID      (links to users.id)
-product_name    VARCHAR   ('homepage', 'aegis-prime', 'product-3', 'product-4')
-access_level    VARCHAR   ('beta', 'premium', 'standard')
-enrolled_date   TIMESTAMP
-expires_at      TIMESTAMP (optional: when access expires)
+id                      UUID      (primary key)
+user_id                 UUID      (links to users.id)
+stripe_subscription_id  VARCHAR   (Stripe subscription ID)
+plan_tier               VARCHAR   ('standard', 'premium', 'vip')
+amount                  INTEGER   (cents: 10000 = $100.00)
+currency                VARCHAR   ('usd')
+status                  VARCHAR   ('active'|'trialing'|'past_due'|'canceled'|'unpaid')
+current_period_start    TIMESTAMP (billing cycle start)
+current_period_end      TIMESTAMP (billing cycle end)
+cancel_at_period_end    BOOLEAN   (will cancel at end of cycle)
+canceled_at             TIMESTAMP (when it was canceled)
+created_at              TIMESTAMP
+updated_at              TIMESTAMP
+```
+
+### user_products table (Product Access Control)
+```sql
+id              UUID        (primary key)
+user_id         UUID        (links to users.id)
+product_name    VARCHAR     ('aegis-auditor', 'product-2', etc)
+tier_required   VARCHAR     ('standard'|'premium'|'vip' minimum)
+access_start    TIMESTAMP   (when access starts)
+access_end      TIMESTAMP   (when access expires, optional)
+```
+
+### payments table (Payment History)
+```sql
+id                  UUID        (primary key)
+user_id             UUID        (links to users.id)
+stripe_payment_id   VARCHAR     (Stripe charge ID)
+amount              INTEGER     (cents)
+currency            VARCHAR     ('usd')
+status              VARCHAR     ('succeeded'|'failed'|'processing')
+description         VARCHAR     (invoice description)
+created_at          TIMESTAMP
 ```
 
 ---
