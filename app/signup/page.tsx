@@ -55,7 +55,21 @@ export default function SignUp() {
 
       if (error) throw error
     } catch (err: any) {
-      setError(err.message || `Failed to sign up with ${provider}`)
+      const errorMessage = err.message || `Failed to sign up with ${provider}`
+
+      // Check if this is an account linking scenario (same email, different provider)
+      if (errorMessage.includes('Multiple accounts with the same email')) {
+        // Store the pending provider for linking attempt
+        sessionStorage.setItem('pendingLinkProvider', provider)
+        setError(`Account already exists with this email. Sign in with your existing account first to link providers.`)
+
+        // Show a helpful link to navigate to login
+        setTimeout(() => {
+          router.push(`/login?linkProvider=${provider}`)
+        }, 2000)
+      } else {
+        setError(errorMessage)
+      }
     } finally {
       setLoading(false)
     }

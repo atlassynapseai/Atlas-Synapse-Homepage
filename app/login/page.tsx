@@ -1,16 +1,23 @@
 'use client'
 
-import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import React, { useState, useEffect } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 
 export default function Login() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [showLinkingPrompt, setShowLinkingPrompt] = useState(false)
+  const [linkingProvider, setLinkingProvider] = useState<'google' | 'github' | null>(null)
+  const [linkingInProgress, setLinkingInProgress] = useState(false)
+
+  // Check if we're in linking mode
+  const linkProvider = searchParams.get('linkProvider') as 'google' | 'github' | null
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -25,7 +32,13 @@ export default function Login() {
 
       if (signInError) throw signInError
 
-      router.push('/')
+      // If we're in linking mode, show the linking prompt instead of redirecting
+      if (linkProvider) {
+        setShowLinkingPrompt(true)
+        setLinkingProvider(linkProvider)
+      } else {
+        router.push('/')
+      }
     } catch (err: any) {
       setError(err.message || 'Failed to sign in')
     } finally {
@@ -51,6 +64,78 @@ export default function Login() {
     } finally {
       setLoading(false)
     }
+  }
+
+  // Link the pending OAuth provider to current account
+  const handleLinkAccount = async () => {
+    if (!linkingProvider) return
+
+    setLinkingInProgress(true)
+    setError('')
+
+    try {
+      const { error } = await supabase.auth.linkIdentity({
+        provider: linkingProvider,
+        options: {
+          redirectTo: window.location.origin + '/Atlas-Synapse-Homepage',
+        },
+      })
+
+      if (error) throw error
+
+      // Success - redirect to homepage
+      setShowLinkingPrompt(false)
+      router.push('/')
+    } catch (err: any) {
+      setError(err.message || `Failed to link ${linkingProvider} account`)
+    } finally {
+      setLinkingInProgress(false)
+    }
+  }
+
+  const handleSkipLinking = () => {
+    setShowLinkingPrompt(false)
+    router.push('/')
+  }
+
+  // Show linking prompt instead of login form
+  if (showLinkingPrompt && linkingProvider) {
+    return (
+      <div className="min-h-screen bg-[#050816] pt-24">
+        <div className="mx-auto max-w-md animate-bounce-in rounded-lg border border-white/10 bg-slate-900/60 p-8">
+          <h1 className="text-2xl font-bold text-slate-100 mb-6 animate-slide-down delay-100">Link Account</h1>
+
+          {error && (
+            <div className="error-message mb-4 rounded-lg bg-red-500/20 p-4 text-red-300 text-sm">{error}</div>
+          )}
+
+          <div className="animate-slide-down delay-200 mb-6 rounded-lg bg-blue-500/10 border border-blue-500/20 p-4">
+            <p className="text-blue-300 text-sm">
+              We found an existing account with this email. You can now link your {linkingProvider === 'github' ? 'GitHub' : 'Google'}{' '}
+              account to it. This means you'll be able to sign in using either provider.
+            </p>
+          </div>
+
+          <div className="space-y-3 animate-slide-up delay-300">
+            <button
+              onClick={handleLinkAccount}
+              disabled={linkingInProgress}
+              className="w-full rounded-lg bg-gradient-to-r from-atlas-primary to-atlas-secondary px-4 py-3 font-semibold text-white disabled:opacity-50 transition-all duration-200 hover:shadow-lg hover:shadow-atlas-primary/50 active:scale-95"
+            >
+              {linkingInProgress ? `Linking ${linkingProvider === 'github' ? 'GitHub' : 'Google'}...` : `Link ${linkingProvider === 'github' ? 'GitHub' : 'Google'} Account`}
+            </button>
+
+            <button
+              onClick={handleSkipLinking}
+              disabled={linkingInProgress}
+              className="w-full rounded-lg border border-white/10 bg-slate-800/60 px-4 py-3 font-semibold text-slate-300 hover:bg-slate-700/60 disabled:opacity-50 transition-all duration-200 active:scale-95"
+            >
+              Skip for Now
+            </button>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
