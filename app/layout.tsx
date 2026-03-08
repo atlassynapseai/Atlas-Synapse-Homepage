@@ -20,7 +20,7 @@ export default function RootLayout({
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body className="bg-[#050816] text-slate-100">
+      <body className="text-slate-100 antialiased">
         <Suspense fallback={null}>
           <AuthProvider>
             {children}
