@@ -56,8 +56,7 @@ export default function Login() {
           if (providerAlreadyLinked) {
             // Provider already linked - redirect to dashboard or pricing based on subscription
             sessionStorage.removeItem('pendingLinkProvider')
-            const hasSubscription = userData?.subscription_status === 'active'
-            router.push(hasSubscription ? '/dashboard' : '/pricing')
+            router.push('/dashboard')
           } else {
             // Provider not linked yet - show linking prompt
             setShowLinkingPrompt(true)
@@ -69,12 +68,11 @@ export default function Login() {
           setLinkingProvider(linkProvider)
         }
       } else {
-        // No linking - redirect based on subscription status (or back to OAuth consent)
+        // No linking - redirect to dashboard (or back to OAuth consent if present)
         if (nextUrl) {
           router.push(decodeURIComponent(nextUrl))
         } else {
-          const hasSubscription = userData?.subscription_status === 'active'
-          router.push(hasSubscription ? '/dashboard' : '/pricing')
+          router.push('/dashboard')
         }
       }
     } catch (err: any) {
@@ -136,11 +134,10 @@ export default function Login() {
         .eq('id', user.id)
         .single()
 
-      // Success - clear linking state and redirect to dashboard or pricing
+      // Success - clear linking state and redirect to dashboard
       sessionStorage.removeItem('pendingLinkProvider')
       setShowLinkingPrompt(false)
-      const hasSubscription = userData?.subscription_status === 'active'
-      router.push(hasSubscription ? '/dashboard' : '/pricing')
+      router.push('/dashboard')
     } catch (err: any) {
       setError(err.message || `Failed to link ${linkingProvider} account`)
     } finally {
@@ -161,8 +158,7 @@ export default function Login() {
         .eq('id', user.id)
         .single()
 
-      const hasSubscription = userData?.subscription_status === 'active'
-      router.push(hasSubscription ? '/dashboard' : '/pricing')
+      router.push('/dashboard')
     } else {
       router.push('/login')
     }

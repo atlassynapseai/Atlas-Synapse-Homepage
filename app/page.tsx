@@ -2,9 +2,24 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { supabase } from '@/lib/supabase'
 
 export default function Home() {
   const [toggleActive, setToggleActive] = useState(false)
+  const [authUser, setAuthUser] = useState<any>(null)
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => setAuthUser(user))
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, session) => {
+      setAuthUser(session?.user ?? null)
+    })
+    return () => subscription.unsubscribe()
+  }, [])
+
+  const getInitials = (user: any) => {
+    const name = user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email || '?'
+    return name.split(' ').map((n: string) => n[0]).join('').slice(0, 2).toUpperCase()
+  }
 
   useEffect(() => {
     // IntersectionObserver for scroll-triggered animations
@@ -77,10 +92,31 @@ export default function Home() {
             ))}
           </nav>
           <div className="flex items-center gap-3">
-            <Link href="/login" className="hidden sm:inline text-sm font-medium text-slate-400 hover:text-white transition-colors">Sign In</Link>
-            <Link href="/signup" className="relative-sheen sheen rounded-full bg-gradient-to-r from-atlas-primary to-atlas-secondary px-5 py-2 text-sm font-semibold text-white hover:shadow-lg hover:shadow-atlas-primary/40 transition-all hover:scale-105">
-              Request Demo
-            </Link>
+            {authUser ? (
+              <Link href="/dashboard" className="flex items-center gap-2 group">
+                {authUser.user_metadata?.avatar_url ? (
+                  <img
+                    src={authUser.user_metadata.avatar_url}
+                    alt="Avatar"
+                    className="h-8 w-8 rounded-full border border-white/20 object-cover group-hover:border-atlas-primary/60 transition-all"
+                  />
+                ) : (
+                  <div className="h-8 w-8 rounded-full border border-white/20 bg-gradient-to-br from-atlas-primary to-atlas-secondary flex items-center justify-center text-xs font-bold text-white group-hover:border-atlas-primary/60 transition-all">
+                    {getInitials(authUser)}
+                  </div>
+                )}
+                <span className="hidden sm:block text-sm font-medium text-slate-300 group-hover:text-white transition-colors truncate max-w-[120px]">
+                  {authUser.user_metadata?.full_name || authUser.user_metadata?.name || authUser.email?.split('@')[0]}
+                </span>
+              </Link>
+            ) : (
+              <>
+                <Link href="/login" className="hidden sm:inline text-sm font-medium text-slate-400 hover:text-white transition-colors">Sign In</Link>
+                <Link href="/signup" className="relative-sheen sheen rounded-full bg-gradient-to-r from-atlas-primary to-atlas-secondary px-5 py-2 text-sm font-semibold text-white hover:shadow-lg hover:shadow-atlas-primary/40 transition-all hover:scale-105">
+                  Request Demo
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </header>
