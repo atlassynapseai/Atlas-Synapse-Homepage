@@ -26,6 +26,9 @@ export default function Home() {
             <a href="/solutions" className="px-4 py-2 text-slate-300 hover:text-white">
               Solutions
             </a>
+            <a href="/pricing" className="px-4 py-2 text-slate-300 hover:text-white">
+              Pricing
+            </a>
             <a href="/contact" className="px-4 py-2 text-slate-300 hover:text-white">
               Contact
             </a>
@@ -85,6 +88,83 @@ export default function Home() {
               <h3 className="text-xl font-bold text-slate-100 mb-2">Auditability</h3>
               <p className="text-slate-400">Complete audit trails and evidence packages for compliance.</p>
             </div>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-white mb-4">Simple, Transparent Pricing</h2>
+            <p className="text-lg text-slate-400">Choose the perfect plan for your needs</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="rounded-lg border border-white/10 bg-slate-900/60 p-8">
+              <h3 className="text-2xl font-bold text-white mb-2">Standard</h3>
+              <div className="flex items-baseline mb-6">
+                <span className="text-4xl font-bold text-white">$100</span>
+                <span className="text-slate-400 ml-2">/month</span>
+              </div>
+              <p className="text-slate-400 text-sm mb-6">Perfect for small teams</p>
+              <Link
+                href="/pricing"
+                className="block w-full text-center rounded-lg border border-white/20 px-4 py-2 font-semibold text-white hover:bg-white/5 mb-6"
+              >
+                Learn More
+              </Link>
+              <ul className="space-y-2 text-sm text-slate-300">
+                <li>✓ Full access to Aegis Prime Auditor</li>
+                <li>✓ Advanced reporting</li>
+                <li>✓ Email support</li>
+              </ul>
+            </div>
+            <div className="rounded-lg border-2 border-atlas-primary bg-gradient-to-br from-atlas-primary/10 to-atlas-secondary/10 p-8 relative">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-atlas-primary to-atlas-secondary px-4 py-1 rounded-full">
+                <span className="text-sm font-semibold text-white">Most Popular</span>
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-2">Premium</h3>
+              <div className="flex items-baseline mb-6">
+                <span className="text-4xl font-bold text-white">$300</span>
+                <span className="text-slate-400 ml-2">/month</span>
+              </div>
+              <p className="text-slate-400 text-sm mb-6">For growing organizations</p>
+              <Link
+                href="/pricing"
+                className="block w-full text-center rounded-lg bg-gradient-to-r from-atlas-primary to-atlas-secondary px-4 py-2 font-semibold text-white hover:opacity-95 mb-6"
+              >
+                Subscribe Now
+              </Link>
+              <ul className="space-y-2 text-sm text-slate-300">
+                <li>✓ All Standard features</li>
+                <li>✓ Priority support</li>
+                <li>✓ Custom integrations</li>
+              </ul>
+            </div>
+            <div className="rounded-lg border border-white/10 bg-slate-900/60 p-8">
+              <h3 className="text-2xl font-bold text-white mb-2">VIP</h3>
+              <div className="flex items-baseline mb-6">
+                <span className="text-4xl font-bold text-white">$1,500</span>
+                <span className="text-slate-400 ml-2">/month</span>
+              </div>
+              <p className="text-slate-400 text-sm mb-6">Enterprise-grade solution</p>
+              <Link
+                href="/pricing"
+                className="block w-full text-center rounded-lg border border-white/20 px-4 py-2 font-semibold text-white hover:bg-white/5 mb-6"
+              >
+                Learn More
+              </Link>
+              <ul className="space-y-2 text-sm text-slate-300">
+                <li>✓ All Premium features</li>
+                <li>✓ Dedicated support</li>
+                <li>✓ SLA guarantee</li>
+              </ul>
+            </div>
+          </div>
+          <div className="mt-12 text-center">
+            <Link
+              href="/pricing"
+              className="inline-block rounded-lg bg-gradient-to-r from-atlas-primary to-atlas-secondary px-8 py-3 font-semibold text-white hover:opacity-95"
+            >
+              View All Plans
+            </Link>
           </div>
         </section>
       </main>
