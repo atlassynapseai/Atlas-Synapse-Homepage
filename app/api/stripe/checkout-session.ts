@@ -6,30 +6,27 @@ import { PRICING_PLANS } from '@/lib/pricing-plans'
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-  {
-    auth: {
-      persistSession: false,
-    },
-  }
+  { auth: { persistSession: false } }
 )
 
 export async function POST(request: NextRequest) {
+  if (!process.env.STRIPE_SECRET_KEY) {
+    return NextResponse.json(
+      { error: 'Stripe is not configured. Please contact support.' },
+      { status: 503 }
+    )
+  }
+
   try {
     const { planId, userId } = await request.json()
 
     if (!planId || !userId) {
-      return NextResponse.json(
-        { error: 'Missing planId or userId' },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'Missing planId or userId' }, { status: 400 })
     }
 
-    const plan = Object.values(PRICING_PLANS).find(p => p.id === planId)
-    if (!plan || plan.price === 0) {
-      return NextResponse.json(
-        { error: 'Invalid plan or cannot checkout free plan' },
-        { status: 400 }
-      )
+    const plan = PRICING_PLANS[planId as keyof typeof PRICING_PLANS]
+    if (!plan) {
+      return NextResponse.json({ error: 'Invalid plan' }, { status: 400 })
     }
 
     // Get user data
@@ -40,10 +37,7 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (!userData) {
-      return NextResponse.json(
-        { error: 'User not found' },
-        { status: 404 }
-      )
+      return NextResponse.json({ error: 'User not found' }, { status: 404 })
     }
 
     let stripeCustomerId = userData.stripe_customer_id
@@ -52,20 +46,18 @@ export async function POST(request: NextRequest) {
     if (!stripeCustomerId) {
       const customer = await stripe.customers.create({
         email: userData.email,
-        metadata: {
-          userId,
-        },
+        metadata: { userId },
       })
       stripeCustomerId = customer.id
 
-      // Update user with Stripe customer ID
       await supabase
         .from('users')
         .update({ stripe_customer_id: stripeCustomerId })
         .eq('id', userId)
     }
 
-    // Create checkout session
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://atlas-synapse-homepage.vercel.app'
+
     const session = await stripe.checkout.sessions.create({
       customer: stripeCustomerId,
       payment_method_types: ['card'],
@@ -78,26 +70,18 @@ export async function POST(request: NextRequest) {
               name: plan.name,
               description: plan.description,
             },
-            unit_amount: plan.price * 100, // Convert to cents
-            recurring: {
-              interval: 'month',
-            },
+            unit_amount: plan.price * 100,
+            recurring: { interval: 'month' },
           },
           quantity: 1,
         },
       ],
-      success_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/dashboard?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/pricing`,
-      metadata: {
-        userId,
-        planId,
-      },
+      success_url: `${appUrl}/dashboard?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${appUrl}/pricing`,
+      metadata: { userId, planId },
     })
 
-    return NextResponse.json({
-      sessionId: session.id,
-      sessionUrl: session.url,
-    })
+    return NextResponse.json({ sessionId: session.id, sessionUrl: session.url })
   } catch (error: any) {
     console.error('Checkout session error:', error)
     return NextResponse.json(

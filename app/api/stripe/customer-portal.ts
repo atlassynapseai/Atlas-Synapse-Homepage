@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
     // Create portal session
     const portalSession = await stripe.billingPortal.sessions.create({
       customer: userData.stripe_customer_id,
-      return_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/dashboard`,
+      return_url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://atlas-synapse-homepage.vercel.app'}/dashboard`,
     })
 
     return NextResponse.json({

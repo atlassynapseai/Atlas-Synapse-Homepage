@@ -1,4 +1,4 @@
-export type PricingTier = 'standard' | 'premium' | 'vip' | 'free';
+export type PricingTier = 'standard' | 'premium' | 'vip';
 
 export interface PricingPlan {
   id: PricingTier;
@@ -10,28 +10,17 @@ export interface PricingPlan {
 }
 
 export const PRICING_PLANS: Record<PricingTier, PricingPlan> = {
-  free: {
-    id: 'free',
-    name: 'Free',
-    price: 0,
-    description: 'Get started with basic features',
-    features: [
-      'Limited access to Aegis Prime Auditor',
-      'Basic reporting',
-      'Community support',
-    ],
-  },
   standard: {
     id: 'standard',
     name: 'Standard',
     price: 100,
-    description: 'Perfect for small teams',
+    description: 'For teams starting their AI governance journey',
     features: [
-      'Full access to Aegis Prime Auditor',
-      'Advanced reporting',
-      'Email support',
-      'Up to 3 team members',
-      'Monthly updates',
+      '16-Week AI Governance Roadmap (drip-fed)',
+      'Weekly group Q&A sessions',
+      'Basic Community Dashboard',
+      'Community Tools Access',
+      'Aegis Prime Auditor — Basic',
     ],
     stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_STANDARD,
   },
@@ -39,14 +28,13 @@ export const PRICING_PLANS: Record<PricingTier, PricingPlan> = {
     id: 'premium',
     name: 'Premium',
     price: 300,
-    description: 'For growing organizations',
+    description: 'For organizations scaling AI responsibly',
     features: [
-      'All Standard features',
-      'Priority support',
-      'Custom integrations',
-      'Up to 10 team members',
-      'Weekly updates',
-      'Advanced analytics',
+      'Full AI Governance Roadmap (instant access, no drip)',
+      'Priority Q&A sessions',
+      'Personal Dashboard',
+      'Full Suite Tools Access',
+      'Aegis Prime Auditor — Full',
     ],
     stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PREMIUM,
   },
@@ -54,16 +42,14 @@ export const PRICING_PLANS: Record<PricingTier, PricingPlan> = {
     id: 'vip',
     name: 'VIP',
     price: 1500,
-    description: 'Enterprise-grade solution',
+    description: 'Enterprise-grade AI governance at scale',
     features: [
-      'All Premium features',
-      'Dedicated support',
-      'Custom development',
-      'Unlimited team members',
-      'Real-time updates',
-      'Advanced security features',
-      'Regular training sessions',
-      'SLA guarantee',
+      'Full Roadmap + 1-on-1 mentorship sessions',
+      'Direct access to leadership',
+      'Multi-Seat Dashboard',
+      'Enterprise Tools + Custom Development',
+      'Aegis Prime Auditor — Enterprise Edition',
+      'All Future Products & Features (Early Access)',
     ],
     stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_VIP,
   },
@@ -71,5 +57,5 @@ export const PRICING_PLANS: Record<PricingTier, PricingPlan> = {
 
 export const getSubscriptionTierFromPlan = (planId: string): PricingTier => {
   const tier = planId.toLowerCase() as PricingTier;
-  return Object.keys(PRICING_PLANS).includes(tier) ? tier : 'free';
+  return Object.keys(PRICING_PLANS).includes(tier) ? tier : 'standard';
 };

@@ -64,10 +64,14 @@ export default function Home() {
             <span className="font-bold text-white text-lg tracking-tight">Atlas Synapse</span>
           </Link>
           <nav className="hidden md:flex items-center gap-1">
-            {['About Us','Risks','Solutions','Pricing','Contact'].map((item) => (
-              <Link key={item} href={`/${item.toLowerCase().replace(' ','-')}`}
+            {[
+              { label: 'How It Works', href: '#problem' },
+              { label: 'Pricing', href: '/pricing' },
+              { label: 'Dashboard', href: '/dashboard' },
+            ].map(({ label, href }) => (
+              <Link key={label} href={href}
                 className="px-4 py-2 text-sm text-slate-300 hover:text-white transition-colors relative group">
-                {item}
+                {label}
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-atlas-primary to-atlas-secondary group-hover:w-full transition-all duration-300 rounded-full" />
               </Link>
             ))}

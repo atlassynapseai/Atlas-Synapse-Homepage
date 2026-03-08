@@ -19,15 +19,6 @@ export function PricingCard({ plan, isPopular = false, onSubscribe, isLoading = 
           : 'border-white/10 bg-slate-900/60 hover:border-white/20'
       }`}
     >
-      {/* Popular badge */}
-      {isPopular && (
-        <div className="absolute -top-4 left-1/2 -translate-x-1/2 transform">
-          <div className="rounded-full bg-gradient-to-r from-atlas-primary to-atlas-secondary px-4 py-1">
-            <span className="text-sm font-semibold text-white">Most Popular</span>
-          </div>
-        </div>
-      )}
-
       <div className="p-8">
         {/* Plan name and price */}
         <h3 className="text-2xl font-bold text-white mb-2">{plan.name}</h3>
@@ -36,36 +27,22 @@ export function PricingCard({ plan, isPopular = false, onSubscribe, isLoading = 
         <div className="mb-6">
           <div className="flex items-baseline">
             <span className="text-5xl font-bold text-white">${plan.price}</span>
-            {plan.price > 0 && <span className="text-slate-400 ml-2">/month</span>}
+            <span className="text-slate-400 ml-2">/month</span>
           </div>
-          {plan.price === 0 && <p className="text-slate-400 text-sm mt-1">Forever free</p>}
         </div>
 
         {/* Subscribe button */}
-        {plan.price > 0 && (
-          <button
-            onClick={onSubscribe}
-            disabled={isLoading}
-            className={`w-full py-3 px-4 rounded-lg font-semibold transition-all duration-200 mb-8 ${
-              isPopular
-                ? 'bg-gradient-to-r from-atlas-primary to-atlas-secondary text-white hover:shadow-lg hover:shadow-atlas-primary/50 disabled:opacity-50'
-                : 'border border-white/20 text-white hover:border-white/40 hover:bg-slate-800/60 disabled:opacity-50'
-            }`}
-          >
-            {isLoading ? 'Processing...' : 'Subscribe Now'}
-          </button>
-        )}
-
-        {/* Free plan button */}
-        {plan.price === 0 && (
-          <button
-            onClick={onSubscribe}
-            disabled={isLoading}
-            className="w-full py-3 px-4 rounded-lg font-semibold border border-white/20 text-white hover:border-white/40 hover:bg-slate-800/60 transition-all duration-200 mb-8 disabled:opacity-50"
-          >
-            {isLoading ? 'Getting started...' : 'Get Started'}
-          </button>
-        )}
+        <button
+          onClick={onSubscribe}
+          disabled={isLoading}
+          className={`w-full py-3 px-4 rounded-lg font-semibold transition-all duration-200 mb-8 ${
+            isPopular
+              ? 'bg-gradient-to-r from-atlas-primary to-atlas-secondary text-white hover:shadow-lg hover:shadow-atlas-primary/50 disabled:opacity-50'
+              : 'border border-white/20 text-white hover:border-white/40 hover:bg-slate-800/60 disabled:opacity-50'
+          }`}
+        >
+          {isLoading ? 'Processing...' : 'Subscribe Now'}
+        </button>
 
         {/* Features list */}
         <div className="space-y-4">
