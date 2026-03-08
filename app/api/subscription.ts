@@ -1,28 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-  {
-    auth: {
-      persistSession: false,
-    },
-  }
-)
-
 export async function GET(request: NextRequest) {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return NextResponse.json({ error: 'Database is not configured on the server.' }, { status: 503 })
+  }
+
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    { auth: { persistSession: false } }
+  )
+
   try {
     const userId = request.nextUrl.searchParams.get('userId')
 
     if (!userId) {
-      return NextResponse.json(
-        { error: 'Missing userId' },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'Missing userId' }, { status: 400 })
     }
 
-    // Get user subscription data
     const { data: userData } = await supabase
       .from('users')
       .select('subscription_status, current_plan, subscription_ends_at')
@@ -30,13 +26,9 @@ export async function GET(request: NextRequest) {
       .single()
 
     if (!userData) {
-      return NextResponse.json(
-        { error: 'User not found' },
-        { status: 404 }
-      )
+      return NextResponse.json({ error: 'User not found' }, { status: 404 })
     }
 
-    // Get active subscription details
     const { data: subscriptionData } = await supabase
       .from('subscriptions')
       .select('*')

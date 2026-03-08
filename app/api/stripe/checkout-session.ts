@@ -3,19 +3,21 @@ import { stripe } from '@/lib/stripe'
 import { createClient } from '@supabase/supabase-js'
 import { PRICING_PLANS } from '@/lib/pricing-plans'
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-  { auth: { persistSession: false } }
-)
-
 export async function POST(request: NextRequest) {
+  // Guard all required env vars before anything else
   if (!process.env.STRIPE_SECRET_KEY) {
-    return NextResponse.json(
-      { error: 'Stripe is not configured. Please contact support.' },
-      { status: 503 }
-    )
+    return NextResponse.json({ error: 'Stripe is not configured on the server.' }, { status: 503 })
   }
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return NextResponse.json({ error: 'Database is not configured on the server.' }, { status: 503 })
+  }
+
+  // Create supabase client inside the handler (not at module level)
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    { auth: { persistSession: false } }
+  )
 
   try {
     const { planId, userId } = await request.json()
@@ -29,7 +31,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid plan' }, { status: 400 })
     }
 
-    // Get user data
     const { data: userData } = await supabase
       .from('users')
       .select('stripe_customer_id, email')
@@ -42,7 +43,6 @@ export async function POST(request: NextRequest) {
 
     let stripeCustomerId = userData.stripe_customer_id
 
-    // Create or get Stripe customer
     if (!stripeCustomerId) {
       const customer = await stripe.customers.create({
         email: userData.email,
