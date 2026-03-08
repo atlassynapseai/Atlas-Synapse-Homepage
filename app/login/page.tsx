@@ -90,7 +90,7 @@ export default function Login() {
       sessionStorage.setItem('pendingLinkProvider', provider)
 
       const { error } = await supabase.auth.signInWithOAuth({
-        provider: provider as any,
+        provider: provider as 'google' | 'github',
         options: {
           redirectTo: window.location.origin + '/Atlas-Synapse-Homepage',
         },
