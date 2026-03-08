@@ -53,7 +53,7 @@ export default function SignUp() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: provider as 'google' | 'github',
         options: {
-          redirectTo: window.location.origin + '/Atlas-Synapse-Homepage',
+          redirectTo: window.location.origin,
         },
       })
 

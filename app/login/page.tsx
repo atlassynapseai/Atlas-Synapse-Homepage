@@ -92,7 +92,7 @@ export default function Login() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: provider as 'google' | 'github',
         options: {
-          redirectTo: window.location.origin + '/Atlas-Synapse-Homepage',
+          redirectTo: window.location.origin,
         },
       })
 
@@ -115,7 +115,7 @@ export default function Login() {
       const { error } = await supabase.auth.linkIdentity({
         provider: linkingProvider,
         options: {
-          redirectTo: window.location.origin + '/Atlas-Synapse-Homepage',
+          redirectTo: window.location.origin,
         },
       })
 
