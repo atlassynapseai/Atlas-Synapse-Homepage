@@ -18,6 +18,7 @@ export default function Login() {
 
   // Check if we're in linking mode
   const linkProvider = searchParams.get('linkProvider') as 'google' | 'github' | null
+  const nextUrl = searchParams.get('next') // OAuth consent return URL
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -68,9 +69,13 @@ export default function Login() {
           setLinkingProvider(linkProvider)
         }
       } else {
-        // No linking - redirect based on subscription status
-        const hasSubscription = userData?.subscription_status === 'active'
-        router.push(hasSubscription ? '/dashboard' : '/pricing')
+        // No linking - redirect based on subscription status (or back to OAuth consent)
+        if (nextUrl) {
+          router.push(decodeURIComponent(nextUrl))
+        } else {
+          const hasSubscription = userData?.subscription_status === 'active'
+          router.push(hasSubscription ? '/dashboard' : '/pricing')
+        }
       }
     } catch (err: any) {
       setError(err.message || 'Failed to sign in')
