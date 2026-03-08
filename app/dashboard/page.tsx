@@ -1,152 +1,215 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { supabase } from '@/lib/supabase'
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { useAuth } from '@/lib/auth-context'
+import { PRICING_PLANS } from '@/lib/pricing-plans'
+import { ProtectedRoute } from '@/components/ProtectedRoute'
 
-interface UserProfile {
-  id: string
-  name: string
-  email: string
-  created_at?: string
+interface SubscriptionData {
+  subscriptionStatus: string
+  currentPlan: string
+  subscriptionEndsAt: string | null
+  activeSubscription: any
 }
 
-export default function Dashboard() {
-  const router = useRouter()
-  const { user, loading } = useAuth()
-  const [profile, setProfile] = useState<UserProfile | null>(null)
-  const [profileLoading, setProfileLoading] = useState(true)
+export default function DashboardPage() {
+  const { user } = useAuth()
+  const [subscriptionData, setSubscriptionData] = useState<SubscriptionData | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+  const [portalLoading, setPortalLoading] = useState(false)
 
   useEffect(() => {
-    if (loading) return
+    if (!user) return
 
-    if (!user) {
-      router.push('/Atlas-Synapse-Homepage/login')
-      return
-    }
-
-    // Fetch user profile from Supabase
-    const fetchProfile = async () => {
+    const fetchSubscriptionData = async () => {
       try {
-        const { data, error } = await supabase
-          .from('users')
-          .select('*')
-          .eq('id', user.id)
-          .single()
-
-        if (error) {
-          // User doesn't exist in database yet, create profile
-          const { data: newUser } = await supabase
-            .from('users')
-            .insert([
-              {
-                id: user.id,
-                email: user.email,
-                name: user.user_metadata?.name || 'User',
-                created_at: new Date(),
-              },
-            ])
-            .select()
-            .single()
-
-          if (newUser) {
-            setProfile(newUser)
-          }
-        } else if (data) {
-          setProfile(data)
-        }
-      } catch (error) {
-        console.error('Error fetching profile:', error)
+        const response = await fetch(`/api/subscription?userId=${user.id}`)
+        if (!response.ok) throw new Error('Failed to fetch subscription')
+        const data = await response.json()
+        setSubscriptionData(data)
+      } catch (err: any) {
+        setError(err.message)
       } finally {
-        setProfileLoading(false)
+        setLoading(false)
       }
     }
 
-    fetchProfile()
-  }, [user, loading, router])
+    fetchSubscriptionData()
+  }, [user])
 
-  const handleLogout = async () => {
+  const handleBillingPortal = async () => {
+    setPortalLoading(true)
     try {
-      await supabase.auth.signOut()
-      router.push('/Atlas-Synapse-Homepage/')
-    } catch (error) {
-      console.error('Error logging out:', error)
+      const response = await fetch('/api/stripe/customer-portal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: user?.id }),
+      })
+
+      if (!response.ok) throw new Error('Failed to open billing portal')
+      const { url } = await response.json()
+      window.location.href = url
+    } catch (err: any) {
+      setError(err.message)
+      setPortalLoading(false)
     }
   }
 
-  if (loading || profileLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-[#050816]">
-        <div className="text-center">
-          <div className="h-12 w-12 animate-spin rounded-full border-4 border-atlas-primary/30 border-t-atlas-primary mx-auto mb-4 shadow-lg shadow-atlas-primary/50"></div>
-          <p className="text-slate-300 animate-pulse">Loading your profile...</p>
-        </div>
-      </div>
-    )
-  }
-
-  if (!user || !profile) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-[#050816]">
-        <p className="text-slate-300 animate-pulse">Redirecting...</p>
-      </div>
-    )
-  }
+  const currentPlan = subscriptionData?.currentPlan ? PRICING_PLANS[subscriptionData.currentPlan as keyof typeof PRICING_PLANS] : null
 
   return (
-    <div className="min-h-screen bg-[#050816] pt-24">
-      <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
-        <div className="animate-bounce-in rounded-lg border border-white/10 bg-slate-900/60 p-8">
-          <div className="flex items-center gap-6 mb-8 animate-slide-up delay-100">
-            <div className="flex-1">
-              <h1 className="text-3xl font-bold text-slate-100 animate-slide-up delay-200">{profile.name}</h1>
-              <p className="text-slate-400 animate-slide-up delay-300">{profile.email}</p>
+    <ProtectedRoute>
+      <div className="min-h-screen bg-[#050816] pt-32 pb-20">
+        {/* Header */}
+        <div className="border-b border-white/10 mb-12 pb-12">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10">
+            <div className="flex justify-between items-start mb-8">
+              <div>
+                <h1 className="text-4xl font-bold text-white mb-2">Dashboard</h1>
+                <p className="text-slate-400">Welcome to your Atlas Synapse workspace</p>
+              </div>
+              <Link href="/" className="text-slate-400 hover:text-white">
+                ← Back to Home
+              </Link>
             </div>
-          </div>
 
-          <div className="border-t border-white/10 pt-8 animate-slide-up delay-300">
-            <h2 className="text-lg font-semibold text-slate-100 mb-4">Account Information</h2>
-            <div className="space-y-4">
-              <div className="animate-slide-up delay-400 p-3 rounded-lg hover:bg-white/5 transition-colors duration-300">
-                <p className="text-sm text-slate-400">Full Name</p>
-                <p className="text-slate-100 font-medium">{profile.name}</p>
-              </div>
-              <div className="animate-slide-up delay-500 p-3 rounded-lg hover:bg-white/5 transition-colors duration-300">
-                <p className="text-sm text-slate-400">Email Address</p>
-                <p className="text-slate-100 font-medium">{profile.email}</p>
-              </div>
-              <div className="animate-slide-up delay-500 p-3 rounded-lg hover:bg-white/5 transition-colors duration-300">
-                <p className="text-sm text-slate-400">User ID</p>
-                <p className="text-slate-100 font-medium text-xs font-mono break-all">{profile.id}</p>
-              </div>
-              {profile.created_at && (
-                <div className="animate-slide-up delay-500 p-3 rounded-lg hover:bg-white/5 transition-colors duration-300">
-                  <p className="text-sm text-slate-400">Member Since</p>
-                  <p className="text-slate-100 font-medium">
-                    {new Date(profile.created_at).toLocaleDateString()}
-                  </p>
+            {/* User info card */}
+            <div className="rounded-lg border border-white/10 bg-slate-900/60 p-6">
+              <h2 className="text-lg font-semibold text-white mb-4">Account Information</h2>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <p className="text-sm text-slate-400">Email</p>
+                  <p className="text-white font-medium">{user?.email}</p>
                 </div>
-              )}
+                <div>
+                  <p className="text-sm text-slate-400">User ID</p>
+                  <p className="text-white font-mono text-sm">{user?.id}</p>
+                </div>
+              </div>
             </div>
-          </div>
-
-          <div className="border-t border-white/10 pt-8 mt-8 animate-slide-up delay-500">
-            <button
-              onClick={handleLogout}
-              className="relative-sheen sheen rounded-lg bg-red-600/20 px-6 py-2 font-semibold text-red-400 hover:bg-red-600/30 hover:shadow-lg hover:shadow-red-600/20 active:scale-95 transition-all duration-200"
-            >
-              Sign Out
-            </button>
           </div>
         </div>
 
-        <div className="mt-8 text-center animate-slide-up delay-500">
-          <a href="/Atlas-Synapse-Homepage/" className="text-atlas-secondary hover:text-atlas-primary transition-colors duration-200 inline-block hover:scale-105">
-            ← Back to Home
-          </a>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10">
+          {error && (
+            <div className="mb-8 rounded-lg bg-red-500/20 border border-red-500/50 p-4 text-red-300 text-sm">
+              {error}
+            </div>
+          )}
+
+          {loading ? (
+            <div className="text-center py-12">
+              <div className="text-slate-400">Loading subscription information...</div>
+            </div>
+          ) : (
+            <>
+              {/* Subscription section */}
+              <div className="mb-12">
+                <h2 className="text-2xl font-bold text-white mb-6">Subscription</h2>
+
+                {subscriptionData?.subscriptionStatus === 'active' && currentPlan ? (
+                  <div className="grid md:grid-cols-3 gap-6 mb-6">
+                    {/* Plan card */}
+                    <div className="md:col-span-2 rounded-lg border border-atlas-primary/50 bg-gradient-to-br from-atlas-primary/10 to-atlas-secondary/10 p-8">
+                      <div className="flex justify-between items-start mb-6">
+                        <div>
+                          <h3 className="text-3xl font-bold text-white mb-2">{currentPlan.name} Plan</h3>
+                          <p className="text-slate-400">${currentPlan.price}/month</p>
+                        </div>
+                        <div className="flex items-center gap-2 px-4 py-2 bg-green-500/20 border border-green-500/50 rounded-lg">
+                          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                          <span className="text-green-300 text-sm font-semibold">Active</span>
+                        </div>
+                      </div>
+
+                      <div className="space-y-3">
+                        {currentPlan.features.slice(0, 4).map((feature, idx) => (
+                          <div key={idx} className="flex items-center gap-2 text-slate-300">
+                            <svg className="w-5 h-5 text-atlas-primary" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
+                            <span>{feature}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="space-y-3">
+                      <button
+                        onClick={handleBillingPortal}
+                        disabled={portalLoading}
+                        className="w-full rounded-lg bg-slate-800 border border-white/20 px-4 py-3 font-semibold text-white hover:bg-slate-700/60 disabled:opacity-50 transition-all"
+                      >
+                        {portalLoading ? 'Loading...' : 'Manage Billing'}
+                      </button>
+                      <Link
+                        href="/pricing"
+                        className="block w-full text-center rounded-lg border border-white/20 px-4 py-3 font-semibold text-white hover:bg-white/5 transition-all"
+                      >
+                        Change Plan
+                      </Link>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="rounded-lg border border-white/10 bg-slate-900/60 p-8 text-center">
+                    <p className="text-slate-400 mb-6">You don't have an active subscription yet.</p>
+                    <Link
+                      href="/pricing"
+                      className="inline-block rounded-lg bg-gradient-to-r from-atlas-primary to-atlas-secondary px-8 py-3 font-semibold text-white hover:opacity-95"
+                    >
+                      Choose a Plan
+                    </Link>
+                  </div>
+                )}
+              </div>
+
+              {/* Products section */}
+              <div>
+                <h2 className="text-2xl font-bold text-white mb-6">Products</h2>
+
+                <div className="grid md:grid-cols-2 gap-6">
+                  {/* Aegis Prime Auditor */}
+                  <div className="rounded-lg border border-white/10 bg-slate-900/60 p-6 hover:border-white/20 transition-all">
+                    <div className="flex justify-between items-start mb-4">
+                      <div>
+                        <h3 className="text-xl font-bold text-white">Aegis Prime Auditor</h3>
+                        <p className="text-sm text-slate-400">Advanced AI system auditing</p>
+                      </div>
+                      {subscriptionData?.subscriptionStatus === 'active' && (
+                        <div className="flex items-center gap-1 px-3 py-1 bg-green-500/20 border border-green-500/50 rounded">
+                          <span className="text-green-300 text-xs font-semibold">Unlocked</span>
+                        </div>
+                      )}
+                    </div>
+
+                    <p className="text-slate-400 text-sm mb-6">
+                      {subscriptionData?.subscriptionStatus === 'active'
+                        ? 'Full access to all auditing features'
+                        : `Available with ${currentPlan?.name || 'Premium'} plan and above`}
+                    </p>
+
+                    <button className="w-full rounded-lg border border-white/20 px-4 py-2 font-semibold text-white hover:bg-white/5 transition-all disabled:opacity-50"
+                      disabled={subscriptionData?.subscriptionStatus !== 'active'}>
+                      {subscriptionData?.subscriptionStatus === 'active' ? 'Launch' : 'Upgrade to Access'}
+                    </button>
+                  </div>
+
+                  {/* Placeholder for future products */}
+                  <div className="rounded-lg border border-dashed border-white/10 bg-slate-900/40 p-6 flex items-center justify-center">
+                    <div className="text-center">
+                      <p className="text-slate-400 mb-4">More products coming soon</p>
+                      <p className="text-sm text-slate-500">Check back later for additional offerings</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
-    </div>
+    </ProtectedRoute>
   )
 }
