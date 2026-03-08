@@ -1,4 +1,4 @@
-import { loadStripe, Stripe as StripeClient } from '@stripe/js';
+import { loadStripe, Stripe as StripeClient } from '@stripe/stripe-js';
 
 let stripePromise: Promise<StripeClient | null>;
 
