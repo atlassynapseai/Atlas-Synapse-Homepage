@@ -413,45 +413,87 @@ export default function Home() {
             <div className="text-center mb-14"
               data-reveal style={{ opacity:0, transform:'translateY(16px)', transition:'opacity 0.7s ease, transform 0.7s ease' }}>
               <h2 className="text-4xl font-bold text-white mb-4">Simple, Transparent Pricing</h2>
-              <p className="text-lg text-slate-400">Choose the plan that fits your needs</p>
+              <p className="text-lg text-slate-400">Choose the plan that fits your AI governance journey</p>
             </div>
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-3 gap-8 items-start">
               {[
-                { name:'Standard', price:'$100', desc:'For small teams', features:['Full Aegis Prime Auditor','Advanced reporting','Email support'], popular:false, delay:'0s' },
-                { name:'Premium', price:'$300', desc:'For growing organizations', features:['All Standard features','Priority support','Custom integrations'], popular:true, delay:'0.1s' },
-                { name:'VIP', price:'$1,500', desc:'Enterprise-grade', features:['All Premium features','Dedicated support','SLA guarantee'], popular:false, delay:'0.2s' },
-              ].map(({ name, price, desc, features, popular, delay }) => (
-                <div key={name} className="atlas-card p-8 relative"
+                {
+                  name:'Standard', price:'$100', period:'/mo',
+                  desc:'For teams starting their AI governance journey',
+                  popular:false, delay:'0s',
+                  features:[
+                    '16-Week AI Governance Roadmap (drip-fed)',
+                    'Weekly group Q&A sessions',
+                    'Basic Community Dashboard',
+                    'Community Tools Access',
+                    'Aegis Prime Auditor — Basic',
+                  ],
+                  cta:'Get Started',
+                },
+                {
+                  name:'Premium', price:'$300', period:'/mo',
+                  desc:'For organizations scaling AI responsibly',
+                  popular:true, delay:'0.1s',
+                  features:[
+                    'Full AI Governance Roadmap (instant access, no drip)',
+                    'Priority Q&A sessions',
+                    'Personal Dashboard',
+                    'Full Suite Tools Access',
+                    'Aegis Prime Auditor — Full',
+                  ],
+                  cta:'Subscribe Now',
+                },
+                {
+                  name:'VIP', price:'$1,500', period:'/mo',
+                  desc:'Enterprise-grade AI governance at scale',
+                  popular:false, delay:'0.2s',
+                  features:[
+                    'Full Roadmap + 1-on-1 mentorship sessions',
+                    'Direct access to leadership',
+                    'Multi-Seat Dashboard',
+                    'Enterprise Tools + Custom Development',
+                    'Aegis Prime Auditor — Enterprise Edition',
+                    'All Future Products & Features (Early Access)',
+                  ],
+                  cta:'Contact Us',
+                },
+              ].map(({ name, price, period, desc, features, popular, delay, cta }) => (
+                /* Outer wrapper to absorb badge overflow */
+                <div key={name} className={`relative ${popular ? 'pt-5' : ''}`}
                   data-reveal
-                  style={{ opacity:0, transform:'translateY(24px)', transition:`opacity 0.7s ease ${delay}, transform 0.7s ease ${delay}`, ...(popular ? { borderColor:'rgba(168,85,247,0.4)' } : {}) }}>
+                  style={{ opacity:0, transform:'translateY(24px)', transition:`opacity 0.7s ease ${delay}, transform 0.7s ease ${delay}` }}>
                   {popular && (
-                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-atlas-primary to-atlas-secondary px-5 py-1.5 rounded-full shadow-lg shadow-atlas-primary/30">
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 z-10 bg-gradient-to-r from-atlas-primary to-atlas-secondary px-5 py-1.5 rounded-full shadow-lg shadow-atlas-primary/40">
                       <span className="text-xs font-bold text-white tracking-wide uppercase">Most Popular</span>
                     </div>
                   )}
-                  <h3 className="text-2xl font-bold text-white mb-2">{name}</h3>
-                  <div className="flex items-baseline mb-6">
-                    <span className="text-4xl font-black text-white">{price}</span>
-                    <span className="text-slate-400 ml-2">/month</span>
+                  <div className="atlas-card p-8 h-full flex flex-col"
+                    style={popular ? { borderColor:'rgba(168,85,247,0.45)', boxShadow:'0 0 40px rgba(168,85,247,0.12)' } : {}}>
+                    <h3 className="text-2xl font-bold text-white mb-1">{name}</h3>
+                    <div className="flex items-baseline mb-2">
+                      <span className="text-4xl font-black text-white">{price}</span>
+                      <span className="text-slate-400 ml-1.5 text-sm">{period}</span>
+                    </div>
+                    <p className="text-slate-400 text-sm mb-6 leading-snug">{desc}</p>
+                    <Link href="/pricing"
+                      className={`block w-full text-center rounded-xl px-4 py-2.5 font-semibold mb-6 transition-all duration-300 ${popular ? 'relative-sheen sheen bg-gradient-to-r from-atlas-primary to-atlas-secondary text-white hover:shadow-lg hover:shadow-atlas-primary/40 hover:scale-105' : 'border border-white/10 text-white hover:bg-white/10 hover:border-white/20'}`}>
+                      {cta}
+                    </Link>
+                    <ul className="space-y-2.5 flex-1">
+                      {features.map((f) => (
+                        <li key={f} className="flex items-start gap-2 text-sm text-slate-300">
+                          <span className="text-emerald-400 mt-0.5 shrink-0">✓</span>
+                          <span>{f}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  <p className="text-slate-400 text-sm mb-6">{desc}</p>
-                  <Link href="/pricing"
-                    className={`block w-full text-center rounded-xl px-4 py-2.5 font-semibold mb-6 transition-all duration-300 ${popular ? 'relative-sheen sheen bg-gradient-to-r from-atlas-primary to-atlas-secondary text-white hover:shadow-lg hover:shadow-atlas-primary/40' : 'border border-white/10 text-white hover:bg-white/10'}`}>
-                    {popular ? 'Subscribe Now' : 'Learn More'}
-                  </Link>
-                  <ul className="space-y-2">
-                    {features.map((f) => (
-                      <li key={f} className="flex items-center gap-2 text-sm text-slate-300">
-                        <span className="text-emerald-400">✓</span>{f}
-                      </li>
-                    ))}
-                  </ul>
                 </div>
               ))}
             </div>
             <div className="mt-12 text-center"
               data-reveal style={{ opacity:0, transition:'opacity 0.7s ease 0.3s' }}>
-              <Link href="/pricing" className="btn-primary inline-block">View All Plans</Link>
+              <Link href="/pricing" className="btn-primary inline-block">View Full Comparison</Link>
             </div>
           </div>
         </section>
