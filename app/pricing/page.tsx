@@ -46,14 +46,16 @@ export default function PricingPage() {
         throw new Error(errorData.error || 'Failed to create checkout session')
       }
 
-      const { sessionId } = await response.json()
+      const { sessionUrl } = await response.json()
 
-      // Redirect to Stripe checkout (this will be handled in Phase 6)
-      // For now, we'll just show a message
-      setError('Checkout endpoint will be available after Phase 6 implementation')
+      // Redirect to Stripe checkout
+      if (sessionUrl) {
+        window.location.href = sessionUrl
+      } else {
+        throw new Error('No checkout URL returned')
+      }
     } catch (err: any) {
       setError(err.message || 'Failed to process subscription')
-    } finally {
       setLoadingPlan(null)
     }
   }
