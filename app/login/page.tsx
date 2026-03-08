@@ -32,6 +32,18 @@ export default function Login() {
 
       if (signInError) throw signInError
 
+      // Get user data to check subscription status
+      const { data: { user } } = await supabase.auth.getUser()
+
+      if (!user) throw new Error('Failed to get user data')
+
+      // Check subscription status in database
+      const { data: userData } = await supabase
+        .from('users')
+        .select('subscription_status')
+        .eq('id', user.id)
+        .single()
+
       // If we're in linking mode, check if the user already has this provider
       if (linkProvider) {
         const { data: { user } } = await supabase.auth.getUser()
@@ -41,9 +53,10 @@ export default function Login() {
           const providerAlreadyLinked = user.identities.some(id => id.provider === linkProvider)
 
           if (providerAlreadyLinked) {
-            // Provider already linked - just redirect
+            // Provider already linked - redirect to dashboard or pricing based on subscription
             sessionStorage.removeItem('pendingLinkProvider')
-            router.push('/')
+            const hasSubscription = userData?.subscription_status === 'active'
+            router.push(hasSubscription ? '/dashboard' : '/pricing')
           } else {
             // Provider not linked yet - show linking prompt
             setShowLinkingPrompt(true)
@@ -55,7 +68,9 @@ export default function Login() {
           setLinkingProvider(linkProvider)
         }
       } else {
-        router.push('/')
+        // No linking - redirect based on subscription status
+        const hasSubscription = userData?.subscription_status === 'active'
+        router.push(hasSubscription ? '/dashboard' : '/pricing')
       }
     } catch (err: any) {
       setError(err.message || 'Failed to sign in')
@@ -106,10 +121,21 @@ export default function Login() {
 
       if (error) throw error
 
-      // Success - clear linking state and redirect to homepage
+      // After linking, check subscription status and redirect appropriately
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) throw new Error('Failed to get user data')
+
+      const { data: userData } = await supabase
+        .from('users')
+        .select('subscription_status')
+        .eq('id', user.id)
+        .single()
+
+      // Success - clear linking state and redirect to dashboard or pricing
       sessionStorage.removeItem('pendingLinkProvider')
       setShowLinkingPrompt(false)
-      router.push('/')
+      const hasSubscription = userData?.subscription_status === 'active'
+      router.push(hasSubscription ? '/dashboard' : '/pricing')
     } catch (err: any) {
       setError(err.message || `Failed to link ${linkingProvider} account`)
     } finally {
@@ -117,11 +143,24 @@ export default function Login() {
     }
   }
 
-  const handleSkipLinking = () => {
-    // Clear linking state and redirect home
+  const handleSkipLinking = async () => {
+    // Clear linking state and redirect based on subscription status
     sessionStorage.removeItem('pendingLinkProvider')
     setShowLinkingPrompt(false)
-    router.push('/')
+
+    const { data: { user } } = await supabase.auth.getUser()
+    if (user) {
+      const { data: userData } = await supabase
+        .from('users')
+        .select('subscription_status')
+        .eq('id', user.id)
+        .single()
+
+      const hasSubscription = userData?.subscription_status === 'active'
+      router.push(hasSubscription ? '/dashboard' : '/pricing')
+    } else {
+      router.push('/login')
+    }
   }
 
   // Show linking prompt instead of login form

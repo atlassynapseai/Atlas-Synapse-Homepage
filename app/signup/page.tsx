@@ -33,7 +33,8 @@ export default function SignUp() {
       if (signUpError) throw signUpError
 
       // User profile is created automatically by database trigger
-      router.push('/')
+      // Redirect to pricing to let user choose a subscription plan
+      router.push('/pricing')
     } catch (err: any) {
       setError(err.message || 'Failed to sign up')
     } finally {
