@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import { AuthProvider } from '@/lib/auth-context'
 import './globals.css'
 
@@ -20,9 +21,11 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className="bg-[#050816] text-slate-100">
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+        <Suspense fallback={null}>
+          <AuthProvider>
+            {children}
+          </AuthProvider>
+        </Suspense>
       </body>
     </html>
   )
