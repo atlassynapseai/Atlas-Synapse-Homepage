@@ -13,11 +13,10 @@ interface PricingCardProps {
 export function PricingCard({ plan, isPopular = false, onSubscribe, isLoading = false }: PricingCardProps) {
   return (
     <div
-      className={`relative rounded-2xl border transition-all duration-300 ${
-        isPopular
+      className={`relative rounded-2xl border transition-all duration-300 ${isPopular
           ? 'border-atlas-primary/50 bg-gradient-to-br from-atlas-primary/10 to-atlas-secondary/10 shadow-2xl shadow-atlas-primary/20 scale-105'
           : 'border-white/10 bg-slate-900/60 hover:border-white/20'
-      }`}
+        }`}
     >
       <div className="p-8">
         {/* Plan name and price */}
@@ -35,11 +34,10 @@ export function PricingCard({ plan, isPopular = false, onSubscribe, isLoading = 
         <button
           onClick={onSubscribe}
           disabled={isLoading}
-          className={`w-full py-3 px-4 rounded-lg font-semibold transition-all duration-200 mb-8 ${
-            isPopular
+          className={`w-full py-3 px-4 rounded-lg font-semibold transition-all duration-200 mb-8 ${isPopular
               ? 'bg-gradient-to-r from-atlas-primary to-atlas-secondary text-white hover:shadow-lg hover:shadow-atlas-primary/50 disabled:opacity-50'
               : 'border border-white/20 text-white hover:border-white/40 hover:bg-slate-800/60 disabled:opacity-50'
-          }`}
+            }`}
         >
           {isLoading ? 'Processing...' : 'Subscribe Now'}
         </button>

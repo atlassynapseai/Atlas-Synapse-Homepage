@@ -56,7 +56,7 @@ export default function PricingPage() {
       {/* Header */}
       <div className="text-center mb-20 px-4">
         <h1 className="text-5xl md:text-6xl font-bold text-white mb-6"
-          style={{ background:'linear-gradient(135deg,#a855f7,#ec4899)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text' }}>
+          style={{ background: 'linear-gradient(135deg,#a855f7,#ec4899)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
           Simple, Transparent Pricing
         </h1>
         <p className="text-xl text-slate-400 max-w-2xl mx-auto">
