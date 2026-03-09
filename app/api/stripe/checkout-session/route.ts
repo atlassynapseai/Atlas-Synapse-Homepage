@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
   )
 
   try {
-    const { planId, userId } = await request.json()
+    const { planId, userId, email } = await request.json()
 
     if (!planId || !userId) {
       return NextResponse.json({ error: 'Missing planId or userId' }, { status: 400 })
@@ -31,21 +31,30 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid plan' }, { status: 400 })
     }
 
-    const { data: userData } = await supabase
+    let { data: userData } = await supabase
       .from('users')
       .select('stripe_customer_id, email')
       .eq('id', userId)
       .single()
 
+    // Auto-create user row if it doesn't exist (e.g. OAuth signup without trigger)
     if (!userData) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 })
+      if (!email) {
+        return NextResponse.json({ error: 'User not found and no email provided' }, { status: 400 })
+      }
+      await supabase.from('users').insert({
+        id: userId,
+        email,
+        subscription_status: 'none',
+      })
+      userData = { stripe_customer_id: null, email }
     }
 
     let stripeCustomerId = userData.stripe_customer_id
 
     if (!stripeCustomerId) {
       const customer = await stripe.customers.create({
-        email: userData.email,
+        email: userData.email || email,
         metadata: { userId },
       })
       stripeCustomerId = customer.id

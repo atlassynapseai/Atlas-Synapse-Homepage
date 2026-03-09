@@ -25,7 +25,7 @@ export default function PricingPage() {
       const response = await fetch('/api/stripe/checkout-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ planId, userId: user.id }),
+        body: JSON.stringify({ planId, userId: user.id, email: user.email }),
       })
 
       // Guard: only parse JSON if the response is JSON

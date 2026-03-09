@@ -26,9 +26,19 @@ export default function DashboardPage() {
     const fetchSubscriptionData = async () => {
       try {
         const response = await fetch(`/api/subscription?userId=${user.id}`)
-        if (!response.ok) throw new Error('Failed to fetch subscription')
+        const contentType = response.headers.get('content-type') || ''
+        if (!contentType.includes('application/json')) {
+          // Route not found or server error - show no subscription state
+          setSubscriptionData({ subscriptionStatus: null, currentPlan: null, subscriptionEndsAt: null, activeSubscription: null })
+          return
+        }
         const data = await response.json()
-        setSubscriptionData(data)
+        if (data.error) {
+          // Server returned an error JSON - show no subscription state silently
+          setSubscriptionData({ subscriptionStatus: null, currentPlan: null, subscriptionEndsAt: null, activeSubscription: null })
+        } else {
+          setSubscriptionData(data)
+        }
       } catch (err: any) {
         setError(err.message)
       } finally {

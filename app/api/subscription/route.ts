@@ -25,8 +25,14 @@ export async function GET(request: NextRequest) {
       .eq('id', userId)
       .single()
 
+    // Return empty subscription state if user row doesn't exist yet
     if (!userData) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 })
+      return NextResponse.json({
+        subscriptionStatus: null,
+        currentPlan: null,
+        subscriptionEndsAt: null,
+        activeSubscription: null,
+      })
     }
 
     const { data: subscriptionData } = await supabase
