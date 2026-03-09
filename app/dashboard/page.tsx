@@ -69,6 +69,12 @@ export default function DashboardPage() {
 
   const currentPlan = subscriptionData?.currentPlan ? PRICING_PLANS[subscriptionData.currentPlan as keyof typeof PRICING_PLANS] : null
 
+  const auditorAccessLevel = subscriptionData?.currentPlan === 'vip'
+    ? 'Enterprise Access'
+    : subscriptionData?.currentPlan === 'premium'
+    ? 'Full Access'
+    : 'Basic Access'
+
   return (
     <ProtectedRoute>
       <div className="min-h-screen bg-[#050816] pt-32 pb-20">
@@ -197,14 +203,27 @@ export default function DashboardPage() {
 
                     <p className="text-slate-400 text-sm mb-6">
                       {subscriptionData?.subscriptionStatus === 'active'
-                        ? 'Full access to all auditing features'
-                        : `Available with ${currentPlan?.name || 'Premium'} plan and above`}
+                        ? `${auditorAccessLevel} — AI governance and audit tooling`
+                        : 'Available with any active subscription'}
                     </p>
 
-                    <button className="w-full rounded-lg border border-white/20 px-4 py-2 font-semibold text-white hover:bg-white/5 transition-all disabled:opacity-50"
-                      disabled={subscriptionData?.subscriptionStatus !== 'active'}>
-                      {subscriptionData?.subscriptionStatus === 'active' ? 'Launch' : 'Upgrade to Access'}
-                    </button>
+                    {subscriptionData?.subscriptionStatus === 'active' ? (
+                      <a
+                        href="https://atlassynapseai.github.io/Aegis-Prime-Auditor/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block w-full text-center rounded-lg border border-atlas-primary/50 bg-atlas-primary/10 px-4 py-2 font-semibold text-white hover:bg-atlas-primary/20 transition-all"
+                      >
+                        Launch Aegis Prime Auditor →
+                      </a>
+                    ) : (
+                      <Link
+                        href="/pricing"
+                        className="block w-full text-center rounded-lg border border-white/20 px-4 py-2 font-semibold text-slate-400 hover:bg-white/5 transition-all"
+                      >
+                        Upgrade to Access
+                      </Link>
+                    )}
                   </div>
 
                   {/* Skool Community */}

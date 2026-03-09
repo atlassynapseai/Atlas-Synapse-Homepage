@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import Link from 'next/link'
 
 const SOCIAL_LINKS = [
@@ -9,11 +9,51 @@ const SOCIAL_LINKS = [
   { label: 'YouTube', href: 'https://www.youtube.com/@AtlasSynapse', icon: '▶' },
 ]
 
+const ACCEPTED_TYPES = '.jpg,.jpeg,.png,.gif,.webp,.svg,.pdf,.doc,.docx,.xls,.xlsx,.txt,.csv'
+const MAX_FILE_MB = 10
+const MAX_TOTAL_MB = 20
+
+function formatBytes(bytes: number) {
+  if (bytes < 1024) return `${bytes} B`
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
+}
+
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
+  const [files, setFiles] = useState<File[]>([])
   const [loading, setLoading] = useState(false)
   const [sent, setSent] = useState(false)
   const [error, setError] = useState('')
+  const [dragOver, setDragOver] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const addFiles = (incoming: FileList | null) => {
+    if (!incoming) return
+    const next = [...files]
+    let totalSize = next.reduce((s, f) => s + f.size, 0)
+
+    for (const file of Array.from(incoming)) {
+      if (file.size > MAX_FILE_MB * 1024 * 1024) {
+        setError(`"${file.name}" exceeds the ${MAX_FILE_MB}MB per-file limit`)
+        return
+      }
+      if (totalSize + file.size > MAX_TOTAL_MB * 1024 * 1024) {
+        setError(`Total attachments cannot exceed ${MAX_TOTAL_MB}MB`)
+        return
+      }
+      if (!next.find(f => f.name === file.name && f.size === file.size)) {
+        next.push(file)
+        totalSize += file.size
+      }
+    }
+    setError('')
+    setFiles(next)
+  }
+
+  const removeFile = (index: number) => {
+    setFiles(files.filter((_, i) => i !== index))
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -21,11 +61,14 @@ export default function ContactPage() {
     setLoading(true)
 
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      })
+      const fd = new FormData()
+      fd.append('name', form.name)
+      fd.append('email', form.email)
+      fd.append('subject', form.subject)
+      fd.append('message', form.message)
+      files.forEach(f => fd.append('files', f))
+
+      const response = await fetch('/api/contact', { method: 'POST', body: fd })
       const data = await response.json()
       if (!response.ok) throw new Error(data.error || 'Failed to send message')
       setSent(true)
@@ -195,11 +238,74 @@ export default function ContactPage() {
                 <textarea
                   value={form.message}
                   onChange={e => setForm({ ...form, message: e.target.value })}
-                  rows={6}
+                  rows={5}
                   className="w-full rounded-lg border border-white/10 bg-slate-800/60 px-4 py-2.5 text-slate-100 placeholder-slate-500 transition-all hover:border-white/20 focus:border-atlas-primary/50 focus:outline-none resize-none"
                   placeholder="Tell us about your AI governance needs, a question, or anything else..."
                   required
                 />
+              </div>
+
+              {/* File upload */}
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">
+                  Attachments <span className="text-slate-500 font-normal">(optional — images, PDF, Word, Excel, CSV · max {MAX_FILE_MB}MB each)</span>
+                </label>
+
+                {/* Drop zone */}
+                <div
+                  className={`relative rounded-lg border-2 border-dashed px-6 py-8 text-center transition-all cursor-pointer ${
+                    dragOver
+                      ? 'border-atlas-primary bg-atlas-primary/10'
+                      : 'border-white/15 bg-slate-800/30 hover:border-white/30 hover:bg-slate-800/50'
+                  }`}
+                  onClick={() => fileInputRef.current?.click()}
+                  onDragOver={e => { e.preventDefault(); setDragOver(true) }}
+                  onDragLeave={() => setDragOver(false)}
+                  onDrop={e => { e.preventDefault(); setDragOver(false); addFiles(e.dataTransfer.files) }}
+                >
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    multiple
+                    accept={ACCEPTED_TYPES}
+                    className="hidden"
+                    onChange={e => addFiles(e.target.files)}
+                  />
+                  <svg className="mx-auto mb-3 w-8 h-8 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                  </svg>
+                  <p className="text-sm text-slate-400">
+                    Drag & drop files here, or <span className="text-atlas-primary font-medium">browse</span>
+                  </p>
+                  <p className="text-xs text-slate-600 mt-1">Max {MAX_TOTAL_MB}MB total</p>
+                </div>
+
+                {/* File list */}
+                {files.length > 0 && (
+                  <ul className="mt-3 space-y-2">
+                    {files.map((file, i) => (
+                      <li key={i} className="flex items-center justify-between rounded-lg border border-white/10 bg-slate-800/40 px-4 py-2.5">
+                        <div className="flex items-center gap-3 min-w-0">
+                          <svg className="w-4 h-4 text-atlas-primary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                          </svg>
+                          <span className="text-sm text-slate-300 truncate">{file.name}</span>
+                          <span className="text-xs text-slate-500 shrink-0">{formatBytes(file.size)}</span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => removeFile(i)}
+                          className="ml-3 text-slate-500 hover:text-red-400 transition-colors shrink-0"
+                          aria-label="Remove file"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
 
               <button

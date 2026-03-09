@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { Readable } from 'stream'
 import { stripe } from '@/lib/stripe'
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
+import { sendWelcomeEmail } from '@/lib/mailer'
 
 // Create supabase client lazily inside request handlers only
 function getSupabase(): SupabaseClient {
@@ -77,11 +78,11 @@ export async function POST(request: NextRequest) {
 }
 
 async function handleSubscriptionCreated(subscription: any, supabase: SupabaseClient) {
-  const { customer, id, status, current_period_start, current_period_end, items } = subscription
-  const planId = items.data[0]?.plan?.nickname || items.data[0]?.price?.nickname
+  const { customer, id, status, current_period_start, current_period_end, items, metadata } = subscription
+  const planId = metadata?.planId || items.data[0]?.plan?.nickname || items.data[0]?.price?.nickname
 
   const { data: userData } = await supabase
-    .from('users').select('id').eq('stripe_customer_id', customer).single()
+    .from('users').select('id, email').eq('stripe_customer_id', customer).single()
 
   if (!userData) { console.error(`User not found for customer ${customer}`); return }
 
@@ -99,10 +100,19 @@ async function handleSubscriptionCreated(subscription: any, supabase: SupabaseCl
     subscription_status: status === 'active' ? 'active' : 'pending',
     current_plan: planId || 'standard',
   }).eq('id', userData.id)
+
+  // Send welcome email
+  if (userData.email && status === 'active') {
+    try {
+      await sendWelcomeEmail(userData.email, planId || 'standard')
+    } catch (err) {
+      console.error('Welcome email failed (non-critical):', err)
+    }
+  }
 }
 
 async function handleSubscriptionUpdated(subscription: any, supabase: SupabaseClient) {
-  const { id, status, current_period_start, current_period_end, items } = subscription
+  const { id, status, current_period_start, current_period_end, items, metadata } = subscription
 
   await supabase.from('subscriptions').update({
     status,
@@ -115,7 +125,7 @@ async function handleSubscriptionUpdated(subscription: any, supabase: SupabaseCl
     .from('subscriptions').select('user_id').eq('stripe_subscription_id', id).single()
 
   if (subData) {
-    const planId = items.data[0]?.plan?.nickname || items.data[0]?.price?.nickname
+    const planId = metadata?.planId || items.data[0]?.plan?.nickname || items.data[0]?.price?.nickname
     await supabase.from('users').update({
       subscription_status: status === 'active' ? 'active' : status,
       current_plan: planId || 'standard',
