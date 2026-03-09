@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { AuthProvider } from '@/lib/auth-context'
+import Navbar from '@/components/Navbar'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -23,6 +24,7 @@ export default function RootLayout({
       <body className="text-slate-100 antialiased">
         <Suspense fallback={null}>
           <AuthProvider>
+            <Navbar />
             {children}
           </AuthProvider>
         </Suspense>
