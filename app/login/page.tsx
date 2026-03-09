@@ -225,7 +225,12 @@ export default function Login() {
           </div>
 
           <div className="animate-slide-down delay-200">
-            <label className="block text-sm font-medium text-slate-300 mb-2">Password</label>
+            <div className="flex items-center justify-between mb-2">
+              <label className="block text-sm font-medium text-slate-300">Password</label>
+              <Link href="/forgot-password" className="text-xs text-atlas-secondary hover:text-atlas-primary transition-colors">
+                Forgot password?
+              </Link>
+            </div>
             <input
               type="password"
               value={password}
