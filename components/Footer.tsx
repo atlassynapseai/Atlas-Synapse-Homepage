@@ -100,9 +100,8 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="border-t border-white/10 pt-6 flex items-center justify-center">
           <p className="text-xs text-slate-500">© 2026 Atlas Synapse LLC. All rights reserved.</p>
-          <p className="text-xs text-slate-500">Domain coming soon</p>
         </div>
       </div>
     </footer>
