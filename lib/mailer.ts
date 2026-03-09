@@ -24,8 +24,8 @@ export async function sendWelcomeEmail(toEmail: string, planId: string) {
     plan.id === 'standard'
       ? 'Your 16-week AI Governance Roadmap will be drip-fed weekly — check your email each week for new content.'
       : plan.id === 'premium'
-      ? 'You have instant access to the full 16-week AI Governance Roadmap — no waiting, dive in now.'
-      : 'Your VIP onboarding team will reach out within 24 hours to schedule your first 1-on-1 session.'
+        ? 'You have instant access to the full 16-week AI Governance Roadmap — no waiting, dive in now.'
+        : 'Your VIP onboarding team will reach out within 24 hours to schedule your first 1-on-1 session.'
 
   const transporter = createTransporter()
 

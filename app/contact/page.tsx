@@ -253,11 +253,10 @@ export default function ContactPage() {
 
                 {/* Drop zone */}
                 <div
-                  className={`relative rounded-lg border-2 border-dashed px-6 py-8 text-center transition-all cursor-pointer ${
-                    dragOver
+                  className={`relative rounded-lg border-2 border-dashed px-6 py-8 text-center transition-all cursor-pointer ${dragOver
                       ? 'border-atlas-primary bg-atlas-primary/10'
                       : 'border-white/15 bg-slate-800/30 hover:border-white/30 hover:bg-slate-800/50'
-                  }`}
+                    }`}
                   onClick={() => fileInputRef.current?.click()}
                   onDragOver={e => { e.preventDefault(); setDragOver(true) }}
                   onDragLeave={() => setDragOver(false)}
