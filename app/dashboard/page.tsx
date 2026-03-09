@@ -178,7 +178,7 @@ export default function DashboardPage() {
 
               {/* Products section */}
               <div>
-                <h2 className="text-2xl font-bold text-white mb-6">Products</h2>
+                <h2 className="text-2xl font-bold text-white mb-6">Products & Community</h2>
 
                 <div className="grid md:grid-cols-2 gap-6">
                   {/* Aegis Prime Auditor */}
@@ -207,13 +207,32 @@ export default function DashboardPage() {
                     </button>
                   </div>
 
-                  {/* Placeholder for future products */}
-                  <div className="rounded-lg border border-dashed border-white/10 bg-slate-900/40 p-6 flex items-center justify-center">
-                    <div className="text-center">
-                      <p className="text-slate-400 mb-4">More products coming soon</p>
-                      <p className="text-sm text-slate-500">Check back later for additional offerings</p>
+                  {/* Skool Community */}
+                  <a
+                    href="https://www.skool.com/atlas-synapse-ai-systems-9152/about"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-lg border border-atlas-primary/30 bg-gradient-to-br from-atlas-primary/10 to-atlas-secondary/10 p-6 hover:border-atlas-primary/60 hover:from-atlas-primary/15 hover:to-atlas-secondary/15 transition-all group"
+                  >
+                    <div className="flex justify-between items-start mb-4">
+                      <div>
+                        <h3 className="text-xl font-bold text-white group-hover:text-atlas-primary transition-colors">Atlas Synapse Community</h3>
+                        <p className="text-sm text-slate-400">Powered by Skool</p>
+                      </div>
+                      <svg className="w-5 h-5 text-atlas-primary shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
                     </div>
-                  </div>
+                    <p className="text-slate-400 text-sm mb-6">
+                      Join live Q&amp;A sessions, access the AI Governance Roadmap, and connect with other members — all in one place.
+                    </p>
+                    <div className="flex items-center gap-2 text-atlas-primary text-sm font-semibold">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      Open Community →
+                    </div>
+                  </a>
                 </div>
               </div>
             </>

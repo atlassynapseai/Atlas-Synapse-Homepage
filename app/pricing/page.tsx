@@ -56,12 +56,24 @@ export default function PricingPage() {
       {/* Header */}
       <div className="text-center mb-20 px-4">
         <h1 className="text-5xl md:text-6xl font-bold text-white mb-6"
-          style={{ background: 'linear-gradient(135deg,#a855f7,#ec4899)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+          style={{ background: 'linear-gradient(135deg,#a855f7,#ec4899)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', paddingBottom: '0.15em', lineHeight: '1.2' }}>
           Simple, Transparent Pricing
         </h1>
-        <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+        <p className="text-xl text-slate-400 max-w-2xl mx-auto mb-8">
           Choose the plan that fits your AI governance journey. Always flexible to scale as you grow.
         </p>
+        {/* Skool community link */}
+        <a
+          href="https://www.skool.com/atlas-synapse-ai-systems-9152/about"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-full border border-atlas-primary/40 bg-atlas-primary/10 px-5 py-2 text-sm font-medium text-atlas-primary hover:bg-atlas-primary/20 hover:border-atlas-primary/60 transition-all"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          Already a member? Join our Skool community
+        </a>
       </div>
 
       {/* Error message */}
