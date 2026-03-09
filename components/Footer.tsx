@@ -35,6 +35,7 @@ const NAV_LINKS = [
   { label: 'Risks', href: '/risks' },
   { label: 'Solutions', href: '/solutions' },
   { label: 'Pricing', href: '/pricing' },
+  { label: 'Contact', href: '/contact' },
   { label: 'Dashboard', href: '/dashboard' },
 ]
 
