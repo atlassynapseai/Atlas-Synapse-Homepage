@@ -55,14 +55,12 @@ export default function Footer() {
             <p className="text-sm text-slate-400 leading-relaxed mb-4">
               The trust layer for agentic AI — governance, verification, and auditability at the boundaries of your AI systems.
             </p>
-            <a
-              href="https://atlassynapseai.com/contact"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/signup"
               className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-atlas-primary to-atlas-secondary px-4 py-1.5 text-xs font-semibold text-white hover:opacity-90 transition-all"
             >
               Claim Your Free AI Audit
-            </a>
+            </Link>
           </div>
 
           {/* Nav links */}
@@ -104,11 +102,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-slate-500">© 2026 Atlas Synapse LLC. All rights reserved.</p>
-          <div className="flex items-center gap-4 text-xs text-slate-500">
-            <a href="https://atlassynapseai.com" target="_blank" rel="noopener noreferrer" className="hover:text-slate-300 transition-colors">
-              atlassynapseai.com
-            </a>
-          </div>
+          <p className="text-xs text-slate-500">Domain coming soon</p>
         </div>
       </div>
     </footer>
