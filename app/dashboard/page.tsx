@@ -209,9 +209,7 @@ export default function DashboardPage() {
 
                     {subscriptionData?.subscriptionStatus === 'active' ? (
                       <a
-                        href="https://atlassynapseai.github.io/Aegis-Prime-Auditor/"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href="/Aegis-Prime-Auditor/"
                         className="block w-full text-center rounded-lg border border-atlas-primary/50 bg-atlas-primary/10 px-4 py-2 font-semibold text-white hover:bg-atlas-primary/20 transition-all"
                       >
                         Launch Aegis Prime Auditor →
