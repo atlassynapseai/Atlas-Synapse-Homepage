@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { Resend } from 'resend'
+import nodemailer from 'nodemailer'
 
 export async function POST(request: NextRequest) {
-  if (!process.env.RESEND_API_KEY) {
+  if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
     return NextResponse.json({ error: 'Email service not configured' }, { status: 503 })
   }
 
@@ -13,11 +13,17 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Name, email and message are required' }, { status: 400 })
     }
 
-    const resend = new Resend(process.env.RESEND_API_KEY)
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_APP_PASSWORD,
+      },
+    })
 
-    await resend.emails.send({
-      from: 'Atlas Synapse <onboarding@resend.dev>',
-      to: 'company@atlassynapseai.com',
+    await transporter.sendMail({
+      from: `"Atlas Synapse" <${process.env.GMAIL_USER}>`,
+      to: process.env.GMAIL_USER, // sends to company@atlassynapseai.com
       replyTo: email,
       subject: subject ? `[Contact] ${subject}` : `[Contact] Message from ${name}`,
       html: `
@@ -31,6 +37,8 @@ export async function POST(request: NextRequest) {
           <hr style="border:none;border-top:1px solid #1e293b;margin:20px 0;" />
           <p><strong style="color:#94a3b8;">Message:</strong></p>
           <p style="background:#1e293b;padding:16px;border-radius:8px;white-space:pre-wrap;">${message}</p>
+          <hr style="border:none;border-top:1px solid #1e293b;margin:20px 0;" />
+          <p style="font-size:12px;color:#475569;">Reply directly to this email to respond to ${name}.</p>
         </div>
       `,
     })
