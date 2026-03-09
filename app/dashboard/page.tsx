@@ -7,8 +7,8 @@ import { PRICING_PLANS } from '@/lib/pricing-plans'
 import { ProtectedRoute } from '@/components/ProtectedRoute'
 
 interface SubscriptionData {
-  subscriptionStatus: string
-  currentPlan: string
+  subscriptionStatus: string | null
+  currentPlan: string | null
   subscriptionEndsAt: string | null
   activeSubscription: any
 }
