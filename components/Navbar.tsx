@@ -6,6 +6,8 @@ import { supabase } from '@/lib/supabase'
 
 const NAV_LINKS = [
   { label: 'How It Works', href: '/#problem' },
+  { label: 'Risks', href: '/risks' },
+  { label: 'Solutions', href: '/solutions' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'Dashboard', href: '/dashboard' },
 ]
