@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { AuthProvider } from '@/lib/auth-context'
 import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -26,6 +27,7 @@ export default function RootLayout({
           <AuthProvider>
             <Navbar />
             {children}
+            <Footer />
           </AuthProvider>
         </Suspense>
       </body>
