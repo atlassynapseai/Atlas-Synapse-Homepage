@@ -489,11 +489,6 @@ export default function Home() {
 
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-white/5 py-10 text-center text-slate-500 text-sm"
-        style={{ background: 'rgba(15,23,42,0.5)' }}>
-        <p>© 2026 Atlas Synapse. All rights reserved.</p>
-      </footer>
     </div>
   )
 }
