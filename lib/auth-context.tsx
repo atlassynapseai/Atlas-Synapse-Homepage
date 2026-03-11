@@ -56,6 +56,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const currentPath = window.location.pathname
 
         if (isOAuth && currentPath !== '/complete-profile') {
+          // Link pending scan to user if they signed in via OAuth (existing users)
+          const pendingScanId = sessionStorage.getItem('pendingScanId')
+          if (pendingScanId) {
+            sessionStorage.removeItem('pendingScanId')
+            fetch('/api/scan-results', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ scanId: pendingScanId, userId: session.user.id }),
+            }).catch(() => {})
+          }
+
           const { data: profile } = await supabase
             .from('users')
             .select('company')
