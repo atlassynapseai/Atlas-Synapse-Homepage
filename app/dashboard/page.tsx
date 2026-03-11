@@ -270,9 +270,9 @@ export default function DashboardPage() {
                 </div>
               </div>
               {/* Scan History */}
-              {scanHistory.length > 0 && (
-                <div className="mt-12">
-                  <h2 className="text-2xl font-bold text-white mb-6">Audit History</h2>
+              <div className="mt-12">
+                <h2 className="text-2xl font-bold text-white mb-6">Audit History</h2>
+                {scanHistory.length > 0 ? (
                   <div className="rounded-lg border border-white/10 bg-slate-900/60 overflow-hidden">
                     <table className="w-full text-sm">
                       <thead>
@@ -304,8 +304,18 @@ export default function DashboardPage() {
                       </tbody>
                     </table>
                   </div>
-                </div>
-              )}
+                ) : (
+                  <div className="rounded-lg border border-white/10 bg-slate-900/60 p-8 text-center">
+                    <p className="text-slate-400 mb-4">No audit scans yet.</p>
+                    <a
+                      href="/Aegis-Prime-Auditor/"
+                      className="inline-block rounded-lg bg-gradient-to-r from-atlas-primary to-atlas-secondary px-6 py-2.5 text-sm font-semibold text-white hover:opacity-90 transition-all"
+                    >
+                      Run Your First Audit →
+                    </a>
+                  </div>
+                )}
+              </div>
             </>
           )}
         </div>
