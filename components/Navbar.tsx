@@ -131,11 +131,11 @@ export default function Navbar() {
             </div>
           ) : (
             <>
-              <Link href="/login" className="hidden sm:inline text-sm font-medium text-slate-400 hover:text-white transition-colors">
-                Sign In
-              </Link>
-              <Link href="/signup" className="hidden sm:inline text-sm font-medium text-slate-400 hover:text-white transition-colors">
-                Sign Up
+              <Link
+                href="/auth"
+                className="hidden sm:inline text-sm font-medium text-slate-400 hover:text-white transition-colors"
+              >
+                Sign In / Sign Up
               </Link>
               <Link
                 href="/contact"

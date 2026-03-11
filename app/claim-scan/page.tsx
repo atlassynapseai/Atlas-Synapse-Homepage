@@ -26,7 +26,7 @@ function ClaimScanInner() {
         router.replace('/dashboard')
       } else {
         // Not signed in — store scan_id and go to signup
-        router.replace(`/signup?scan_id=${scanId}`)
+        router.replace(`/auth?mode=signup&scan_id=${scanId}`)
       }
     })
   }, [scanId, router])
