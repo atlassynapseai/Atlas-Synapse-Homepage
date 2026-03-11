@@ -180,7 +180,7 @@ export default function ContactPage() {
             <p className="text-sm font-semibold text-white mb-1">Ready to get started?</p>
             <p className="text-xs text-slate-400 mb-4">Claim your free AI governance audit.</p>
             <Link
-              href="/signup"
+              href="/Aegis-Prime-Auditor/"
               className="inline-block rounded-full bg-gradient-to-r from-atlas-primary to-atlas-secondary px-4 py-1.5 text-xs font-semibold text-white hover:opacity-90 transition-all"
             >
               Claim Free Audit →

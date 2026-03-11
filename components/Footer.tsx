@@ -57,7 +57,7 @@ export default function Footer() {
               The trust layer for agentic AI — governance, verification, and auditability at the boundaries of your AI systems.
             </p>
             <Link
-              href="/signup"
+              href="/Aegis-Prime-Auditor/"
               className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-atlas-primary to-atlas-secondary px-4 py-1.5 text-xs font-semibold text-white hover:opacity-90 transition-all"
             >
               Claim Your Free AI Audit
