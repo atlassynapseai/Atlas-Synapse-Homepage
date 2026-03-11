@@ -15,13 +15,19 @@ function ClaimScanInner() {
       return
     }
 
-    supabase.auth.getUser().then(async ({ data: { user } }) => {
-      if (user) {
+    // Use onAuthStateChange so we wait for the session to load from storage
+    // before deciding — avoids the race condition where getUser() returns null
+    // while the session is still initialising.
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event !== 'INITIAL_SESSION' && event !== 'SIGNED_IN') return
+      subscription.unsubscribe()
+
+      if (session?.user) {
         // Already signed in — claim the scan immediately
         await fetch('/api/scan-results', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userId: user.id, scanId }),
+          body: JSON.stringify({ userId: session.user.id, scanId }),
         }).catch(() => {})
         router.replace('/dashboard')
       } else {
@@ -29,6 +35,8 @@ function ClaimScanInner() {
         router.replace(`/auth?mode=signup&scan_id=${scanId}`)
       }
     })
+
+    return () => subscription.unsubscribe()
   }, [scanId, router])
 
   return (
