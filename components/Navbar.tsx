@@ -134,8 +134,11 @@ export default function Navbar() {
               <Link href="/login" className="hidden sm:inline text-sm font-medium text-slate-400 hover:text-white transition-colors">
                 Sign In
               </Link>
+              <Link href="/signup" className="hidden sm:inline text-sm font-medium text-slate-400 hover:text-white transition-colors">
+                Sign Up
+              </Link>
               <Link
-                href="/signup"
+                href="/contact"
                 className="relative-sheen sheen rounded-full bg-gradient-to-r from-atlas-primary to-atlas-secondary px-5 py-2 text-sm font-semibold text-white hover:shadow-lg hover:shadow-atlas-primary/40 transition-all hover:scale-105"
               >
                 Request Demo
