@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useAuth } from '@/lib/auth-context'
 import { PRICING_PLANS } from '@/lib/pricing-plans'
 import { ProtectedRoute } from '@/components/ProtectedRoute'
@@ -25,6 +26,7 @@ interface ScanRecord {
 
 export default function DashboardPage() {
   const { user } = useAuth()
+  const router = useRouter()
   const [subscriptionData, setSubscriptionData] = useState<SubscriptionData | null>(null)
   const [scanHistory, setScanHistory] = useState<ScanRecord[]>([])
   const [loading, setLoading] = useState(true)
@@ -286,7 +288,11 @@ export default function DashboardPage() {
                       </thead>
                       <tbody className="divide-y divide-white/5">
                         {scanHistory.map(scan => (
-                          <tr key={scan.id} className="hover:bg-white/5 transition-colors cursor-pointer">
+                          <tr
+                            key={scan.id}
+                            onClick={() => router.push(`/dashboard/scan/${scan.scan_id}`)}
+                            className="hover:bg-white/5 transition-colors cursor-pointer group"
+                          >
                             <td className="px-6 py-4 text-slate-300 max-w-xs truncate">{scan.file_desc || 'Unknown'}</td>
                             <td className="px-6 py-4">
                               <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${
@@ -300,14 +306,7 @@ export default function DashboardPage() {
                             </td>
                             <td className="px-6 py-4 text-slate-300">{scan.total_findings ?? '—'}</td>
                             <td className="px-6 py-4 text-slate-500">{new Date(scan.created_at).toLocaleDateString()}</td>
-                            <td className="px-6 py-4">
-                              <Link
-                                href={`/dashboard/scan/${scan.scan_id}`}
-                                className="text-xs font-semibold text-atlas-primary hover:text-atlas-secondary transition-colors"
-                              >
-                                View →
-                              </Link>
-                            </td>
+                            <td className="px-6 py-4 text-atlas-primary text-xs font-semibold group-hover:text-atlas-secondary transition-colors">View →</td>
                           </tr>
                         ))}
                       </tbody>
