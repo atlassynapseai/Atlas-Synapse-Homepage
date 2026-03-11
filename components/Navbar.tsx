@@ -139,9 +139,15 @@ export default function Navbar() {
               </Link>
               <Link
                 href="/contact"
-                className="relative-sheen sheen rounded-full bg-gradient-to-r from-atlas-primary to-atlas-secondary px-5 py-2 text-sm font-semibold text-white hover:shadow-lg hover:shadow-atlas-primary/40 transition-all hover:scale-105"
+                className="hidden sm:inline text-sm font-medium text-slate-400 hover:text-white transition-colors"
               >
                 Request Demo
+              </Link>
+              <Link
+                href="/Aegis-Prime-Auditor/"
+                className="relative-sheen sheen rounded-full bg-gradient-to-r from-atlas-primary to-atlas-secondary px-5 py-2 text-sm font-semibold text-white hover:shadow-lg hover:shadow-atlas-primary/40 transition-all hover:scale-105"
+              >
+                Free AI Audit →
               </Link>
             </>
           )}

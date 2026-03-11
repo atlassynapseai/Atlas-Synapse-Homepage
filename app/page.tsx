@@ -71,7 +71,7 @@ export default function Home() {
             Atlas Synapse is the trust layer for agentic AI — governance, verification, and auditability at the boundaries of your AI systems.
           </p>
           <div className="flex flex-wrap justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-            <Link href="/signup" className="btn-primary inline-block">Get Started Free</Link>
+            <a href="/Aegis-Prime-Auditor/" className="btn-primary inline-block">Claim Your Free AI Audit →</a>
             <Link href="/solutions" className="relative-sheen rounded-xl border border-white/10 bg-white/5 px-7 py-3 font-semibold text-slate-300 hover:bg-white/10 hover:text-white transition-all hover:scale-105">
               See How It Works
             </Link>
