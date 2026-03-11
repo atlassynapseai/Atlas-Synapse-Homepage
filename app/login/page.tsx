@@ -19,6 +19,7 @@ export default function Login() {
   // Check if we're in linking mode
   const linkProvider = searchParams.get('linkProvider') as 'google' | 'github' | null
   const nextUrl = searchParams.get('next') // OAuth consent return URL
+  const scanId = searchParams.get('scan_id') || ''
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -37,6 +38,15 @@ export default function Login() {
       const { data: { user } } = await supabase.auth.getUser()
 
       if (!user) throw new Error('Failed to get user data')
+
+      // Link pending scan if scan_id was passed in URL
+      if (scanId) {
+        fetch('/api/scan-results', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId: user.id, scanId }),
+        }).catch(() => {})
+      }
 
       // Check subscription status in database
       const { data: userData } = await supabase
@@ -91,6 +101,7 @@ export default function Login() {
     try {
       // Store the provider in case of email conflict error
       sessionStorage.setItem('pendingLinkProvider', provider)
+      if (scanId) sessionStorage.setItem('pendingScanId', scanId)
 
       const { error } = await supabase.auth.signInWithOAuth({
         provider: provider as 'google' | 'github',
