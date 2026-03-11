@@ -49,24 +49,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setUser(session?.user ?? null)
       setLoading(false)
 
-      // After OAuth sign-in, check if profile is complete
+      // After any sign-in, link pending scan if present (set by Auditor banner flow)
       if (_event === 'SIGNED_IN' && session?.user) {
+        const pendingScanId = sessionStorage.getItem('pendingScanId')
+        if (pendingScanId) {
+          sessionStorage.removeItem('pendingScanId')
+          fetch('/api/scan-results', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ scanId: pendingScanId, userId: session.user.id }),
+          }).catch(() => {})
+        }
+
+        // OAuth-specific: check if profile is complete
         const provider = session.user.app_metadata?.provider
         const isOAuth = provider === 'google' || provider === 'github'
         const currentPath = window.location.pathname
 
         if (isOAuth && currentPath !== '/complete-profile') {
-          // Link pending scan to user if they signed in via OAuth (existing users)
-          const pendingScanId = sessionStorage.getItem('pendingScanId')
-          if (pendingScanId) {
-            sessionStorage.removeItem('pendingScanId')
-            fetch('/api/scan-results', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ scanId: pendingScanId, userId: session.user.id }),
-            }).catch(() => {})
-          }
-
           const { data: profile } = await supabase
             .from('users')
             .select('company')
