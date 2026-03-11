@@ -22,16 +22,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const searchParams = useSearchParams()
 
   useEffect(() => {
-    // Handle OAuth redirect errors
     const error = searchParams.get('error')
     const errorDescription = searchParams.get('error_description')
 
     if (error && errorDescription) {
       const decodedDescription = decodeURIComponent(errorDescription)
-
-      // Check if this is an email conflict error from OAuth
       if (decodedDescription.includes('Multiple accounts with the same email')) {
-        // Store pending provider and redirect to login with linking mode
         const provider = sessionStorage.getItem('pendingLinkProvider') || 'github'
         router.push(`/login?linkProvider=${provider}`)
       }
@@ -39,11 +35,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [searchParams, router])
 
   useEffect(() => {
-    // Check active sessions and subscribe to auth changes
     const getSession = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession()
+      const { data: { session } } = await supabase.auth.getSession()
       setSession(session)
       setUser(session?.user ?? null)
       setLoading(false)
@@ -51,16 +44,33 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     getSession()
 
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
       setSession(session)
       setUser(session?.user ?? null)
       setLoading(false)
+
+      // After OAuth sign-in, check if profile is complete
+      if (_event === 'SIGNED_IN' && session?.user) {
+        const provider = session.user.app_metadata?.provider
+        const isOAuth = provider === 'google' || provider === 'github'
+        const currentPath = window.location.pathname
+
+        if (isOAuth && currentPath !== '/complete-profile') {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('company')
+            .eq('id', session.user.id)
+            .single()
+
+          if (!profile?.company) {
+            router.push('/complete-profile')
+          }
+        }
+      }
     })
 
     return () => subscription?.unsubscribe()
-  }, [])
+  }, [router])
 
   const value: AuthContextType = {
     user,

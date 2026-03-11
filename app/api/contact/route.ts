@@ -23,6 +23,7 @@ export async function POST(request: NextRequest) {
 
     const name = formData.get('name') as string
     const email = formData.get('email') as string
+    const phone = formData.get('phone') as string
     const subject = formData.get('subject') as string
     const message = formData.get('message') as string
     const files = formData.getAll('files') as File[]
@@ -67,6 +68,7 @@ export async function POST(request: NextRequest) {
           <hr style="border:none;border-top:1px solid #1e293b;margin:20px 0;" />
           <p><strong style="color:#94a3b8;">Name:</strong> ${name}</p>
           <p><strong style="color:#94a3b8;">Email:</strong> <a href="mailto:${email}" style="color:#a855f7;">${email}</a></p>
+          ${phone ? `<p><strong style="color:#94a3b8;">Phone:</strong> ${phone}</p>` : ''}
           ${subject ? `<p><strong style="color:#94a3b8;">Subject:</strong> ${subject}</p>` : ''}
           <hr style="border:none;border-top:1px solid #1e293b;margin:20px 0;" />
           <p><strong style="color:#94a3b8;">Message:</strong></p>

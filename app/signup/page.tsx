@@ -1,15 +1,21 @@
 'use client'
 
-import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import React, { useState, Suspense } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 
-export default function SignUp() {
+function SignUpInner() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const scanId = searchParams.get('scan_id') || ''
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [company, setCompany] = useState('')
+  const [jobTitle, setJobTitle] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -19,21 +25,34 @@ export default function SignUp() {
     setLoading(true)
 
     try {
-      // Sign up with email and password
       const { data, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
-        options: {
-          data: {
-            name,
-          },
-        },
+        options: { data: { name } },
       })
 
       if (signUpError) throw signUpError
 
-      // User profile is created automatically by database trigger
-      // Redirect to dashboard — they can subscribe from there
+      // Save extra profile fields
+      if (data.user) {
+        await supabase.from('profiles').upsert({
+          id: data.user.id,
+          full_name: name,
+          phone: phone || null,
+          company,
+          job_title: jobTitle,
+        })
+
+        // Link pending scan if present
+        if (scanId) {
+          await fetch('/api/scan-results', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId: data.user.id, scanId }),
+          })
+        }
+      }
+
       router.push('/dashboard')
     } catch (err: any) {
       setError(err.message || 'Failed to sign up')
@@ -47,28 +66,22 @@ export default function SignUp() {
     setLoading(true)
 
     try {
-      // Store the provider in case of email conflict error
       sessionStorage.setItem('pendingLinkProvider', provider)
+      if (scanId) sessionStorage.setItem('pendingScanId', scanId)
 
       const { error } = await supabase.auth.signInWithOAuth({
-        provider: provider as 'google' | 'github',
+        provider,
         options: {
-          redirectTo: window.location.origin,
+          redirectTo: `${window.location.origin}/complete-profile`,
         },
       })
 
       if (error) throw error
     } catch (err: any) {
       const errorMessage = err.message || `Failed to sign up with ${provider}`
-
-      // Check if this is an account linking scenario (same email, different provider)
       if (errorMessage.includes('Multiple accounts with the same email')) {
-        setError(`Account already exists with this email. Sign in with your existing account first to link providers.`)
-
-        // Show a helpful link to navigate to login
-        setTimeout(() => {
-          router.push(`/login?linkProvider=${provider}`)
-        }, 2000)
+        setError('Account already exists with this email. Sign in with your existing account first.')
+        setTimeout(() => router.push(`/login?linkProvider=${provider}`), 2000)
       } else {
         setError(errorMessage)
       }
@@ -77,95 +90,85 @@ export default function SignUp() {
     }
   }
 
-  return (
-    <div className="min-h-screen bg-[#050816] pt-24">
-      <div className="mx-auto max-w-md animate-bounce-in rounded-lg border border-white/10 bg-slate-900/60 p-8">
-        <h1 className="text-2xl font-bold text-slate-100 mb-6 animate-slide-down delay-100">Create Account</h1>
+  const inputClass = 'w-full rounded-lg border border-white/10 bg-slate-800/60 px-4 py-2 text-slate-100 placeholder-slate-500 transition-all duration-300 hover:border-white/20 focus:border-atlas-primary/50 focus:outline-none'
 
-        {error && <div className="error-message mb-4 rounded-lg bg-red-500/20 p-4 text-red-300 text-sm">{error}</div>}
+  return (
+    <div className="min-h-screen bg-[#050816] pt-24 pb-16">
+      <div className="mx-auto max-w-md animate-bounce-in rounded-lg border border-white/10 bg-slate-900/60 p-8">
+        <h1 className="text-2xl font-bold text-slate-100 mb-2 animate-slide-down delay-100">Create Account</h1>
+        <p className="text-sm text-slate-400 mb-6">Join Atlas Synapse — AI governance starts here.</p>
+
+        {error && <div className="mb-4 rounded-lg bg-red-500/20 p-4 text-red-300 text-sm">{error}</div>}
 
         <form onSubmit={handleSignUp} className="space-y-4">
-          <div className="animate-slide-down delay-100">
-            <label className="block text-sm font-medium text-slate-300 mb-2">Full Name</label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full rounded-lg border border-white/10 bg-slate-800/60 px-4 py-2 text-slate-100 placeholder-slate-500 transition-all duration-300 hover:border-white/20"
-              placeholder="John Doe"
-              required
-            />
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">Full Name <span className="text-red-400">*</span></label>
+              <input type="text" value={name} onChange={e => setName(e.target.value)} className={inputClass} placeholder="Jane Smith" required />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">Phone <span className="text-slate-500 font-normal">(optional)</span></label>
+              <input type="tel" value={phone} onChange={e => setPhone(e.target.value)} className={inputClass} placeholder="+1 555 000 0000" />
+            </div>
           </div>
 
-          <div className="animate-slide-down delay-200">
-            <label className="block text-sm font-medium text-slate-300 mb-2">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-lg border border-white/10 bg-slate-800/60 px-4 py-2 text-slate-100 placeholder-slate-500 transition-all duration-300 hover:border-white/20"
-              placeholder="you@example.com"
-              required
-            />
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">Company <span className="text-red-400">*</span></label>
+              <input type="text" value={company} onChange={e => setCompany(e.target.value)} className={inputClass} placeholder="Acme Corp" required />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">Job Title <span className="text-red-400">*</span></label>
+              <input type="text" value={jobTitle} onChange={e => setJobTitle(e.target.value)} className={inputClass} placeholder="CTO / AI Lead" required />
+            </div>
           </div>
 
-          <div className="animate-slide-down delay-300">
-            <label className="block text-sm font-medium text-slate-300 mb-2">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-lg border border-white/10 bg-slate-800/60 px-4 py-2 text-slate-100 placeholder-slate-500 transition-all duration-300 hover:border-white/20"
-              placeholder="••••••••"
-              required
-            />
+          <div>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Email <span className="text-red-400">*</span></label>
+            <input type="email" value={email} onChange={e => setEmail(e.target.value)} className={inputClass} placeholder="you@company.com" required />
           </div>
 
-          <div className="animate-slide-down delay-400">
-            <button
-              type="submit"
-              disabled={loading}
-              className="relative-sheen sheen w-full rounded-lg bg-gradient-to-r from-atlas-primary to-atlas-secondary px-4 py-2 font-semibold text-white disabled:opacity-50 transition-all duration-200 hover:shadow-lg hover:shadow-atlas-primary/50 active:scale-95"
-            >
-              {loading ? 'Creating Account...' : 'Sign Up'}
-            </button>
+          <div>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Password <span className="text-red-400">*</span></label>
+            <input type="password" value={password} onChange={e => setPassword(e.target.value)} className={inputClass} placeholder="••••••••" required />
           </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="relative-sheen sheen w-full rounded-lg bg-gradient-to-r from-atlas-primary to-atlas-secondary px-4 py-2 font-semibold text-white disabled:opacity-50 transition-all duration-200 hover:shadow-lg hover:shadow-atlas-primary/50 active:scale-95"
+          >
+            {loading ? 'Creating Account...' : 'Sign Up'}
+          </button>
         </form>
 
-        <div className="relative my-6 animate-slide-down delay-400">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-white/10"></div>
-          </div>
-          <div className="relative flex justify-center text-sm">
-            <span className="bg-slate-900 px-2 text-slate-400">Or continue with</span>
-          </div>
+        <div className="relative my-6">
+          <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-white/10" /></div>
+          <div className="relative flex justify-center text-sm"><span className="bg-slate-900 px-2 text-slate-400">Or continue with</span></div>
         </div>
 
         <div className="space-y-3">
-          <button
-            onClick={() => handleOAuthSignUp('google')}
-            disabled={loading}
-            className="animate-slide-in-left delay-500 relative-sheen w-full rounded-lg border border-white/10 bg-slate-800/60 px-4 py-2 font-semibold text-slate-300 hover:bg-slate-700/60 disabled:opacity-50 transition-all duration-200 active:scale-95"
-          >
+          <button onClick={() => handleOAuthSignUp('google')} disabled={loading} className="relative-sheen w-full rounded-lg border border-white/10 bg-slate-800/60 px-4 py-2 font-semibold text-slate-300 hover:bg-slate-700/60 disabled:opacity-50 transition-all duration-200 active:scale-95">
             Sign Up with Google
           </button>
-
-          <button
-            onClick={() => handleOAuthSignUp('github')}
-            disabled={loading}
-            className="animate-slide-in-right delay-500 relative-sheen w-full rounded-lg border border-white/10 bg-slate-800/60 px-4 py-2 font-semibold text-slate-300 hover:bg-slate-700/60 disabled:opacity-50 transition-all duration-200 active:scale-95"
-          >
+          <button onClick={() => handleOAuthSignUp('github')} disabled={loading} className="relative-sheen w-full rounded-lg border border-white/10 bg-slate-800/60 px-4 py-2 font-semibold text-slate-300 hover:bg-slate-700/60 disabled:opacity-50 transition-all duration-200 active:scale-95">
             Sign Up with GitHub
           </button>
         </div>
 
-        <p className="mt-6 text-center text-sm text-slate-400 animate-slide-up delay-500">
+        <p className="mt-6 text-center text-sm text-slate-400">
           Already have an account?{' '}
-          <Link href="/login" className="text-atlas-secondary hover:text-atlas-primary transition-colors duration-200">
-            Sign In
-          </Link>
+          <Link href="/login" className="text-atlas-secondary hover:text-atlas-primary transition-colors duration-200">Sign In</Link>
         </p>
       </div>
     </div>
+  )
+}
+
+export default function SignUp() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#050816] flex items-center justify-center"><div className="h-8 w-8 animate-spin rounded-full border-2 border-atlas-primary border-t-transparent" /></div>}>
+      <SignUpInner />
+    </Suspense>
   )
 }

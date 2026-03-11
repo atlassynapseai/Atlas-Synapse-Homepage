@@ -13,9 +13,20 @@ interface SubscriptionData {
   activeSubscription: any
 }
 
+interface ScanRecord {
+  id: string
+  scan_id: string
+  file_desc: string
+  total_findings: number
+  risk_score: number
+  risk_level: string
+  created_at: string
+}
+
 export default function DashboardPage() {
   const { user } = useAuth()
   const [subscriptionData, setSubscriptionData] = useState<SubscriptionData | null>(null)
+  const [scanHistory, setScanHistory] = useState<ScanRecord[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [portalLoading, setPortalLoading] = useState(false)
@@ -34,10 +45,16 @@ export default function DashboardPage() {
         }
         const data = await response.json()
         if (data.error) {
-          // Server returned an error JSON - show no subscription state silently
           setSubscriptionData({ subscriptionStatus: null, currentPlan: null, subscriptionEndsAt: null, activeSubscription: null })
         } else {
           setSubscriptionData(data)
+        }
+
+        // Fetch scan history
+        const scanRes = await fetch(`/api/scan-results?userId=${user.id}`)
+        if (scanRes.ok) {
+          const scanData = await scanRes.json()
+          setScanHistory(scanData.scans || [])
         }
       } catch (err: any) {
         setError(err.message)
@@ -252,6 +269,43 @@ export default function DashboardPage() {
                   </a>
                 </div>
               </div>
+              {/* Scan History */}
+              {scanHistory.length > 0 && (
+                <div className="mt-12">
+                  <h2 className="text-2xl font-bold text-white mb-6">Audit History</h2>
+                  <div className="rounded-lg border border-white/10 bg-slate-900/60 overflow-hidden">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b border-white/10 text-slate-400 text-xs uppercase tracking-wider">
+                          <th className="px-6 py-3 text-left">File(s)</th>
+                          <th className="px-6 py-3 text-left">Risk</th>
+                          <th className="px-6 py-3 text-left">Findings</th>
+                          <th className="px-6 py-3 text-left">Date</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-white/5">
+                        {scanHistory.map(scan => (
+                          <tr key={scan.id} className="hover:bg-white/5 transition-colors">
+                            <td className="px-6 py-4 text-slate-300 max-w-xs truncate">{scan.file_desc || 'Unknown'}</td>
+                            <td className="px-6 py-4">
+                              <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${
+                                scan.risk_level === 'CRITICAL' ? 'bg-red-500/20 text-red-300' :
+                                scan.risk_level === 'HIGH' ? 'bg-orange-500/20 text-orange-300' :
+                                scan.risk_level === 'MEDIUM' ? 'bg-yellow-500/20 text-yellow-300' :
+                                'bg-green-500/20 text-green-300'
+                              }`}>
+                                {scan.risk_score != null ? `${scan.risk_score}/100` : '—'} {scan.risk_level || ''}
+                              </span>
+                            </td>
+                            <td className="px-6 py-4 text-slate-300">{scan.total_findings ?? '—'}</td>
+                            <td className="px-6 py-4 text-slate-500">{new Date(scan.created_at).toLocaleDateString()}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
             </>
           )}
         </div>

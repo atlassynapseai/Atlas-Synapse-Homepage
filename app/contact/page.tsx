@@ -20,7 +20,7 @@ function formatBytes(bytes: number) {
 }
 
 export default function ContactPage() {
-  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
+  const [form, setForm] = useState({ name: '', email: '', phone: '', subject: '', message: '' })
   const [files, setFiles] = useState<File[]>([])
   const [loading, setLoading] = useState(false)
   const [sent, setSent] = useState(false)
@@ -64,6 +64,7 @@ export default function ContactPage() {
       const fd = new FormData()
       fd.append('name', form.name)
       fd.append('email', form.email)
+      fd.append('phone', form.phone)
       fd.append('subject', form.subject)
       fd.append('message', form.message)
       files.forEach(f => fd.append('files', f))
@@ -220,6 +221,17 @@ export default function ContactPage() {
                     required
                   />
                 </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">Phone <span className="text-slate-500 font-normal">(optional)</span></label>
+                <input
+                  type="tel"
+                  value={form.phone}
+                  onChange={e => setForm({ ...form, phone: e.target.value })}
+                  className="w-full rounded-lg border border-white/10 bg-slate-800/60 px-4 py-2.5 text-slate-100 placeholder-slate-500 transition-all hover:border-white/20 focus:border-atlas-primary/50 focus:outline-none"
+                  placeholder="+1 555 000 0000"
+                />
               </div>
 
               <div>
