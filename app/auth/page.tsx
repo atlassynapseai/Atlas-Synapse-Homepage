@@ -87,7 +87,7 @@ function AuthInner() {
         options: {
           redirectTo: mode === 'signup'
             ? `${window.location.origin}/complete-profile`
-            : window.location.origin,
+            : `${window.location.origin}/dashboard`,
         },
       })
       if (error) throw error

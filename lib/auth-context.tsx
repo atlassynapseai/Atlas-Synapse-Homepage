@@ -54,11 +54,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const pendingScanId = sessionStorage.getItem('pendingScanId')
         if (pendingScanId) {
           sessionStorage.removeItem('pendingScanId')
-          fetch('/api/scan-results', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ scanId: pendingScanId, userId: session.user.id }),
-          }).catch(() => {})
+          try {
+            await fetch('/api/scan-results', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ scanId: pendingScanId, userId: session.user.id }),
+            })
+          } catch (_) {}
+          // Send user to dashboard so they see their scan history
+          router.push('/dashboard')
         }
 
         // OAuth-specific: check if profile is complete
