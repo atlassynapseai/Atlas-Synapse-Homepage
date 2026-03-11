@@ -1,17 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
+function getAdmin() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+}
 
 // GET /api/scan-results?userId=xxx — fetch scan history for a user
 export async function GET(request: NextRequest) {
   const userId = request.nextUrl.searchParams.get('userId')
   if (!userId) return NextResponse.json({ error: 'userId required' }, { status: 400 })
 
-  const { data, error } = await supabaseAdmin
+  const { data, error } = await getAdmin()
     .from('scan_results')
     .select('id, scan_id, file_desc, total_findings, risk_score, risk_level, created_at')
     .eq('user_id', userId)
@@ -28,7 +30,7 @@ export async function POST(request: NextRequest) {
     const { userId, scanId } = await request.json()
     if (!userId || !scanId) return NextResponse.json({ error: 'userId and scanId required' }, { status: 400 })
 
-    const { error } = await supabaseAdmin
+    const { error } = await getAdmin()
       .from('scan_results')
       .update({ user_id: userId })
       .eq('scan_id', scanId)
