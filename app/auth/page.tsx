@@ -54,6 +54,12 @@ function AuthInner() {
               body: JSON.stringify({ userId: data.user.id, scanId }),
             })
           }
+          // Notify team of new signup
+          fetch('/api/notify-signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, phone, company, jobTitle, provider: 'email' }),
+          }).catch(() => {})
         }
       } else {
         const { error: signInError } = await supabase.auth.signInWithPassword({ email, password })

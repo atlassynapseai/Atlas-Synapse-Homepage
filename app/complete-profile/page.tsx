@@ -63,6 +63,20 @@ function CompleteProfileInner() {
 
       if (upsertError) throw upsertError
 
+      // Notify team of new OAuth signup
+      fetch('/api/notify-signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: user.user_metadata?.full_name || user.user_metadata?.name || '',
+          email: user.email,
+          phone: phone || null,
+          company,
+          jobTitle,
+          provider: user.app_metadata?.provider || 'oauth',
+        }),
+      }).catch(() => {})
+
       // Link any pending scan result from OAuth flow
       const pendingScanId = sessionStorage.getItem('pendingScanId')
       if (pendingScanId) {
