@@ -35,9 +35,9 @@ function SignUpInner() {
 
       // Save extra profile fields
       if (data.user) {
-        await supabase.from('profiles').upsert({
+        await supabase.from('users').upsert({
           id: data.user.id,
-          full_name: name,
+          name,
           phone: phone || null,
           company,
           job_title: jobTitle,

@@ -57,7 +57,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
         if (isOAuth && currentPath !== '/complete-profile') {
           const { data: profile } = await supabase
-            .from('profiles')
+            .from('users')
             .select('company')
             .eq('id', session.user.id)
             .single()

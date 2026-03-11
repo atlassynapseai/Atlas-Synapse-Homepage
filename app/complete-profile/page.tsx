@@ -28,7 +28,7 @@ function CompleteProfileInner() {
 
       // Pre-fill if profile partially exists
       const { data: profile } = await supabase
-        .from('profiles')
+        .from('users')
         .select('phone, company, job_title')
         .eq('id', user.id)
         .single()
@@ -53,9 +53,9 @@ function CompleteProfileInner() {
     setError('')
 
     try {
-      const { error: upsertError } = await supabase.from('profiles').upsert({
+      const { error: upsertError } = await supabase.from('users').upsert({
         id: user.id,
-        full_name: user.user_metadata?.full_name || user.user_metadata?.name || '',
+        name: user.user_metadata?.full_name || user.user_metadata?.name || '',
         phone: phone || null,
         company,
         job_title: jobTitle,
