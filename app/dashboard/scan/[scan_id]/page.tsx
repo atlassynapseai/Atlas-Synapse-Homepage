@@ -58,13 +58,13 @@ interface ScanDetail {
 
 // CWE → framework violation mapping
 const CWE_MAP: Record<string, { pci?: string[]; owasp?: string[]; nist?: string[]; soc2?: string[]; nydfs?: string[]; cwe25?: boolean }> = {
-  'CWE-89':  { pci: ['6.5.1'], owasp: ['A03:2021'], nist: ['RV.1.1'], cwe25: true },
-  'CWE-79':  { pci: ['6.5.7'], owasp: ['A03:2021'], soc2: ['CC8.1'], cwe25: true },
-  'CWE-78':  { pci: ['6.5.1'], owasp: ['A03:2021'], nist: ['RV.1.1'], cwe25: true },
+  'CWE-89': { pci: ['6.5.1'], owasp: ['A03:2021'], nist: ['RV.1.1'], cwe25: true },
+  'CWE-79': { pci: ['6.5.7'], owasp: ['A03:2021'], soc2: ['CC8.1'], cwe25: true },
+  'CWE-78': { pci: ['6.5.1'], owasp: ['A03:2021'], nist: ['RV.1.1'], cwe25: true },
   'CWE-798': { pci: ['8.2.1', '8.3.2'], owasp: ['A07:2021'], soc2: ['CC6.1'], nydfs: ['500.7'], cwe25: true },
   'CWE-502': { pci: ['6.5.8'], owasp: ['A08:2021'], nist: ['RV.1.2'], cwe25: true },
-  'CWE-95':  { pci: ['6.5.1'], owasp: ['A03:2021'], cwe25: true },
-  'CWE-22':  { pci: ['6.5.4'], owasp: ['A01:2021'], nist: ['RV.1.1'], cwe25: true },
+  'CWE-95': { pci: ['6.5.1'], owasp: ['A03:2021'], cwe25: true },
+  'CWE-22': { pci: ['6.5.4'], owasp: ['A01:2021'], nist: ['RV.1.1'], cwe25: true },
   'CWE-327': { pci: ['4.2.1'], nist: ['PW.9.1'], soc2: ['CC6.1'], nydfs: ['500.12'] },
 }
 
@@ -106,10 +106,10 @@ function computeCompliance(findings: Finding[]): ComplianceResult[] {
   }
 
   return [
-    calc('pci',   'Payment Card Industry Data Security Standard v4.0', 'PCI-DSS 4.0'),
+    calc('pci', 'Payment Card Industry Data Security Standard v4.0', 'PCI-DSS 4.0'),
     calc('owasp', 'OWASP Top 10 Web Application Security Risks', 'OWASP Top 10'),
-    calc('nist',  'NIST Secure Software Development Framework 1.1', 'NIST SSDF 1.1'),
-    calc('soc2',  'SOC 2 Type II Trust Services Criteria', 'SOC 2 Type II'),
+    calc('nist', 'NIST Secure Software Development Framework 1.1', 'NIST SSDF 1.1'),
+    calc('soc2', 'SOC 2 Type II Trust Services Criteria', 'SOC 2 Type II'),
     calc('nydfs', 'NY Dept of Financial Services Cybersecurity Regulation', 'NYDFS Cyber'),
     calc('cwe25', 'CWE Top 25 Most Dangerous Software Weaknesses', 'CWE Top 25'),
   ]
@@ -126,27 +126,27 @@ function normSeverity(s: string) {
 
 const SEV_BADGE: Record<string, string> = {
   CRITICAL: 'bg-red-600 text-white',
-  HIGH:     'bg-orange-500 text-white',
-  MEDIUM:   'bg-yellow-500 text-black',
-  LOW:      'bg-green-600 text-white',
-  ERROR:    'bg-red-600 text-white',
+  HIGH: 'bg-orange-500 text-white',
+  MEDIUM: 'bg-yellow-500 text-black',
+  LOW: 'bg-green-600 text-white',
+  ERROR: 'bg-red-600 text-white',
 }
 
 const SEV_BORDER: Record<string, string> = {
   CRITICAL: 'border-l-red-500',
-  HIGH:     'border-l-orange-500',
-  MEDIUM:   'border-l-yellow-400',
-  LOW:      'border-l-green-500',
-  ERROR:    'border-l-red-500',
+  HIGH: 'border-l-orange-500',
+  MEDIUM: 'border-l-yellow-400',
+  LOW: 'border-l-green-500',
+  ERROR: 'border-l-red-500',
 }
 
 function heatmapCell(sev: string, count: number) {
   if (count === 0) return 'text-slate-600 print:text-gray-300'
   switch (sev) {
     case 'CRITICAL': return 'text-red-400 font-bold print:text-red-600'
-    case 'HIGH':     return 'text-orange-400 font-semibold print:text-orange-600'
-    case 'MEDIUM':   return 'text-yellow-400 print:text-yellow-600'
-    default:         return 'text-green-400 print:text-green-600'
+    case 'HIGH': return 'text-orange-400 font-semibold print:text-orange-600'
+    case 'MEDIUM': return 'text-yellow-400 print:text-yellow-600'
+    default: return 'text-green-400 print:text-green-600'
   }
 }
 
@@ -234,8 +234,8 @@ export default function ScanDetailPage() {
 
   const riskColor = scan?.risk_level === 'CRITICAL' ? 'text-red-400 border-red-500/50 bg-red-500/10' :
     scan?.risk_level === 'HIGH' ? 'text-orange-400 border-orange-500/50 bg-orange-500/10' :
-    scan?.risk_level === 'MEDIUM' ? 'text-yellow-400 border-yellow-500/50 bg-yellow-500/10' :
-    'text-green-400 border-green-500/50 bg-green-500/10'
+      scan?.risk_level === 'MEDIUM' ? 'text-yellow-400 border-yellow-500/50 bg-yellow-500/10' :
+        'text-green-400 border-green-500/50 bg-green-500/10'
 
   return (
     <ProtectedRoute>

@@ -28,7 +28,7 @@ function ClaimScanInner() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ userId: session.user.id, scanId }),
-        }).catch(() => {})
+        }).catch(() => { })
         router.replace('/dashboard')
       } else {
         // Not signed in — store scan_id and go to signup

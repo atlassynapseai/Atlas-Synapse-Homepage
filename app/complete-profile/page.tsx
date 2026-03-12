@@ -75,7 +75,7 @@ function CompleteProfileInner() {
           jobTitle,
           provider: user.app_metadata?.provider || 'oauth',
         }),
-      }).catch(() => {})
+      }).catch(() => { })
 
       // Link any pending scan result from OAuth flow
       const pendingScanId = sessionStorage.getItem('pendingScanId')
