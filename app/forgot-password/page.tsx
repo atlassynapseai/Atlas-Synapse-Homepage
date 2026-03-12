@@ -46,7 +46,7 @@ export default function ForgotPasswordPage() {
             Click the link in the email to reset your password. If you don't see it, check your spam folder.
           </p>
           <Link
-            href="/login"
+            href="/auth?mode=signin"
             className="text-sm text-atlas-secondary hover:text-atlas-primary transition-colors"
           >
             ← Back to Sign In
@@ -94,7 +94,7 @@ export default function ForgotPasswordPage() {
 
         <p className="mt-6 text-center text-sm text-slate-400">
           Remember your password?{' '}
-          <Link href="/login" className="text-atlas-secondary hover:text-atlas-primary transition-colors">
+          <Link href="/auth?mode=signin" className="text-atlas-secondary hover:text-atlas-primary transition-colors">
             Sign In
           </Link>
         </p>

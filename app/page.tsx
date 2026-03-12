@@ -482,7 +482,7 @@ export default function Home() {
                 Ready to Trust Your AI?
               </h2>
               <p className="text-slate-400 text-lg mb-8">Join teams using Atlas Synapse to govern and verify their AI systems at scale.</p>
-              <Link href="/signup" className="btn-primary inline-block">Start Free Today</Link>
+              <Link href="/auth?mode=signup" className="btn-primary inline-block">Start Free Today</Link>
             </div>
           </div>
         </section>

@@ -11,7 +11,6 @@ const NAV_LINKS = [
   { label: 'Solutions', href: '/solutions' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'Contact', href: '/contact' },
-  { label: 'Dashboard', href: '/dashboard' },
 ]
 
 function getInitials(user: any) {
@@ -75,6 +74,15 @@ export default function Navbar() {
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-atlas-primary to-atlas-secondary group-hover:w-full transition-all duration-300 rounded-full" />
             </Link>
           ))}
+          {authUser && (
+            <Link
+              href="/dashboard"
+              className="px-4 py-2 text-sm text-slate-300 hover:text-white transition-colors relative group"
+            >
+              Dashboard
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-atlas-primary to-atlas-secondary group-hover:w-full transition-all duration-300 rounded-full" />
+            </Link>
+          )}
         </nav>
 
         {/* Auth area */}

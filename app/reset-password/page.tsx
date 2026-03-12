@@ -157,7 +157,7 @@ export default function ResetPasswordPage() {
         </form>
 
         <p className="mt-6 text-center text-sm text-slate-400">
-          <Link href="/login" className="text-atlas-secondary hover:text-atlas-primary transition-colors">
+          <Link href="/auth?mode=signin" className="text-atlas-secondary hover:text-atlas-primary transition-colors">
             ← Back to Sign In
           </Link>
         </p>

@@ -220,7 +220,7 @@ export default function SolutionsPage() {
               View Plans
             </Link>
             <Link
-              href="/signup"
+              href="/auth?mode=signup"
               className="rounded-full border border-white/20 px-8 py-3 font-semibold text-slate-300 hover:bg-white/5 transition-all"
             >
               Create Account
