@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { createClient } from '@supabase/supabase-js'
 import { createTransporter } from '@/lib/mailer'
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10MB per file
@@ -90,6 +91,27 @@ export async function POST(request: NextRequest) {
     const transporter = createTransporter()
     const fullPhone = dialCode ? `${dialCode} ${phone}` : phone
     const firstName = name.split(' ')[0]
+
+    // Save to Supabase — non-blocking, never fail the request over this
+    if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      const supabase = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL,
+        process.env.SUPABASE_SERVICE_ROLE_KEY,
+      )
+      supabase.from('contact_submissions').insert({
+        name,
+        email,
+        dial_code: dialCode || null,
+        phone: phone || null,
+        company: company || null,
+        subject: subject || null,
+        message,
+        how_heard: how_heard || null,
+        attachment_names: attachments.length > 0 ? attachments.map(a => a.filename) : null,
+      }).then(({ error }) => {
+        if (error) console.error('Failed to save contact submission:', error.message)
+      })
+    }
 
     // 1. Notify team
     await transporter.sendMail({
