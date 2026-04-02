@@ -17,6 +17,14 @@ const nextConfig = {
         source: '/Aegis-Prime-Auditor/:path*',
         destination: 'https://atlassynapseai.github.io/Aegis-Prime-Auditor/:path*',
       },
+      {
+        source: '/Atlas-Synapse-Brand',
+        destination: 'https://atlas-synapse-ai.vercel.app/Atlas-Synapse-Brand',
+      },
+      {
+        source: '/Atlas-Synapse-Brand/:path*',
+        destination: 'https://atlas-synapse-ai.vercel.app/Atlas-Synapse-Brand/:path*',
+      },
     ]
   },
 }
