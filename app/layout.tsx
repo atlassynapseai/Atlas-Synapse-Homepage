@@ -6,7 +6,7 @@ import MotionProvider from "../components/MotionProvider";
 import { AuthProvider } from "@/lib/auth-context";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { SynapseChatbot } from "@/components/SynapseChatbot";
+import { IrisGlobalChatbot } from "@/components/IrisGlobalChatbot";
 import { Suspense } from "react";
 
 const inter = Inter({
@@ -47,7 +47,7 @@ function RootLayoutContent({
         <Suspense fallback={null}>
           <Footer />
         </Suspense>
-        <SynapseChatbot />
+        <IrisGlobalChatbot />
       </MotionProvider>
     </>
   );
