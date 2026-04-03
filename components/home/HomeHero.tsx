@@ -16,12 +16,13 @@ export default function HomeHero() {
           Trust Engine for AI Systems
         </motion.p>
 
-        <h1 className="mt-4 font-display font-bold leading-[1.2] tracking-tight text-slate-100 overflow-visible" style={{ fontSize: "clamp(3.5rem, 10vw + 2rem, 6.5rem)" }}>
+        <h1 className="mt-4 font-display font-bold leading-[1.3] tracking-tight text-slate-100" style={{ fontSize: "clamp(3.5rem, 10vw + 2rem, 6.5rem)" }}>
           <motion.span
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.06 }}
-            className="inline-block bg-gradient-to-r from-slate-100 via-atlas-primary to-atlas-secondary bg-clip-text text-transparent whitespace-normal"
+            className="inline-block bg-gradient-to-r from-slate-100 via-atlas-primary to-atlas-secondary bg-clip-text text-transparent whitespace-normal pb-3"
+            style={{ WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
           >
             Atlas Synapse
           </motion.span>
