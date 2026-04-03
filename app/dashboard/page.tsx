@@ -181,7 +181,7 @@ export default function DashboardPage() {
                         {portalLoading ? 'Loading...' : 'Manage Billing'}
                       </button>
                       <Link
-                        href="/pricing"
+                        href="/?scroll=pricing"
                         className="block w-full text-center rounded-lg border border-white/20 px-4 py-3 font-semibold text-white hover:bg-white/5 transition-all"
                       >
                         Change Plan
@@ -192,7 +192,7 @@ export default function DashboardPage() {
                   <div className="rounded-lg border border-white/10 bg-slate-900/60 p-8 text-center">
                     <p className="text-slate-400 mb-6">You don't have an active subscription yet.</p>
                     <Link
-                      href="/pricing"
+                      href="/?scroll=pricing"
                       className="inline-block rounded-lg bg-gradient-to-r from-atlas-primary to-atlas-secondary px-8 py-3 font-semibold text-white hover:opacity-95"
                     >
                       Choose a Plan
@@ -235,7 +235,7 @@ export default function DashboardPage() {
                       </a>
                     ) : (
                       <Link
-                        href="/pricing"
+                        href="/?scroll=pricing"
                         className="block w-full text-center rounded-lg border border-white/20 px-4 py-2 font-semibold text-slate-400 hover:bg-white/5 transition-all"
                       >
                         Upgrade to Access

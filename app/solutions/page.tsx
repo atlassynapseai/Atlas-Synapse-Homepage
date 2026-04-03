@@ -103,7 +103,7 @@ export default function SolutionsPage() {
         </div>
         <div className="flex flex-wrap justify-center gap-4">
           <Link
-            href="/pricing"
+            href="/?scroll=pricing"
             className="rounded-full bg-gradient-to-r from-atlas-primary to-atlas-secondary px-6 py-2.5 text-sm font-semibold text-white hover:opacity-90 transition-all hover:scale-105"
           >
             Get Started
@@ -214,7 +214,7 @@ export default function SolutionsPage() {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
-              href="/pricing"
+              href="/?scroll=pricing"
               className="rounded-full bg-gradient-to-r from-atlas-primary to-atlas-secondary px-8 py-3 font-semibold text-white hover:opacity-90 transition-all hover:scale-105"
             >
               View Plans

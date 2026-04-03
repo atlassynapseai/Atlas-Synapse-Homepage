@@ -104,7 +104,7 @@ export default function RisksPage() {
             See How We Fix This →
           </Link>
           <Link
-            href="/pricing"
+            href="/?scroll=pricing"
             className="rounded-full border border-white/10 bg-white/5 px-6 py-2.5 text-sm font-semibold text-slate-300 hover:bg-white/10 transition-all"
           >
             View Plans
@@ -173,7 +173,7 @@ export default function RisksPage() {
               Explore Solutions
             </Link>
             <Link
-              href="/pricing"
+              href="/?scroll=pricing"
               className="rounded-full border border-white/20 px-8 py-3 font-semibold text-slate-300 hover:bg-white/5 transition-all"
             >
               Get Started

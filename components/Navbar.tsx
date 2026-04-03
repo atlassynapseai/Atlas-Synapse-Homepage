@@ -9,8 +9,8 @@ const NAV_LINKS = [
   { label: 'How It Works', href: '/#problem' },
   { label: 'Risks', href: '/risks' },
   { label: 'Solutions', href: '/solutions' },
-  { label: 'Pricing', href: '/pricing' },
-  { label: 'Contact', href: '/contact' },
+  { label: 'Pricing', href: '/?scroll=pricing' },
+  { label: 'Contact', href: '/?scroll=contact' },
 ]
 
 function getInitials(user: any) {
@@ -146,7 +146,7 @@ export default function Navbar() {
                 Sign In / Sign Up
               </Link>
               <Link
-                href="/contact"
+                href="/?scroll=contact"
                 className="hidden sm:inline text-sm font-medium text-slate-400 hover:text-white transition-colors"
               >
                 Request Demo
