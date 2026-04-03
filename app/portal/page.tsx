@@ -1,6 +1,6 @@
 'use client'
 
-import Portal from '@/components/portal/Portal'
+import { Portal } from '@/components/portal/Portal'
 import { ProtectedRoute } from '@/components/ProtectedRoute'
 
 export default function PortalPage() {

@@ -1,106 +1,94 @@
-'use client'
+'use client';
 
-import { useState, useEffect } from 'react'
-import KPICard from './KPICard'
-import { MOCK_KPI_CARDS, BUSINESS_CATEGORIES, LIVE_TICKER_START } from './mockData'
+import { useState, useEffect } from 'react';
+import { KPICard } from './KPICard';
+import { LIVE_TICKER_START, KPI_CARDS, BUSINESS_CATEGORIES } from '@/lib/portal-mock-data';
 
-export default function KPIDashboard() {
-  const [selectedCategories, setSelectedCategories] = useState<string[]>(['Services'])
-  const [displayedCards, setDisplayedCards] = useState(MOCK_KPI_CARDS.slice(0, 3))
-  const [tickerValue, setTickerValue] = useState(LIVE_TICKER_START)
-  const [cardRotationIndex, setCardRotationIndex] = useState(0)
+export function KPIDashboard() {
+  const [tickerValue, setTickerValue] = useState(LIVE_TICKER_START);
+  const [cardIndex, setCardIndex] = useState(0);
+  const [selectedCategories, setSelectedCategories] = useState<Set<string>>(new Set());
 
-  // Live ticker increment
+  // Ticker animation
   useEffect(() => {
-    const tickerInterval = setInterval(() => {
-      setTickerValue((prev) => {
-        const increment = Math.floor(Math.random() * 50) + 10
-        return prev + increment
-      })
-    }, 2000)
-    return () => clearInterval(tickerInterval)
-  }, [])
+    const interval = setInterval(() => {
+      setTickerValue((prev) => prev + Math.floor(Math.random() * 50) + 10);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Card rotation every 8 seconds
   useEffect(() => {
-    const rotationInterval = setInterval(() => {
-      setCardRotationIndex((prev) => {
-        const nextIndex = prev + 3
-        if (nextIndex >= MOCK_KPI_CARDS.length) {
-          return 0
-        }
-        return nextIndex
-      })
-    }, 8000)
-    return () => clearInterval(rotationInterval)
-  }, [])
+    const interval = setInterval(() => {
+      setCardIndex((prev) => (prev + 3) % KPI_CARDS.length);
+    }, 8000);
+    return () => clearInterval(interval);
+  }, []);
 
-  // Update displayed cards based on rotation
-  useEffect(() => {
-    const newCards = []
-    for (let i = 0; i < 3; i++) {
-      const index = (cardRotationIndex + i) % MOCK_KPI_CARDS.length
-      newCards.push(MOCK_KPI_CARDS[index])
+  const toggleCategory = (cat: string) => {
+    const newSet = new Set(selectedCategories);
+    if (newSet.has(cat)) {
+      newSet.delete(cat);
+    } else {
+      newSet.add(cat);
     }
-    setDisplayedCards(newCards)
-  }, [cardRotationIndex])
+    setSelectedCategories(newSet);
+  };
 
-  const toggleCategory = (category: string) => {
-    setSelectedCategories((prev) =>
-      prev.includes(category)
-        ? prev.filter((c) => c !== category)
-        : [...prev, category]
-    )
-  }
+  const displayedCards = [
+    KPI_CARDS[(cardIndex + 0) % KPI_CARDS.length],
+    KPI_CARDS[(cardIndex + 1) % KPI_CARDS.length],
+    KPI_CARDS[(cardIndex + 2) % KPI_CARDS.length],
+  ];
 
   return (
-    <div className="ml-56 space-y-6 pt-20 px-8 pb-8">
-      {/* Header Section */}
+    <div className="space-y-6">
+      {/* Header Card with Ticker */}
       <div className="rounded-xl border border-white/10 bg-slate-900/60 p-8 backdrop-blur-sm">
-        <div className="flex items-end justify-between mb-6">
+        <div className="flex items-end justify-between">
           <div>
-            <h2 className="text-2xl font-bold text-white mb-1">Business Command</h2>
+            <h2 className="text-2xl font-bold text-white">Business Command</h2>
             <p className="text-slate-400">Money saved for you</p>
           </div>
           <div className="text-right">
-            <p className="text-4xl font-bold text-atlas-cyan">
-              ${(tickerValue / 1000000).toFixed(1)}M
-            </p>
-            <p className="text-xs text-atlas-cyan font-semibold tracking-wider">📈 LIVE TICKER</p>
+            <p className="text-4xl font-bold text-atlas-cyan">${(tickerValue / 1000000).toFixed(1)}M</p>
+            <p className="text-xs text-atlas-cyan font-semibold tracking-wider mt-1">📈 LIVE TICKER</p>
           </div>
-        </div>
-
-        {/* Category Filter */}
-        <div className="flex flex-wrap gap-2">
-          {BUSINESS_CATEGORIES.map((category) => (
-            <button
-              key={category}
-              onClick={() => toggleCategory(category)}
-              className={`rounded-full px-4 py-2 text-sm font-medium transition-all ${
-                selectedCategories.includes(category)
-                  ? 'bg-atlas-cyan text-slate-900 shadow-lg shadow-atlas-cyan/50'
-                  : 'border border-white/10 bg-slate-800/60 text-slate-300 hover:border-white/30'
-              }`}
-            >
-              {category}
-            </button>
-          ))}
         </div>
       </div>
 
+      {/* Category Filter Buttons */}
+      <div className="flex flex-wrap gap-3">
+        {BUSINESS_CATEGORIES.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => toggleCategory(cat)}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all
+              ${
+                selectedCategories.has(cat)
+                  ? 'bg-white text-slate-900 font-semibold'
+                  : 'border border-white/20 text-slate-300 hover:border-white/40'
+              }`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
       {/* KPI Cards Grid */}
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {displayedCards.map((card) => (
           <KPICard
             key={card.id}
-            title={card.title}
-            value={card.value}
             icon={card.icon}
-            badge={card.badge}
-            tagline={card.tagline}
+            label={card.label}
+            value={card.value}
+            quote={card.quote}
+            metric={card.metric}
+            isActive={true}
           />
         ))}
       </div>
     </div>
-  )
+  );
 }

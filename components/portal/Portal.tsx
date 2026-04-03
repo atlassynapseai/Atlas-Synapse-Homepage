@@ -1,31 +1,49 @@
-'use client'
+'use client';
 
-import Sidebar from './Sidebar'
-import KPIDashboard from './KPIDashboard'
-import NetworkGraph from './NetworkGraph'
-import DailyWinsLog from './DailyWinsLog'
-import ChatBot from './ChatBot'
+import { PortalSidebar } from './PortalSidebar';
+import { KPIDashboard } from './KPIDashboard';
+import { NetworkGraph } from './NetworkGraph';
+import { OpportunitiesPanel } from './OpportunitiesPanel';
+import { DailyWinsLog } from './DailyWinsLog';
+import { ChatBot } from './ChatBot';
 
-export default function Portal() {
+export function Portal() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a]">
-      {/* Sidebar */}
-      <Sidebar />
-
-      {/* Main Content */}
-      <div className="flex flex-col">
-        {/* KPI Dashboard */}
-        <KPIDashboard />
-
-        {/* Network Graph + Opportunities */}
-        <NetworkGraph />
-
-        {/* Daily Wins Log */}
-        <DailyWinsLog />
+    <div className="min-h-screen bg-gradient-to-br from-atlas-bg via-slate-900 to-atlas-elevated">
+      {/* Navbar placeholder (would be shared with homepage) */}
+      <div className="fixed inset-x-0 top-0 z-50 h-16 border-b border-white/10 bg-atlas-bg/80 backdrop-blur flex items-center px-8">
+        <div className="flex items-center gap-3">
+          <div className="h-8 w-8 rounded-full bg-atlas-primary/30 flex items-center justify-center">
+            🌐
+          </div>
+          <span className="font-bold text-white">ATLAS SYNAPSE</span>
+        </div>
       </div>
 
-      {/* Chatbot */}
+      {/* Sidebar */}
+      <PortalSidebar />
+
+      {/* Main Content */}
+      <div className="ml-56 pt-20 px-8 pb-8 min-h-screen space-y-8">
+        {/* KPI Dashboard Section */}
+        <section>
+          <KPIDashboard />
+        </section>
+
+        {/* Network Graph + Opportunities + Daily Wins */}
+        <section className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2">
+            <NetworkGraph />
+          </div>
+          <div className="space-y-6">
+            <OpportunitiesPanel />
+            <DailyWinsLog />
+          </div>
+        </section>
+      </div>
+
+      {/* ChatBot */}
       <ChatBot />
     </div>
-  )
+  );
 }
