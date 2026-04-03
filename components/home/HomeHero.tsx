@@ -16,7 +16,7 @@ export default function HomeHero() {
           Trust Engine for AI Systems
         </motion.p>
 
-        <h1 className="mt-4 font-display font-bold leading-[1.05] tracking-tight text-slate-100 overflow-visible" style={{ fontSize: "clamp(3.5rem, 10vw + 2rem, 6.5rem)" }}>
+        <h1 className="mt-4 font-display font-bold leading-[1.2] tracking-tight text-slate-100 overflow-visible" style={{ fontSize: "clamp(3.5rem, 10vw + 2rem, 6.5rem)" }}>
           <motion.span
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
