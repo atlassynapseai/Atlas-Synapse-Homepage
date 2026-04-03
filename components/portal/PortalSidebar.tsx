@@ -2,7 +2,7 @@
 
 export function PortalSidebar() {
   return (
-    <div className="fixed left-0 top-16 w-56 h-[calc(100vh-4rem)] bg-slate-900/40 backdrop-blur border-r border-white/10 p-6 flex flex-col z-40">
+    <div className="fixed left-0 top-0 w-56 h-screen bg-slate-900/40 backdrop-blur border-r border-white/10 p-6 flex flex-col z-40 pt-20">
       {/* Brand Section */}
       <div className="bg-atlas-primary/10 rounded-lg p-4 mb-8 border border-atlas-primary/20">
         <p className="text-xl font-bold text-atlas-primary">Business Command</p>
