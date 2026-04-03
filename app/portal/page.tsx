@@ -1,5 +1,4 @@
-import Navbar from "../../components/Navbar";
-import PortalExperience from "../../components/portal/PortalExperience";
+import { Portal } from "../../components/portal/Portal";
 
 export const metadata = {
   title: "Portal | Atlas Synapse AI",
@@ -7,10 +6,5 @@ export const metadata = {
 };
 
 export default function PortalPage() {
-  return (
-    <>
-      <Navbar />
-      <PortalExperience />
-    </>
-  );
+  return <Portal />;
 }
