@@ -1,15 +1,16 @@
-'use client'
+import Navbar from "../../components/Navbar";
+import PortalExperience from "../../components/portal/PortalExperience";
 
-import Navbar from '@/components/Navbar'
-import { Portal } from '@/components/portal/Portal'
+export const metadata = {
+  title: "Portal | Atlas Synapse AI",
+  description: "Client portal — sign in and access your command center."
+};
 
 export default function PortalPage() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-atlas-bg via-slate-900 to-atlas-elevated">
+    <>
       <Navbar />
-      <div className="pt-20">
-        <Portal />
-      </div>
-    </main>
-  )
+      <PortalExperience />
+    </>
+  );
 }
