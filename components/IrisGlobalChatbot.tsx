@@ -365,11 +365,10 @@ export function IrisGlobalChatbot() {
                   )}
 
                   <div
-                    className={`max-w-xs px-4 py-3 rounded-2xl text-sm leading-relaxed transition-colors ${
-                      msg.role === 'user'
+                    className={`max-w-xs px-4 py-3 rounded-2xl text-sm leading-relaxed transition-colors ${msg.role === 'user'
                         ? 'bg-gradient-to-r from-cyan-600 to-cyan-700 text-white rounded-br-none shadow-lg shadow-cyan-600/20'
                         : 'bg-white/10 hover:bg-white/15 text-slate-100 rounded-bl-none border border-white/10'
-                    }`}
+                      }`}
                   >
                     {msg.content || (
                       <span className="text-slate-400 italic">Message not relevant to our services</span>
