@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send, Sparkles, Zap } from 'lucide-react';
+import { useAuth } from '@/lib/auth-context';
 
 interface Message {
   id: string;
@@ -62,9 +63,9 @@ function isGreeting(message: string): boolean {
 function findBestResponse(userMessage: string): string | null {
   const lowerMessage = userMessage.toLowerCase();
 
-  // Check if it's just a greeting
+  // Check if it's just a greeting - return greeting response
   if (isGreeting(userMessage)) {
-    return null; // Return null for greetings - don't respond
+    return 'greeting'; // Special marker for greeting response
   }
 
   // Score each knowledge base entry
@@ -90,8 +91,26 @@ function findBestResponse(userMessage: string): string | null {
   return bestResponse;
 }
 
+// Extract user name from message (handles "My name is X", "I'm X", "Call me X")
+function extractName(message: string): string | null {
+  const patterns = [
+    /(?:my name is|i'm|im|call me)\s+([a-zA-Z]+)/i,
+    /(?:the name is|you can call me)\s+([a-zA-Z]+)/i,
+  ];
+
+  for (const pattern of patterns) {
+    const match = message.match(pattern);
+    if (match && match[1]) {
+      return match[1].charAt(0).toUpperCase() + match[1].slice(1);
+    }
+  }
+  return null;
+}
+
 export function IrisGlobalChatbot() {
+  const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const [userName, setUserName] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -102,7 +121,18 @@ export function IrisGlobalChatbot() {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [characterExpression, setCharacterExpression] = useState<'neutral' | 'happy' | 'thinking'>('neutral');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Get name from logged-in user on mount
+  useEffect(() => {
+    if (user && !userName) {
+      const fullName = user.user_metadata?.full_name || user.user_metadata?.first_name || user.email?.split('@')[0];
+      if (fullName) {
+        setUserName(fullName);
+      }
+    }
+  }, [user, userName]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -126,30 +156,87 @@ export function IrisGlobalChatbot() {
     setMessages(prev => [...prev, userMessage]);
     setInput('');
 
-    // Check if it's a greeting (no response)
-    if (isGreeting(messageText)) {
-      return; // Don't show loading or add assistant message
+    // Check for name in message
+    const extractedName = extractName(messageText);
+    if (extractedName && !extractedName.toLowerCase().includes('iris')) {
+      setUserName(extractedName);
+      // Add welcome message with name
+      const welcomeMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        content: `Nice to meet you, ${extractedName}! 😊 Feel free to ask me anything about Atlas Synapse, our products, pricing, security, or how to get started.`,
+        timestamp: new Date()
+      };
+      setCharacterExpression('happy');
+      setMessages(prev => [...prev, welcomeMessage]);
+      setTimeout(() => setCharacterExpression('neutral'), 2000);
+      return;
     }
 
+    setCharacterExpression('thinking');
     setIsLoading(true);
 
     setTimeout(() => {
-      const response = findBestResponse(messageText);
+      let response = findBestResponse(messageText);
+
       if (response) {
+        let assistantContent = '';
+
+        // Handle greeting response
+        if (response === 'greeting') {
+          if (userName) {
+            assistantContent = `Hey ${userName}! How can I help you today?`;
+          } else {
+            assistantContent = "Hey there! How can I help you today?";
+          }
+        } else {
+          // Regular response - personalize with user's name if available
+          if (userName) {
+            assistantContent = `${userName}, ${response.charAt(0).toLowerCase()}${response.slice(1)}`;
+          } else {
+            assistantContent = response;
+          }
+        }
+
         const assistantMessage: Message = {
           id: (Date.now() + 1).toString(),
           role: 'assistant',
-          content: response,
+          content: assistantContent,
           timestamp: new Date()
         };
         setMessages(prev => [...prev, assistantMessage]);
+        setCharacterExpression('happy');
+      } else {
+        setCharacterExpression('neutral');
       }
       setIsLoading(false);
+      setTimeout(() => setCharacterExpression('neutral'), 2000);
     }, 300);
   };
 
   return (
     <>
+      {/* Floating Caption - Appears near button to attract attention */}
+      <AnimatePresence>
+        {!isOpen && (
+          <motion.div
+            initial={{ opacity: 0, x: 20, y: 10 }}
+            animate={{ opacity: 1, x: 0, y: 0 }}
+            exit={{ opacity: 0, x: 20, y: 10 }}
+            transition={{ duration: 0.5 }}
+            className="fixed bottom-24 right-6 z-30"
+          >
+            <motion.div
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="bg-gradient-to-r from-cyan-500 to-purple-500 text-white px-4 py-2 rounded-full text-xs font-semibold shadow-lg shadow-cyan-500/30 whitespace-nowrap flex items-center gap-2"
+            >
+              <span>✨ Need help?</span>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Cute Button with Iris Character */}
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
@@ -177,15 +264,33 @@ export function IrisGlobalChatbot() {
               transition={{ type: 'spring', stiffness: 200 }}
               className="flex flex-col items-center justify-center"
             >
-              {/* Eyes */}
+              {/* Eyes with expression */}
               <div className="flex gap-2 mb-1">
-                <div className="w-2 h-2.5 rounded-full bg-slate-900" />
-                <div className="w-2 h-2.5 rounded-full bg-slate-900" />
+                <motion.div
+                  animate={characterExpression === 'thinking' ? { scaleY: [1, 0.3, 1] } : {}}
+                  transition={characterExpression === 'thinking' ? { duration: 0.6, repeat: Infinity } : {}}
+                  className="w-2 h-2.5 rounded-full bg-slate-900"
+                />
+                <motion.div
+                  animate={characterExpression === 'thinking' ? { scaleY: [1, 0.3, 1] } : {}}
+                  transition={characterExpression === 'thinking' ? { duration: 0.6, repeat: Infinity, delay: 0.1 } : {}}
+                  className="w-2 h-2.5 rounded-full bg-slate-900"
+                />
               </div>
-              {/* Smile */}
-              <svg width="12" height="6" viewBox="0 0 12 6" className="text-slate-900">
-                <path d="M 2 2 Q 6 5 10 2" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-              </svg>
+              {/* Smile or mouth based on expression */}
+              {characterExpression === 'happy' ? (
+                <motion.svg width="14" height="8" viewBox="0 0 14 8" className="text-slate-900" animate={{ scale: [1, 1.1, 1] }} transition={{ duration: 0.3 }}>
+                  <path d="M 2 2 Q 7 6 12 2" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+                </motion.svg>
+              ) : characterExpression === 'thinking' ? (
+                <motion.svg width="12" height="8" viewBox="0 0 12 8" className="text-slate-900">
+                  <circle cx="6" cy="4" r="1.5" fill="currentColor" />
+                </motion.svg>
+              ) : (
+                <svg width="12" height="6" viewBox="0 0 12 6" className="text-slate-900">
+                  <path d="M 2 2 Q 6 5 10 2" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+                </svg>
+              )}
             </motion.div>
           ) : (
             <X className="w-6 h-6 text-white" />
@@ -227,7 +332,9 @@ export function IrisGlobalChatbot() {
                   <h2 className="text-sm font-bold text-transparent bg-gradient-to-r from-cyan-300 to-purple-300 bg-clip-text uppercase tracking-widest">
                     Iris
                   </h2>
-                  <p className="text-[10px] text-cyan-300/70 font-medium">Your AI Guide</p>
+                  <p className="text-[10px] text-cyan-300/70 font-medium">
+                    {userName ? `Hi, ${userName}!` : 'Your AI Guide'}
+                  </p>
                 </div>
               </div>
 
