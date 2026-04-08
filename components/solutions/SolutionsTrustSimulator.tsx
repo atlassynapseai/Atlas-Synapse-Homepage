@@ -129,7 +129,7 @@ export default function SolutionsTrustSimulator() {
                     ))}
                   </ul>
                   <Link
-                    href="https://atlassynapseai.github.io/Aegis-Prime-Auditor/"
+                    href="https://atlassynapseai.com/Aegis-Prime-Auditor"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-8 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-atlas-primary to-atlas-secondary px-6 py-3 text-base font-semibold text-slate-950 shadow-atlas-soft hover:opacity-95 transition-opacity"
