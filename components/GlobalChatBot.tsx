@@ -116,11 +116,10 @@ export function GlobalChatBot() {
       {/* Floating Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg flex items-center justify-center text-white text-2xl z-40 transition-all duration-300 ${
-          isOpen
+        className={`fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg flex items-center justify-center text-white text-2xl z-40 transition-all duration-300 ${isOpen
             ? 'bg-atlas-cyan scale-110'
             : 'bg-atlas-primary hover:bg-atlas-primary/90 hover:scale-110'
-        }`}
+          }`}
         title="Chat with Iris"
       >
         💬
@@ -151,11 +150,10 @@ export function GlobalChatBot() {
                 className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2`}
               >
                 <div
-                  className={`max-w-xs px-4 py-3 rounded-xl text-sm leading-relaxed ${
-                    msg.role === 'user'
+                  className={`max-w-xs px-4 py-3 rounded-xl text-sm leading-relaxed ${msg.role === 'user'
                       ? 'bg-atlas-primary/40 text-white rounded-br-none'
                       : 'bg-slate-800/80 text-slate-100 rounded-bl-none border border-atlas-cyan/20'
-                  }`}
+                    }`}
                 >
                   {msg.content}
                 </div>

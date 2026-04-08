@@ -143,16 +143,14 @@ export function SynapseChatbot() {
                   key={msg.id}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className={`flex ${
-                    msg.sender === 'user' ? 'justify-end' : 'justify-start'
-                  }`}
+                  className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'
+                    }`}
                 >
                   <div
-                    className={`max-w-xs px-4 py-2 rounded-lg ${
-                      msg.sender === 'user'
+                    className={`max-w-xs px-4 py-2 rounded-lg ${msg.sender === 'user'
                         ? 'bg-atlas-primary/80 text-white rounded-br-none'
                         : 'bg-slate-800 text-slate-200 border border-white/10 rounded-bl-none'
-                    }`}
+                      }`}
                   >
                     <p className="text-sm">{msg.text}</p>
                     <p className="text-xs mt-1 opacity-60">

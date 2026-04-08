@@ -256,44 +256,40 @@ export default function SolutionsTrustSimulator() {
                   </div>
                   {/* Validate — pii/output: active (gate passed); policy: blocked (red) */}
                   <div
-                    className={`rounded-md p-2 text-center transition-colors ${
-                      scenario === "policy"
+                    className={`rounded-md p-2 text-center transition-colors ${scenario === "policy"
                         ? "bg-rose-950/40 ring-1 ring-rose-500/30 opacity-70"
                         : "bg-atlas-primary/15 ring-1 ring-atlas-primary/40"
-                    }`}
+                      }`}
                   >
                     <p className={`font-semibold ${scenario === "policy" ? "text-rose-300/90" : "text-atlas-primary"}`}>Validate</p>
                     <p className="mt-0.5">Mask • Block • Route</p>
                   </div>
                   {/* Process — pii/output: neutral; policy: blocked (red) */}
                   <div
-                    className={`rounded-md p-2 text-center transition-colors ${
-                      scenario === "policy"
+                    className={`rounded-md p-2 text-center transition-colors ${scenario === "policy"
                         ? "bg-rose-950/40 ring-1 ring-rose-500/30 opacity-70"
                         : "bg-slate-800/80"
-                    }`}
+                      }`}
                   >
                     <p className={`font-semibold ${scenario === "policy" ? "text-rose-300/90" : "text-slate-400"}`}>Process</p>
                     <p className="mt-0.5">Models run</p>
                   </div>
                   {/* Verify — pii: active; output: held (red); policy: blocked (red) */}
                   <div
-                    className={`rounded-md p-2 text-center transition-colors ${
-                      scenario === "policy" || scenario === "output"
+                    className={`rounded-md p-2 text-center transition-colors ${scenario === "policy" || scenario === "output"
                         ? "bg-rose-950/40 ring-1 ring-rose-500/30 opacity-70"
                         : "bg-atlas-primary/15 ring-1 ring-atlas-primary/40"
-                    }`}
+                      }`}
                   >
                     <p className={`font-semibold ${scenario === "policy" || scenario === "output" ? "text-rose-300/90" : "text-atlas-primary"}`}>Verify</p>
                     <p className="mt-0.5">Score • Redact • Log</p>
                   </div>
                   {/* Delivered — pii: success (green); policy/output: not reached (red) */}
                   <div
-                    className={`rounded-md p-2 text-center transition-colors ${
-                      scenario === "policy" || scenario === "output"
+                    className={`rounded-md p-2 text-center transition-colors ${scenario === "policy" || scenario === "output"
                         ? "bg-rose-950/40 ring-1 ring-rose-500/30 opacity-70"
                         : "bg-emerald-500/10 ring-1 ring-emerald-400/30"
-                    }`}
+                      }`}
                   >
                     <p className={`font-semibold ${scenario === "policy" || scenario === "output" ? "text-rose-300/90" : "text-emerald-300"}`}>Delivered</p>
                     <p className="mt-0.5">Safe output</p>
@@ -309,11 +305,10 @@ export default function SolutionsTrustSimulator() {
                     <button
                       key={s.key}
                       onClick={() => handleScenarioChange(s.key)}
-                      className={`w-full rounded-lg border px-3 py-2.5 text-left text-xs transition-colors ${
-                        scenario === s.key
+                      className={`w-full rounded-lg border px-3 py-2.5 text-left text-xs transition-colors ${scenario === s.key
                           ? "border-atlas-primary bg-atlas-primary/15 text-slate-50"
                           : "border-white/10 bg-slate-800/60 text-slate-300 hover:border-atlas-primary/40"
-                      }`}
+                        }`}
                     >
                       <span className="font-semibold">{s.label}</span>
                       <span className="mt-0.5 block text-[10px] opacity-80">{s.description}</span>
@@ -479,8 +474,7 @@ function Packet({ scenario }: { scenario: ScenarioKey }) {
       }
     >
       <motion.div
-        className={`h-5 w-5 rounded-full border-2 shrink-0 ${
-          blocked
+        className={`h-5 w-5 rounded-full border-2 shrink-0 ${blocked
             ? "bg-rose-500/80 border-rose-400"
             : heldForReview
               ? "bg-amber-500/80 border-amber-400"
@@ -489,7 +483,7 @@ function Packet({ scenario }: { scenario: ScenarioKey }) {
                   ? "bg-amber-500/80 border-amber-400"
                   : "bg-slate-400 border-slate-500"
                 : "bg-slate-400 border-white/30"
-        }`}
+          }`}
       />
       {blocked && (
         <motion.span

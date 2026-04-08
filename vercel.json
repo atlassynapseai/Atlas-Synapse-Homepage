@@ -7,6 +7,8 @@
   "git": {
     "silent": true
   },
-  "regions": ["sfo1"],
+  "regions": [
+    "sfo1"
+  ],
   "public": false
 }

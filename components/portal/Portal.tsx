@@ -34,11 +34,10 @@ interface SidebarItemProps {
 const SidebarItem: React.FC<SidebarItemProps> = ({ icon: Icon, label, active, onClick }) => (
   <button
     onClick={onClick}
-    className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold transition-all ${
-      active
+    className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold transition-all ${active
         ? 'bg-cyan-400 text-slate-900 shadow-[0_0_15px_rgba(0,242,255,0.4)]'
         : 'text-slate-400 hover:text-white hover:bg-white/5'
-    }`}
+      }`}
   >
     <Icon className="w-4 h-4" />
     {label}
@@ -478,11 +477,10 @@ export function Portal() {
                       {i === 0 ? (
                         <span className="text-[10px] text-slate-600 font-mono bg-white/5 px-3 py-1 rounded-full text-center border border-white/5">{msg}</span>
                       ) : (
-                        <div className={`max-w-[80%] p-3 rounded-xl text-xs leading-relaxed ${
-                          i % 2 !== 0
+                        <div className={`max-w-[80%] p-3 rounded-xl text-xs leading-relaxed ${i % 2 !== 0
                             ? 'bg-cyan-600 text-white rounded-br-none'
                             : 'bg-slate-800 text-slate-200 rounded-bl-none'
-                        }`}>
+                          }`}>
                           {msg}
                         </div>
                       )}

@@ -285,12 +285,11 @@ export function DashboardSection() {
                     >
                       <td className="px-6 py-4 text-slate-300 max-w-xs truncate">{scan.file_desc || 'Unknown'}</td>
                       <td className="px-6 py-4">
-                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${
-                          scan.risk_level === 'CRITICAL' ? 'bg-red-500/20 text-red-300' :
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${scan.risk_level === 'CRITICAL' ? 'bg-red-500/20 text-red-300' :
                             scan.risk_level === 'HIGH' ? 'bg-orange-500/20 text-orange-300' :
                               scan.risk_level === 'MEDIUM' ? 'bg-yellow-500/20 text-yellow-300' :
                                 'bg-green-500/20 text-green-300'
-                        }`}>
+                          }`}>
                           {scan.risk_level}
                         </span>
                       </td>
