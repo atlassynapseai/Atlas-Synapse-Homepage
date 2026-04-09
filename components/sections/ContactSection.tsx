@@ -205,15 +205,15 @@ export function ContactSection() {
   }
 
   return (
-    <section className="py-20">
+    <section className="pt-12 pb-20">
       <div className="max-w-5xl mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 rounded-full border border-purple-400/30 bg-purple-400/10 px-4 py-1.5 mb-8">
             <span className="h-2 w-2 rounded-full bg-purple-400 animate-pulse" />
             <span className="text-xs font-semibold uppercase tracking-widest text-purple-400">Get in Touch</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+          <h2 className="text-6xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
             Contact Us
           </h2>
           <p className="text-xl text-slate-400 max-w-xl mx-auto">
