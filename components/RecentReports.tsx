@@ -178,9 +178,8 @@ export function RecentReports() {
             <div className="flex-1">
               <h3 className="text-lg font-semibold text-white mb-1">{report.agent_name}</h3>
               <span
-                className={`inline-flex px-2.5 py-1 rounded-full text-xs font-semibold ${
-                  statusColors[report.status]
-                }`}
+                className={`inline-flex px-2.5 py-1 rounded-full text-xs font-semibold ${statusColors[report.status]
+                  }`}
               >
                 {report.status.charAt(0).toUpperCase() + report.status.slice(1)}
               </span>
