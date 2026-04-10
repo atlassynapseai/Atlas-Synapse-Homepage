@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useAuth } from '@/lib/auth-context'
 import { PRICING_PLANS } from '@/lib/pricing-plans'
 import { ProtectedRoute } from '@/components/ProtectedRoute'
+import { RecentReports } from '@/components/RecentReports'
 
 interface SubscriptionData {
   subscriptionStatus: string | null
@@ -271,6 +272,13 @@ export default function DashboardPage() {
                   </a>
                 </div>
               </div>
+
+              {/* Recent Reports section */}
+              <div className="mt-12">
+                <h2 className="text-2xl font-bold text-white mb-6">Recent Reports</h2>
+                <RecentReports />
+              </div>
+
               {/* Scan History */}
               <div className="mt-12">
                 <h2 className="text-2xl font-bold text-white mb-6">Audit History</h2>
