@@ -25,6 +25,15 @@ const nextConfig = {
         source: '/Atlas-Synapse-Brand/:path*',
         destination: 'https://atlas-synapse-ai.vercel.app/Atlas-Synapse-Brand/:path*',
       },
+      // CRM Routes - NEW
+      {
+        source: '/Atlas-Synapse-CRM',
+        destination: 'https://atlas-synapse-crm.vercel.app/',
+      },
+      {
+        source: '/Atlas-Synapse-CRM/:path*',
+        destination: 'https://atlas-synapse-crm.vercel.app/:path*',
+      },
       // Agent Store routes
       {
         source: '/agents',
